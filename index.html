@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#3d2352">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171221">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,6 +18,7 @@
     --ink: #23202a;
     --ink-soft: #5a5462;
     --line: #e6ddd0;
+    --hairline: #f2ebe0;
     --plum: #5b3a70;
     --plum-deep: #3d2352;
     --pumpkin: #d97613;
@@ -24,6 +26,14 @@
     --dca: #1f6f5c;
     --dl1: #b4471a;
     --dl2: #6b3fa0;
+    --callout-bg: #fdf1e2;
+    --callout-ink: #7a4a12;
+    --callout-plum-bg: #f3ecf6;
+    --callout-plum-ink: #4a2d5e;
+    --warn-bg: #fbe4d0;
+    --warn-ink: #a5490d;
+    --go-bg: #d9efe4;
+    --go-ink: #1c6b52;
     --shadow: 0 2px 10px rgba(45,30,55,.08);
   }
 
@@ -224,15 +234,15 @@
     margin-bottom: 10px;
   }
   .tag.accent { background: var(--accent, var(--plum)); color: #fff; }
-  .tag.warn { background: #fbe4d0; color: #a5490d; }
-  .tag.go { background: #d9efe4; color: #1c6b52; }
+  .tag.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .tag.go { background: var(--go-bg); color: var(--go-ink); }
 
   ul.list { list-style: none; }
   ul.list li {
     position: relative;
     padding: 5px 0 5px 20px;
     font-size: 15px;
-    border-bottom: 1px solid #f2ebe0;
+    border-bottom: 1px solid var(--hairline);
   }
   ul.list li:last-child { border-bottom: none; }
   ul.list li::before {
@@ -250,7 +260,7 @@
     position: relative;
     padding: 8px 0 8px 34px;
     font-size: 15px;
-    border-bottom: 1px solid #f2ebe0;
+    border-bottom: 1px solid var(--hairline);
   }
   .pri li:last-child { border-bottom: none; }
   .pri li::before {
@@ -274,14 +284,14 @@
 
   .callout {
     border-left: 4px solid var(--pumpkin);
-    background: #fdf1e2;
+    background: var(--callout-bg);
     padding: 11px 13px;
     border-radius: 0 10px 10px 0;
     font-size: 14px;
     margin-top: 10px;
-    color: #7a4a12;
+    color: var(--callout-ink);
   }
-  .callout.plum { border-left-color: var(--plum); background: #f3ecf6; color: #4a2d5e; }
+  .callout.plum { border-left-color: var(--plum); background: var(--callout-plum-bg); color: var(--callout-plum-ink); }
 
   /* ---- Reference collapsibles ---- */
   details.card { padding: 0; overflow: hidden; }
@@ -307,13 +317,13 @@
   details.card summary .ic { margin-right: 8px; }
   details .body { padding: 0 16px 16px; }
 
-  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid #f2ebe0; font-size: 15px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--hairline); font-size: 15px; }
   .kv:last-child { border-bottom: none; }
   .kv .k { color: var(--ink-soft); }
   .kv .v { font-weight: 700; text-align: right; }
 
   .cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .minicard { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: #fff; }
+  .minicard { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--card); }
   .minicard .name { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
   .minicard .rate { font-family: "SF Mono", ui-monospace, monospace; font-size: 20px; font-weight: 700; color: var(--teal); }
   .minicard .for { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
@@ -330,6 +340,33 @@
   }
 
   footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 26px 20px 0; }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #171221;
+      --card: #221b30;
+      --ink: #ece7f2;
+      --ink-soft: #a89fb5;
+      --line: #372e46;
+      --hairline: #2f2740;
+      --plum: #b18ed0;
+      --teal: #6fc2c0;
+      --callout-bg: #33261a;
+      --callout-ink: #f0c48f;
+      --callout-plum-bg: #2b2140;
+      --callout-plum-ink: #d9c7ea;
+      --warn-bg: #45301a;
+      --warn-ink: #f2b077;
+      --go-bg: #1a352c;
+      --go-ink: #8ad6b2;
+      --shadow: 0 2px 10px rgba(0,0,0,.45);
+    }
+    #day19 { --accent: #3aa98b; }
+    #day20 { --accent: #e0713d; }
+    #day21 { --accent: #a37ede; }
+    .tag.accent { color: #171221; }
+    .pri li::before { color: #171221; }
+  }
 
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
   html { scroll-behavior: smooth; }
