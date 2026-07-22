@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#3d2352">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Disneyland">
+<link rel="apple-touch-icon" href="icon.png">
+<title>Disneyland Trip Guide · Aug 2026</title>
+<style>
+  :root {
+    --paper: #fbf6ee;
+    --card: #ffffff;
+    --ink: #23202a;
+    --ink-soft: #5a5462;
+    --line: #e6ddd0;
+    --plum: #5b3a70;
+    --plum-deep: #3d2352;
+    --pumpkin: #d97613;
+    --teal: #2f6f6e;
+    --dca: #1f6f5c;
+    --dl1: #b4471a;
+    --dl2: #6b3fa0;
+    --shadow: 0 2px 10px rgba(45,30,55,.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 16px;
+    padding-bottom: 40px;
+  }
+
+  .display {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+
+  .mono {
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  /* ---- Header ---- */
+  header {
+    background: linear-gradient(160deg, var(--sky-a, #3d2352), var(--sky-b, #5b3a70));
+    color: #fff;
+    padding: 26px 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: background 1.5s ease;
+  }
+  body[data-phase="dawn"]  { --sky-a: #472a4f; --sky-b: #b0574a; }
+  body[data-phase="day"]   { --sky-a: #2e4a8f; --sky-b: #5b7fc7; }
+  body[data-phase="dusk"]  { --sky-a: #3d2352; --sky-b: #c2622e; }
+  body[data-phase="night"] { --sky-a: #191129; --sky-b: #3d2352; }
+  header .moon {
+    position: absolute;
+    top: -30px; right: -20px;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(217,118,19,.55), rgba(217,118,19,0) 70%);
+    pointer-events: none;
+    transition: background 1.5s ease;
+  }
+  body[data-phase="day"] header .moon {
+    background: radial-gradient(circle at 35% 35%, rgba(255,224,130,.75), rgba(255,224,130,0) 70%);
+  }
+  body[data-phase="night"] header .moon {
+    background: radial-gradient(circle at 35% 35%, rgba(214,222,255,.5), rgba(214,222,255,0) 70%);
+  }
+  header .stars {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 34% 15%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 55% 45%, #ffe9c9, transparent),
+      radial-gradient(1px 1px at 72% 22%, #fff, transparent),
+      radial-gradient(1px 1px at 88% 55%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 25% 65%, #fff, transparent);
+  }
+  body[data-phase="night"] header .stars { opacity: .8; }
+
+  .countdown {
+    margin-top: 14px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .countdown .big {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .countdown .small {
+    font-size: 13px;
+    color: rgba(255,255,255,.85);
+    margin-top: 2px;
+  }
+  .countdown .small .time { font-size: 13px; color: #ffd9a3; }
+
+  nav a.today {
+    color: #ffd9a3;
+    border-bottom-color: var(--pumpkin);
+  }
+  nav a.today .d::after {
+    content: "";
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pumpkin);
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #e9b676;
+    font-weight: 600;
+  }
+  header h1 {
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 6px 0 8px;
+    font-weight: 700;
+  }
+  header .sub {
+    font-size: 14px;
+    color: rgba(255,255,255,.82);
+  }
+
+  /* ---- Sticky day nav ---- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    background: var(--plum-deep);
+    box-shadow: var(--shadow);
+  }
+  nav a {
+    flex: 1;
+    text-align: center;
+    padding: 11px 4px;
+    color: rgba(255,255,255,.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+  }
+  nav a .d {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+  nav a.info-tab { flex: 0 0 62px; }
+
+  /* ---- Layout ---- */
+  main { max-width: 640px; margin: 0 auto; padding: 18px 16px 0; }
+
+  section { margin-bottom: 22px; scroll-margin-top: 60px; }
+
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 4px 2px 10px;
+    border-bottom: 2px solid var(--accent, var(--plum));
+    margin-bottom: 14px;
+  }
+  .day-head .date {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--accent, var(--plum));
+    text-transform: uppercase;
+  }
+  .day-head h2 {
+    font-size: 23px;
+    font-weight: 700;
+    flex: 1;
+  }
+  #day19 { --accent: var(--dca); }
+  #day20 { --accent: var(--dl1); }
+  #day21 { --accent: var(--dl2); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 15px 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 {
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 9px;
+    font-weight: 700;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .tag.accent { background: var(--accent, var(--plum)); color: #fff; }
+  .tag.warn { background: #fbe4d0; color: #a5490d; }
+  .tag.go { background: #d9efe4; color: #1c6b52; }
+
+  ul.list { list-style: none; }
+  ul.list li {
+    position: relative;
+    padding: 5px 0 5px 20px;
+    font-size: 15px;
+    border-bottom: 1px solid #f2ebe0;
+  }
+  ul.list li:last-child { border-bottom: none; }
+  ul.list li::before {
+    content: "";
+    position: absolute;
+    left: 3px; top: 12px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent, var(--plum));
+  }
+  ul.list li strong { font-weight: 700; }
+
+  .pri { counter-reset: pri; list-style: none; }
+  .pri li {
+    position: relative;
+    padding: 8px 0 8px 34px;
+    font-size: 15px;
+    border-bottom: 1px solid #f2ebe0;
+  }
+  .pri li:last-child { border-bottom: none; }
+  .pri li::before {
+    counter-increment: pri;
+    content: counter(pri);
+    position: absolute;
+    left: 0; top: 8px;
+    width: 23px; height: 23px;
+    border-radius: 50%;
+    background: var(--accent, var(--plum));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  }
+
+  .time { font-family: "SF Mono", ui-monospace, Menlo, monospace; font-weight: 700; font-size: 14px; }
+
+  .callout {
+    border-left: 4px solid var(--pumpkin);
+    background: #fdf1e2;
+    padding: 11px 13px;
+    border-radius: 0 10px 10px 0;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #7a4a12;
+  }
+  .callout.plum { border-left-color: var(--plum); background: #f3ecf6; color: #4a2d5e; }
+
+  /* ---- Reference collapsibles ---- */
+  details.card { padding: 0; overflow: hidden; }
+  details.card summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 15px 16px;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  details.card summary::-webkit-details-marker { display: none; }
+  details.card summary::after {
+    content: "+";
+    font-size: 22px;
+    color: var(--plum);
+    font-weight: 400;
+    line-height: 1;
+  }
+  details.card[open] summary::after { content: "\2013"; }
+  details.card summary .ic { margin-right: 8px; }
+  details .body { padding: 0 16px 16px; }
+
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid #f2ebe0; font-size: 15px; }
+  .kv:last-child { border-bottom: none; }
+  .kv .k { color: var(--ink-soft); }
+  .kv .v { font-weight: 700; text-align: right; }
+
+  .cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .minicard { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: #fff; }
+  .minicard .name { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+  .minicard .rate { font-family: "SF Mono", ui-monospace, monospace; font-size: 20px; font-weight: 700; color: var(--teal); }
+  .minicard .for { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  h2.ref-title {
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--plum);
+    font-weight: 700;
+    margin: 30px 2px 12px;
+    padding-top: 8px;
+    border-top: 2px solid var(--line);
+  }
+
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 26px 20px 0; }
+
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="moon"></div>
+  <div class="stars"></div>
+  <div class="eyebrow" id="greeting">Halloween Time · California</div>
+  <h1 class="display">Disneyland<br>Trip Guide</h1>
+  <div class="sub">August 18&ndash;22, 2026 · party of 4 · land late 8/18</div>
+  <div class="countdown" id="countdown" hidden>
+    <div class="big" id="cd-big"></div>
+    <div class="small" id="cd-small"></div>
+  </div>
+</header>
+
+<nav>
+  <a href="#day19"><span class="d">19</span>DCA</a>
+  <a href="#day20"><span class="d">20</span>DL</a>
+  <a href="#day21"><span class="d">21</span>DL</a>
+  <a href="#reference" class="info-tab"><span class="d">i</span>Info</a>
+</nav>
+
+<main>
+
+  <!-- ===================== DAY 19 ===================== -->
+  <section id="day19">
+    <div class="day-head">
+      <span class="date">Wed 8/19</span>
+      <h2 class="display">California Adventure</h2>
+    </div>
+
+    <div class="card">
+      <span class="tag go">Open to full close</span>
+      <ul class="list">
+        <li>Not an Oogie Boogie Bash night, so the park stays open normal hours (no 6pm cutoff).</li>
+        <li>Halloween d&eacute;cor is already up. Cars Land becomes <strong>"Radiator Screams"</strong> after dark.</li>
+        <li><strong>World of Color &ndash; ONE</strong> runs at night. Worth staying for.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Multi Pass priority</h3>
+      <ol class="pri">
+        <li><strong>Radiator Springs Racers</strong> &mdash; book first, longest standby by far.</li>
+        <li><strong>Guardians of the Galaxy: Mission Breakout</strong></li>
+        <li><strong>Incredicoaster</strong></li>
+      </ol>
+      <div class="callout">Book Racers the second you tap through the gate. Its return window pushes hours out fast.</div>
+    </div>
+
+    <div class="card">
+      <h3>Dinner &mdash; booked</h3>
+      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">6:20 pm</span> &middot; Lamplight Lounge</div>
+      <ul class="list">
+        <li>Book the <strong>downstairs</strong> location (the reserved, fully themed one). Boardwalk Dining upstairs is a separate walk-up spot.</li>
+        <li>Veg options are solid: Brussels Caesar is plant-based as listed. Ask about the off-menu vegan nachos.</li>
+        <li>Out around <span class="time">7:50</span>, which leaves buffer for the show.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Evening</h3>
+      <ul class="list">
+        <li><strong>World of Color &ndash; ONE</strong> typically runs <span class="time">9:00&ndash;9:30 pm</span>. Confirm the time in the app that morning.</li>
+        <li>Join the <strong>free virtual queue</strong> in the app earlier in the day for a viewing spot, or be in place 45&ndash;60 min ahead.</li>
+        <li>Cars Land neon lights up at dusk (~<span class="time">7:45 pm</span>). You'll walk out right into it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== DAY 20 ===================== -->
+  <section id="day20">
+    <div class="day-head">
+      <span class="date">Thu 8/20</span>
+      <h2 class="display">Disneyland &middot; Day 1</h2>
+    </div>
+
+    <div class="card">
+      <span class="tag accent">Final night ever</span>
+      <h3>The two shows end tonight</h3>
+      <ul class="list">
+        <li><strong>Paint the Night</strong> parade &mdash; <span class="time">8:45</span> &amp; <span class="time">10:45 pm</span></li>
+        <li><strong>Wondrous Journeys</strong> fireworks &mdash; <span class="time">9:35 pm</span></li>
+      </ul>
+      <div class="callout">Last scheduled night for both (70th anniversary shows stop before Halloween Time). Stake out a spot <strong>60&ndash;90 min early</strong>.</div>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">Expect it packed</span>
+      <ul class="list">
+        <li>DCA closes to regular guests at <strong>6pm</strong> for the party tonight, so crowds shift here.</li>
+        <li><strong>Haunted Mansion likely closed</strong> today (Holiday overlay install). You get it tomorrow.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Game plan</h3>
+      <ul class="list">
+        <li>Start churning Lightning Lane bookings the moment you scan in. No need to ration anything.</li>
+        <li>Split the headliners between today and tomorrow rather than cramming them into one day.</li>
+        <li>Evening belongs to the shows. Don't count on riding much after <span class="time">8 pm</span>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Dinner &mdash; booked</h3>
+      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">5:10 pm</span> &middot; Caf&eacute; Orleans</div>
+      <ul class="list">
+        <li>New Orleans Square, right next to Blue Bayou. Vegetarian triple-cheese Monte Cristo is the pick.</li>
+        <li>Out around <span class="time">6:30</span>. Best-timed meal of the trip.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">Camp by 7:30 pm</span>
+      <h3>Tonight's run of show</h3>
+      <ul class="list">
+        <li><span class="time">8:45 pm</span> &mdash; Paint the Night parade</li>
+        <li><span class="time">9:35 pm</span> &mdash; Wondrous Journeys fireworks</li>
+        <li><span class="time">10:45 pm</span> &mdash; Paint the Night, second showing</li>
+      </ul>
+      <div class="callout">Claim a Main Street spot by <strong>7:30</strong>. Final night for both shows, and DCA closes at 6pm for the party, so its crowd lands here.</div>
+    </div>
+  </section>
+
+  <!-- ===================== DAY 21 ===================== -->
+  <section id="day21">
+    <div class="day-head">
+      <span class="date">Fri 8/21</span>
+      <h2 class="display">Disneyland &middot; Day 2</h2>
+    </div>
+
+    <div class="card">
+      <span class="tag accent">Halloween Time opening day</span>
+      <ul class="list">
+        <li>Main Street pumpkins go up, and <strong>Haunted Mansion Holiday</strong> opens with Jack Skellington.</li>
+        <li>Busiest of your three days (Friday + opening day + locals). <strong>Lean on Multi Pass hard.</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Headliner blitz order</h3>
+      <ol class="pri">
+        <li><strong>Haunted Mansion Holiday</strong> &mdash; opening-day line will be long, grab a Lightning Lane early.</li>
+        <li><strong>Space Mountain</strong></li>
+        <li><strong>Big Thunder Mountain</strong></li>
+        <li>Then chain the rest (see churn tip in Info).</li>
+      </ol>
+      <div class="callout plum"><strong>Rise of the Resistance</strong> is NOT on Multi Pass. It's a separate paid <strong>Single Pass</strong> (~$20&ndash;25/person) if it's a must-do.</div>
+    </div>
+
+    <div class="card">
+      <h3>Dinner &mdash; booked</h3>
+      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">6:10 pm</span> &middot; River Belle Terrace</div>
+      <ul class="list">
+        <li>Frontierland, overlooking the Rivers of America. Vegetarian options on the Southern menu.</li>
+        <li>Out around <span class="time">7:30&ndash;7:45</span>.</li>
+        <li><strong>Book Multi Pass return windows around the 6:10&ndash;7:45 block</strong> so you're not holding a slot while seated.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">Camp by 8:30 pm</span>
+      <h3>Halloween Screams &mdash; debut night</h3>
+      <ul class="list">
+        <li>Runs roughly <span class="time">9:00&ndash;9:30 pm</span>. Confirm the time in the app that morning.</li>
+        <li>Projections hit the castle, Main Street, small world, and the Rivers of America. <strong>Castle-adjacent is the spot.</strong></li>
+        <li>Fireworks on select nights, usually weekends. Friday opening night is a good bet.</li>
+      </ul>
+      <div class="callout">Opening night + Friday = the heaviest crowd of your trip. Don't count on watching from the restaurant, River Belle closes around 9pm.</div>
+    </div>
+  </section>
+
+  <!-- ===================== REFERENCE ===================== -->
+  <h2 class="ref-title" id="reference">Reference &amp; Strategy</h2>
+
+  <details class="card" open>
+    <summary><span><span class="ic">&#127903;</span>Multi Pass, dejargonified</span></summary>
+    <div class="body">
+      <ul class="list">
+        <li><strong>Return window</strong> = the 1-hour arrival slot the app gives you (e.g. "come 2:40&ndash;3:40"). Not whenever you want.</li>
+        <li><strong>The churn rule:</strong> you can only hold one booking at a time. Can't book the next until you either use the current one or 2 hours pass.</li>
+        <li><strong>Keep the wheel spinning:</strong> between headliners, book quick-loading rides (Pirates, Little Mermaid) whose window is often "right now." Ride it, and it instantly unlocks your next booking.</li>
+        <li><strong>Book at entry:</strong> you must be scanned into the park to book. Grab your first pick while walking in.</li>
+        <li><strong>Modify, don't cancel:</strong> refresh the "modify" screen to snag earlier return times without losing your slot.</li>
+        <li><strong>One purchase covers both parks</strong> at Disneyland Resort.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#127869;</span>Dining at a glance</span></summary>
+    <div class="body">
+      <div class="kv"><span class="k">Wed 8/19 &middot; DCA</span><span class="v">Lamplight Lounge<br>6:20 pm</span></div>
+      <div class="kv"><span class="k">Thu 8/20 &middot; DL</span><span class="v">Caf&eacute; Orleans<br>5:10 pm</span></div>
+      <div class="kv"><span class="k">Fri 8/21 &middot; DL</span><span class="v">River Belle Terrace<br>6:10 pm</span></div>
+      <div class="callout plum" style="margin-top:14px;"><strong>Blue Bayou watch.</strong> Still the best-themed meal at the resort. Refresh the app for 8/20 or 8/21 &mdash; cancellations appear <strong>24&ndash;48 hrs out</strong> and the morning of. Try odd times (11:00&ndash;11:30, 2:30&ndash;3:30) and smaller party sizes. Join the walk-up waitlist in the app on the day. If one opens, drop whichever DL dinner it replaces.</div>
+      <div class="callout">Cancel <strong>1+ day ahead</strong> if plans change. There's a per-person no-show fee on all three.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#128179;</span>Which card to tap</span></summary>
+    <div class="body">
+      <div class="cards-row" style="margin-bottom:12px;">
+        <div class="minicard">
+          <div class="name">Freedom Flex</div>
+          <div class="rate">5%</div>
+          <div class="for">Tickets &amp; Multi Pass charged by Disney (Q3 bonus active)</div>
+        </div>
+        <div class="minicard">
+          <div class="name">Savor</div>
+          <div class="rate">3%</div>
+          <div class="for">All dining &amp; food carts</div>
+        </div>
+      </div>
+      <div class="callout">If you bought the Undercover Tourist bundle, it codes as a <strong>travel agency (~1%)</strong>, not 5%. That's already priced into your decision. In-park food and merch still follow the rule above.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#127828;</span>Food &amp; budget</span></summary>
+    <div class="body">
+      <div class="kv"><span class="k">Quick service meal</span><span class="v">$18&ndash;25 / person</span></div>
+      <div class="kv"><span class="k">Snacks (churro, Dole Whip)</span><span class="v">$6&ndash;9</span></div>
+      <div class="kv"><span class="k">Table service entree</span><span class="v">$25&ndash;45</span></div>
+      <div class="kv"><span class="k">Splurge (Blue Bayou, Oga's)</span><span class="v">$50+ / person</span></div>
+      <div class="kv"><span class="k">Realistic day, 2 adults</span><span class="v">$100&ndash;250</span></div>
+      <ul class="list" style="margin-top:12px;">
+        <li><strong>Bring your own food + sealed drinks.</strong> Disneyland allows it. Biggest single saver.</li>
+        <li>Eat a real breakfast before you enter.</li>
+        <li>Ask for <strong>free water cups</strong> at any quick-service counter.</li>
+        <li>Split big portions (Flo's V8, Rancho del Zocalo, corn dogs).</li>
+        <li>Do one nice sit-down meal, quick service everywhere else.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#9989;</span>Before you go</span></summary>
+    <div class="body">
+      <ul class="list">
+        <li>Tickets + Multi Pass, all 3 days. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
+        <li>Park reservations: DCA 8/19, Disneyland 8/20 &amp; 8/21. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
+        <li>Dining, all 3 nights. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
+        <li>Q3 Freedom Flex bonus activated. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
+        <li>All 4 tickets linked in the app, everyone in the same party.</li>
+        <li>Decide on Rise of the Resistance Single Pass (separate purchase).</li>
+        <li>Keep refreshing for Blue Bayou.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>
+    Built for the Aug 2026 trip · times &amp; prices confirmed close to travel in the app
+  </footer>
+
+</main>
+<script>
+(function () {
+  // ---- time of day sky ----
+  function setPhase() {
+    var h = new Date().getHours();
+    var phase = (h >= 5 && h < 9) ? "dawn"
+              : (h >= 9 && h < 16) ? "day"
+              : (h >= 16 && h < 20) ? "dusk"
+              : "night";
+    document.body.setAttribute("data-phase", phase);
+  }
+
+  // ---- trip schedule (local device time; you'll be in Pacific) ----
+  var TRIP_START = new Date(2026, 7, 18); // Aug 18
+  var DAYS = {
+    "2026-08-18": { label: "Travel day", note: "Land, rest up. It starts tomorrow.", nav: null },
+    "2026-08-19": { label: "Day 1 · California Adventure", nav: "day19", events: [
+      [18, 20, "Lamplight Lounge, 6:20 pm"],
+      [19, 45, "Cars Land neon comes on around now"],
+      [20, 15, "Head toward a World of Color spot"],
+      [21, 0,  "World of Color \u2013 ONE (confirm time in app)"]
+    ]},
+    "2026-08-20": { label: "Day 2 · Disneyland", nav: "day20", events: [
+      [17, 10, "Caf\u00e9 Orleans, 5:10 pm"],
+      [19, 30, "Camp on Main Street for the shows"],
+      [20, 45, "Paint the Night \u2014 final night"],
+      [21, 35, "Wondrous Journeys \u2014 final night"],
+      [22, 45, "Paint the Night, second showing"]
+    ]},
+    "2026-08-21": { label: "Day 3 · Disneyland", nav: "day21", events: [
+      [18, 10, "River Belle Terrace, 6:10 pm"],
+      [20, 30, "Camp near the castle"],
+      [21, 0,  "Halloween Screams debut (confirm time in app)"]
+    ]},
+    "2026-08-22": { label: "Last day in Cali", note: "No parks today. Safe travels home.", nav: null }
+  };
+
+  function dayKey(d) {
+    return d.getFullYear() + "-" +
+      String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+  }
+
+  function update() {
+    setPhase();
+    var now = new Date();
+    var box = document.getElementById("countdown");
+    var big = document.getElementById("cd-big");
+    var small = document.getElementById("cd-small");
+    var greet = document.getElementById("greeting");
+    box.hidden = false;
+
+    // clear any previous today marker
+    document.querySelectorAll("nav a.today").forEach(function (a) { a.classList.remove("today"); });
+
+    var key = dayKey(now);
+    var today = DAYS[key];
+
+    if (today) {
+      // ---- trip mode ----
+      big.textContent = today.label;
+      if (today.nav) {
+        var tab = document.querySelector('nav a[href="#' + today.nav + '"]');
+        if (tab) tab.classList.add("today");
+      }
+      if (today.events) {
+        var next = null;
+        for (var i = 0; i < today.events.length; i++) {
+          var e = today.events[i];
+          var t = new Date(now); t.setHours(e[0], e[1], 0, 0);
+          if (t > now) { next = e; break; }
+        }
+        small.textContent = next ? "Up next \u00b7 " + next[2] : "That's the day. Enjoy the night.";
+      } else {
+        small.textContent = today.note || "";
+      }
+      greet.textContent = "Halloween Time \u00b7 Anaheim";
+    } else if (now < TRIP_START) {
+      // ---- countdown mode ----
+      var midnightNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var days = Math.round((TRIP_START - midnightNow) / 864e5);
+      big.textContent = days === 1 ? "1 day to go" : days + " days to go";
+      small.textContent = days === 1 ? "Wheels up tomorrow" : "Until wheels up on Aug 18";
+    } else {
+      // ---- after the trip ----
+      big.textContent = "Trip complete";
+      small.textContent = "Hope it was magical. See you next time.";
+    }
+  }
+
+  update();
+  setInterval(update, 60 * 1000);
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) update();
+  });
+})();
+</script>
+</body>
+</html>
