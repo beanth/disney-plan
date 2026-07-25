@@ -23,9 +23,11 @@
     --plum-deep: #3d2352;
     --pumpkin: #d97613;
     --teal: #2f6f6e;
-    --dca: #1f6f5c;
-    --dl1: #b4471a;
-    --dl2: #6b3fa0;
+    /* Day accents live in the Halloween palette, not park-identity colors.
+       8/19 pumpkin, 8/20 the 70th's gold, 8/21 witch purple. */
+    --acc-19: #c25a0e;
+    --acc-20: #8a6a1c;
+    --acc-21: #6b3fa0;
     --callout-bg: #fdf1e2;
     --callout-ink: #7a4a12;
     --callout-plum-bg: #f3ecf6;
@@ -36,9 +38,9 @@
     --go-ink: #1c6b52;
     --shadow: 0 2px 10px rgba(45,30,55,.08);
     --spark: #e9b676;
-    --chrome-19: #1a5c4c;
-    --chrome-20: #8f3714;
-    --chrome-21: #553184;
+    --chrome-19: #7c3a0e;
+    --chrome-20: #5f4a16;
+    --chrome-21: #4a2874;
   }
 
   /* ---- Trip phase: the palette moves with the calendar ---- */
@@ -167,22 +169,11 @@
     opacity: .55;
     will-change: transform;
   }
-  header .b1 { width: 32px; top: 92px;  left: 64%; animation: batbob 7s ease-in-out infinite; }
-  header .b2 { width: 21px; top: 40px;  left: 49%; animation: batbob 9s ease-in-out -2s infinite; }
-  header .b3 { width: 27px; top: 132px; left: 81%; animation: batbob 8s ease-in-out -4s infinite; }
-  header .b4 { width: 16px; top: 24px;  left: 33%; animation: batbob 11s ease-in-out -1s infinite; opacity: .38; }
-  header .drifter { width: 24px; top: 62px; left: 0; opacity: 0; animation: batcross 26s linear infinite; }
-
-  @keyframes batbob {
-    0%, 100% { transform: translate3d(0, 0, 0) rotate(-5deg); }
-    50%      { transform: translate3d(5px, -8px, 0) rotate(5deg); }
-  }
-  @keyframes batcross {
-    0%   { transform: translate3d(-16vw, 12px, 0) rotate(-8deg); opacity: 0; }
-    8%   { opacity: .5; }
-    88%  { opacity: .5; }
-    100% { transform: translate3d(116vw, -20px, 0) rotate(7deg); opacity: 0; }
-  }
+  header .b1 { width: 32px; top: 92px;  left: 64%; transform: rotate(-7deg); }
+  header .b2 { width: 21px; top: 40px;  left: 49%; transform: rotate(6deg); }
+  header .b3 { width: 27px; top: 132px; left: 81%; transform: rotate(-3deg); }
+  header .b4 { width: 16px; top: 24px;  left: 33%; transform: rotate(9deg); opacity: .38; }
+  header .drifter { width: 24px; top: 60px; left: 22%; transform: rotate(4deg); opacity: .42; }
 
   /* harvest moon once the sun is down */
   body[data-mood="halloween"][data-phase="dusk"]  header .orb,
@@ -210,6 +201,42 @@
     transform: rotate(-12deg);
   }
 
+  /* cobwebs strung in the corner of every card on the Halloween days */
+  #day19 .card, #day21 .card { position: relative; overflow: hidden; }
+  #day19 .card::before, #day21 .card::before {
+    content: "";
+    position: absolute; top: 0; right: 0;
+    width: 60px; height: 60px;
+    pointer-events: none;
+    opacity: .14;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23000%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M100%200%20L2%205%20M100%200%20L14%2054%20M100%200%20L50%2090%20M100%200%20L95%20100%27%2F%3E%3Cpath%20d%3D%27M74%202%20Q%2078%2020%2098%2025%27%2F%3E%3Cpath%20d%3D%27M50%205%20Q%2058%2042%2096%2048%27%2F%3E%3Cpath%20d%3D%27M26%209%20Q%2040%2064%2093%2072%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat top right;
+    background-size: 60px 60px;
+  }
+
+  /* a spider dangling off the day title */
+  #day19 .day-head::before, #day21 .day-head::before {
+    content: "";
+    position: absolute; top: -10px; right: 30px;
+    width: 15px; height: 36px;
+    pointer-events: none;
+    opacity: .45;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2040%27%3E%3Cline%20x1%3D%2712%27%20y1%3D%270%27%20x2%3D%2712%27%20y2%3D%2722%27%20stroke%3D%27%23000%27%20stroke-width%3D%271%27%2F%3E%3Cg%20stroke%3D%27%23000%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M9%2027%20C%204%2025%2C%203%2021%2C%201%2019%27%2F%3E%3Cpath%20d%3D%27M9%2030%20C%204%2030%2C%202%2028%2C%200%2026%27%2F%3E%3Cpath%20d%3D%27M15%2027%20C%2020%2025%2C%2021%2021%2C%2023%2019%27%2F%3E%3Cpath%20d%3D%27M15%2030%20C%2020%2030%2C%2022%2028%2C%2024%2026%27%2F%3E%3C%2Fg%3E%3Cellipse%20cx%3D%2712%27%20cy%3D%2728.5%27%20rx%3D%274.2%27%20ry%3D%275%27%20fill%3D%27%23000%27%2F%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2723.5%27%20r%3D%272.4%27%20fill%3D%27%23000%27%2F%3E%3C%2Fsvg%3E") no-repeat top center;
+    background-size: 15px 36px;
+  }
+
+  /* numbered lists become jack-o'-lanterns */
+  #day19 .pri li::before, #day21 .pri li::before {
+    background: radial-gradient(ellipse at 50% 58%, #ffb264 0 28%, #d9631a 29% 100%);
+    color: #401d05;
+    text-shadow: 0 1px 0 rgba(255,210,150,.45);
+  }
+
+  /* pill tags get a pumpkin skin */
+  #day19 .tag.accent, #day21 .tag.accent {
+    background: linear-gradient(135deg, #f18d2c, #c9560c);
+    color: #fff;
+  }
+
   /* a lit pumpkin behind the day title */
   #day19 .day-head, #day20 .day-head, #day21 .day-head { position: relative; }
   #day19 .day-head::after,
@@ -226,11 +253,6 @@
     width: 96px; height: 34px;
     pointer-events: none;
     background: radial-gradient(ellipse at 74% 100%, rgba(214,178,92,.38), transparent 68%);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    header .bat { animation: none !important; }
-    header .drifter { opacity: .45; transform: translate3d(38vw, 0, 0); }
   }
 
   /* season wash, blended over the sky */
@@ -384,9 +406,9 @@
     font-weight: 700;
     flex: 1;
   }
-  #day19 { --accent: var(--dca); }
-  #day20 { --accent: var(--dl1); }
-  #day21 { --accent: var(--dl2); }
+  #day19 { --accent: var(--acc-19); }
+  #day20 { --accent: var(--acc-20); }
+  #day21 { --accent: var(--acc-21); }
 
   .card {
     background: var(--card);
@@ -573,9 +595,9 @@
       --go-ink: #8ad6b2;
       --shadow: 0 2px 10px rgba(0,0,0,.45);
     }
-    #day19 { --accent: #3aa98b; }
-    #day20 { --accent: #e0713d; }
-    #day21 { --accent: #a37ede; }
+    #day19 { --accent: #ff9440; }
+    #day20 { --accent: #ddbc68; }
+    #day21 { --accent: #b78ce8; }
     .tag.accent { color: #171221; }
     .pri li::before { color: #171221; }
 
@@ -590,9 +612,12 @@
     body[data-mood="seventieth"] { --spark: #f0d091; --wash: #c9a24e; --wash-o: .20; }
     header .bat { fill: #0a0610; opacity: .62; }
     header .web { opacity: .22; }
-    body[data-day="19"] { --chrome: #123f34; }
-    body[data-day="20"] { --chrome: #6b2a0f; }
-    body[data-day="21"] { --chrome: #3d2461; }
+    /* webs and spider are drawn black, so flip them to silver on dark cards */
+    #day19 .card::before, #day21 .card::before { filter: invert(1); opacity: .16; }
+    #day19 .day-head::before, #day21 .day-head::before { filter: invert(1); opacity: .5; }
+    body[data-day="19"] { --chrome: #5c2909; }
+    body[data-day="20"] { --chrome: #453610; }
+    body[data-day="21"] { --chrome: #351c55; }
     header .ridge { opacity: .26; }
   }
 
@@ -1070,10 +1095,11 @@
   }
 
   // ---- palette follows the calendar ----
+  // must stay in sync with --chrome-NN in the stylesheet, light then dark
   var CHROME = {
-    "19": ["#1a5c4c", "#123f34"],
-    "20": ["#8f3714", "#6b2a0f"],
-    "21": ["#553184", "#3d2461"]
+    "19": ["#7c3a0e", "#5c2909"],
+    "20": ["#5f4a16", "#453610"],
+    "21": ["#4a2874", "#351c55"]
   };
 
   function setChromeMeta(day) {
