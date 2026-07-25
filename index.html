@@ -24,10 +24,15 @@
     --pumpkin: #d97613;
     --teal: #2f6f6e;
     /* Day accents live in the Halloween palette, not park-identity colors.
-       8/19 pumpkin, 8/20 the 70th's gold, 8/21 witch purple. */
-    --acc-19: #c25a0e;
-    --acc-20: #8a6a1c;
-    --acc-21: #6b3fa0;
+       8/19 pumpkin, 8/20 the 70th's gold, 8/21 witch purple.
+       --acc is the bright decorative fill; --ink is the readable text tone,
+       because a pumpkin orange bright enough to look right fails as 13px text. */
+    --acc-19: #e8720f;
+    --acc-20: #b8912e;
+    --acc-21: #8b56c9;
+    --ink-19: #b5540d;
+    --ink-20: #7a5d16;
+    --ink-21: #6b3fa0;
     --callout-bg: #fdf1e2;
     --callout-ink: #7a4a12;
     --callout-plum-bg: #f3ecf6;
@@ -38,9 +43,10 @@
     --go-ink: #1c6b52;
     --shadow: 0 2px 10px rgba(45,30,55,.08);
     --spark: #e9b676;
-    --chrome-19: #7c3a0e;
-    --chrome-20: #5f4a16;
-    --chrome-21: #4a2874;
+    /* nav sits close to each section's accent rather than a near-black */
+    --chrome-19: #b05412;
+    --chrome-20: #8a6a1c;
+    --chrome-21: #6b3fa0;
   }
 
   /* ---- Trip phase: the palette moves with the calendar ---- */
@@ -209,7 +215,7 @@
     width: 60px; height: 60px;
     pointer-events: none;
     opacity: .14;
-    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23000%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M100%200%20L2%205%20M100%200%20L14%2054%20M100%200%20L50%2090%20M100%200%20L95%20100%27%2F%3E%3Cpath%20d%3D%27M74%202%20Q%2078%2020%2098%2025%27%2F%3E%3Cpath%20d%3D%27M50%205%20Q%2058%2042%2096%2048%27%2F%3E%3Cpath%20d%3D%27M26%209%20Q%2040%2064%2093%2072%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat top right;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'1.5'%3E%20%3Cpath%20d%3D'M100%200%20L2%207%20M100%200%20L10%2038%20M100%200%20L28%2066%20M100%200%20L55%2088%20M100%200%20L86%20100'%2F%3E%20%3C%2Fg%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'1.15'%3E%20%3Cpath%20d%3D'M78.4%201.5%20Q%2078%206.4%2080.2%208.4%20Q%2081.4%2012.2%2084.2%2014.5%20Q%2086.9%2017.8%2090.1%2019.4%20Q%2093.7%2021.2%2096.9%2022'%2F%3E%20%3Cpath%20d%3D'M55.9%203.2%20Q%2056.8%2011.4%2062.2%2016%20Q%2062.4%2025.3%2065.4%2031.7%20Q%2071.4%2036.9%2080.2%2038.7%20Q%2087.3%2043.2%2093.6%2046'%2F%3E%20%3Cpath%20d%3D'M29.4%205%20Q%2031.6%2018.4%2038.8%2025.8%20Q%2040.3%2039.6%2046%2049.5%20Q%2055.4%2057.9%2068.5%2061.6%20Q%2079.3%2068.8%2089.8%2073'%2F%3E%20%3Cpath%20d%3D'M6.9%206.7%20Q%209.4%2024.1%2014.5%2036.1%20Q%2020.3%2051.4%2031.6%2062.7'%2F%3E%20%3C%2Fg%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'0.9'%3E%20%3Cpath%20d%3D'M31.6%2062.7%20Q%2034.4%2070.2%2029.8%2076.4'%2F%3E%20%3Cpath%20d%3D'M46%2049.5%20Q%2041.2%2055.8%2043.6%2061'%2F%3E%20%3C%2Fg%3E%20%3C%2Fsvg%3E") no-repeat top right;
     background-size: 60px 60px;
   }
 
@@ -224,16 +230,33 @@
     background-size: 15px 36px;
   }
 
-  /* numbered lists become jack-o'-lanterns */
+  /* numbered lists become pumpkins: squat body, ribs, a stem on top */
   #day19 .pri li::before, #day21 .pri li::before {
-    background: radial-gradient(ellipse at 50% 58%, #ffb264 0 28%, #d9631a 29% 100%);
-    color: #401d05;
-    text-shadow: 0 1px 0 rgba(255,210,150,.45);
+    background:
+      linear-gradient(90deg,
+        rgba(120,45,0,.20) 0 6%, transparent 6% 26%,
+        rgba(120,45,0,.14) 26% 30%, transparent 30% 70%,
+        rgba(120,45,0,.14) 70% 74%, transparent 74% 94%,
+        rgba(120,45,0,.20) 94% 100%),
+      #c9560c;
+    border-radius: 50% / 44%;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(80,30,0,.5);
+    top: 10px;
+  }
+  #day19 .pri li::after, #day21 .pri li::after {
+    content: "";
+    position: absolute;
+    left: 10px; top: 4px;
+    width: 3px; height: 6px;
+    border-radius: 2px 2px 0 0;
+    background: #5c8a3c;
+    transform: rotate(-14deg);
   }
 
   /* pill tags get a pumpkin skin */
   #day19 .tag.accent, #day21 .tag.accent {
-    background: linear-gradient(135deg, #f18d2c, #c9560c);
+    background: linear-gradient(135deg, #c9560c, #9c400a);
     color: #fff;
   }
 
@@ -398,7 +421,7 @@
     font-size: 13px;
     font-weight: 700;
     letter-spacing: .04em;
-    color: var(--accent, var(--plum));
+    color: var(--accent-ink, var(--accent, var(--plum)));
     text-transform: uppercase;
   }
   .day-head h2 {
@@ -406,9 +429,9 @@
     font-weight: 700;
     flex: 1;
   }
-  #day19 { --accent: var(--acc-19); }
-  #day20 { --accent: var(--acc-20); }
-  #day21 { --accent: var(--acc-21); }
+  #day19 { --accent: var(--acc-19); --accent-ink: var(--ink-19); }
+  #day20 { --accent: var(--acc-20); --accent-ink: var(--ink-20); }
+  #day21 { --accent: var(--acc-21); --accent-ink: var(--ink-21); }
 
   .card {
     background: var(--card);
@@ -514,7 +537,7 @@
     font-size: 12px;
     font-weight: 700;
     letter-spacing: -.02em;
-    color: var(--accent, var(--plum));
+    color: var(--accent-ink, var(--accent, var(--plum)));
     padding-top: 3px;
   }
   ol.script .said {
@@ -595,9 +618,9 @@
       --go-ink: #8ad6b2;
       --shadow: 0 2px 10px rgba(0,0,0,.45);
     }
-    #day19 { --accent: #ff9440; }
-    #day20 { --accent: #ddbc68; }
-    #day21 { --accent: #b78ce8; }
+    #day19 { --accent: #ff9440; --accent-ink: #ff9440; }
+    #day20 { --accent: #ddbc68; --accent-ink: #ddbc68; }
+    #day21 { --accent: #b78ce8; --accent-ink: #b78ce8; }
     .tag.accent { color: #171221; }
     .pri li::before { color: #171221; }
 
@@ -615,9 +638,9 @@
     /* webs and spider are drawn black, so flip them to silver on dark cards */
     #day19 .card::before, #day21 .card::before { filter: invert(1); opacity: .16; }
     #day19 .day-head::before, #day21 .day-head::before { filter: invert(1); opacity: .5; }
-    body[data-day="19"] { --chrome: #5c2909; }
-    body[data-day="20"] { --chrome: #453610; }
-    body[data-day="21"] { --chrome: #351c55; }
+    body[data-day="19"] { --chrome: #8a3f0d; }
+    body[data-day="20"] { --chrome: #6b5218; }
+    body[data-day="21"] { --chrome: #533080; }
     header .ridge { opacity: .26; }
   }
 
@@ -1097,9 +1120,9 @@
   // ---- palette follows the calendar ----
   // must stay in sync with --chrome-NN in the stylesheet, light then dark
   var CHROME = {
-    "19": ["#7c3a0e", "#5c2909"],
-    "20": ["#5f4a16", "#453610"],
-    "21": ["#4a2874", "#351c55"]
+    "19": ["#b05412", "#8a3f0d"],
+    "20": ["#8a6a1c", "#6b5218"],
+    "21": ["#6b3fa0", "#533080"]
   };
 
   function setChromeMeta(day) {
