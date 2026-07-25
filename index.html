@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#3d2352">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171221">
+<meta name="theme-color" id="tc-light" media="(prefers-color-scheme: light)" content="#3d2352">
+<meta name="theme-color" id="tc-dark" media="(prefers-color-scheme: dark)" content="#171221">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -35,7 +35,18 @@
     --go-bg: #d9efe4;
     --go-ink: #1c6b52;
     --shadow: 0 2px 10px rgba(45,30,55,.08);
+    --spark: #e9b676;
+    --chrome-19: #1a5c4c;
+    --chrome-20: #8f3714;
+    --chrome-21: #553184;
   }
+
+  /* ---- Trip phase: the palette moves with the calendar ---- */
+  body[data-trip="pre"]       { --spark: #cfa06a; --wash: #6b7a99; --wash-o: .42; }
+  body[data-trip="trip"]      { --spark: #ffd9a3; --wash: #ffb347; --wash-o: .16; }
+  body[data-trip="halloween"] { --spark: #ffb057; --wash: #ff6a00; --wash-o: .34;
+                                --paper: #fbf2e6; --plum-deep: #4a2414; --plum: #9c4a1e; }
+  body[data-trip="post"]      { --spark: #c9bcd4; --wash: #5a5462; --wash-o: .46; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; }
 
@@ -63,41 +74,116 @@
     padding: 26px 20px 22px;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
     transition: background 1.5s ease;
+  }
+  header .hd-inner { position: relative; z-index: 4; }
+  header::after {
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 3px;
+    z-index: 5;
+    background: var(--chrome, transparent);
+    transition: background .55s ease;
   }
   body[data-phase="dawn"]  { --sky-a: #472a4f; --sky-b: #b0574a; }
   body[data-phase="day"]   { --sky-a: #2e4a8f; --sky-b: #5b7fc7; }
   body[data-phase="dusk"]  { --sky-a: #3d2352; --sky-b: #c2622e; }
   body[data-phase="night"] { --sky-a: #191129; --sky-b: #3d2352; }
-  header .moon {
-    position: absolute;
-    top: -30px; right: -20px;
-    width: 130px; height: 130px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(217,118,19,.55), rgba(217,118,19,0) 70%);
-    pointer-events: none;
+
+  /* horizon glow */
+  header .glow {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 68%;
+    z-index: 0; pointer-events: none;
+    background: radial-gradient(130% 100% at 76% 100%, var(--glow-c, rgba(217,118,19,.28)), transparent 72%);
     transition: background 1.5s ease;
   }
-  body[data-phase="day"] header .moon {
-    background: radial-gradient(circle at 35% 35%, rgba(255,224,130,.75), rgba(255,224,130,0) 70%);
+  body[data-phase="dawn"]  header .glow { --glow-c: rgba(255,152,112,.38); }
+  body[data-phase="day"]   header .glow { --glow-c: rgba(255,255,255,.18); }
+  body[data-phase="dusk"]  header .glow { --glow-c: rgba(255,128,48,.44); }
+  body[data-phase="night"] header .glow { --glow-c: rgba(96,74,168,.40); }
+
+  /* sun / moon, with a real terminator */
+  header .orb {
+    position: absolute;
+    top: 16px; right: 24px;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    z-index: 1; pointer-events: none;
+    overflow: hidden;
+    background: var(--orb-face, #e8e2f5);
+    box-shadow: 0 0 32px 10px var(--orb-glow, rgba(214,222,255,.34));
+    transition: background 1.5s ease, box-shadow 1.5s ease;
   }
-  body[data-phase="night"] header .moon {
-    background: radial-gradient(circle at 35% 35%, rgba(214,222,255,.5), rgba(214,222,255,0) 70%);
+  header .orb-shade {
+    position: absolute; inset: -1px;
+    border-radius: 50%;
+    background: var(--sky-a, #3d2352);
+    transform: translateX(var(--moon-dx, -60%));
+    transition: transform 1.5s ease, background 1.5s ease, opacity 1.2s ease;
   }
-  header .stars {
+  body[data-phase="dawn"]  header .orb { --orb-face: #ffd2a8; --orb-glow: rgba(255,190,140,.44); }
+  body[data-phase="day"]   header .orb { --orb-face: #ffe08a; --orb-glow: rgba(255,224,138,.50); }
+  body[data-phase="dusk"]  header .orb { --orb-face: #ffcf9a; --orb-glow: rgba(255,160,90,.40); }
+  body[data-phase="night"] header .orb { --orb-face: #e6ebff; --orb-glow: rgba(200,214,255,.40); }
+  body[data-phase="dawn"] header .orb-shade,
+  body[data-phase="day"]  header .orb-shade { opacity: 0; }
+  body[data-phase="dusk"] header .orb-shade { opacity: .8; }
+
+  /* castle watermark */
+  header .ridge {
+    position: absolute;
+    right: 16px; top: 78px;
+    width: 106px; height: 58px;
+    z-index: 2; pointer-events: none;
+    fill: #000;
+    opacity: .17;
+  }
+  body[data-phase="day"] header .ridge { opacity: .13; }
+
+  /* season wash, blended over the sky */
+  header .wash {
     position: absolute; inset: 0;
-    pointer-events: none;
+    z-index: 3; pointer-events: none;
+    background: var(--wash, transparent);
+    opacity: var(--wash-o, 0);
+    mix-blend-mode: soft-light;
+    transition: opacity 1.5s ease, background 1.5s ease;
+  }
+
+  header .stars, header .stars-b {
+    position: absolute; inset: 0;
+    z-index: 0; pointer-events: none;
     opacity: 0;
     transition: opacity 1.5s ease;
+  }
+  header .stars {
     background-image:
       radial-gradient(1.5px 1.5px at 12% 30%, #fff, transparent),
       radial-gradient(1px 1px at 34% 15%, #fff, transparent),
       radial-gradient(1.5px 1.5px at 55% 45%, #ffe9c9, transparent),
       radial-gradient(1px 1px at 72% 22%, #fff, transparent),
       radial-gradient(1px 1px at 88% 55%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 25% 65%, #fff, transparent);
+      radial-gradient(1.5px 1.5px at 25% 65%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 63% 12%, #fff, transparent),
+      radial-gradient(1px 1px at 8% 58%, #ffe9c9, transparent),
+      radial-gradient(1.5px 1.5px at 44% 72%, #fff, transparent);
   }
-  body[data-phase="night"] header .stars { opacity: .8; }
+  header .stars-b {
+    background-image:
+      radial-gradient(1px 1px at 19% 44%, #cdd8ff, transparent),
+      radial-gradient(1px 1px at 41% 28%, #fff, transparent),
+      radial-gradient(1px 1px at 58% 62%, #cdd8ff, transparent),
+      radial-gradient(1px 1px at 79% 38%, #fff, transparent),
+      radial-gradient(1px 1px at 92% 18%, #ffe9c9, transparent),
+      radial-gradient(1px 1px at 30% 8%, #fff, transparent),
+      radial-gradient(1px 1px at 68% 78%, #cdd8ff, transparent),
+      radial-gradient(1px 1px at 51% 20%, #fff, transparent);
+  }
+  body[data-phase="dusk"]  header .stars { opacity: .3; }
+  body[data-phase="night"] header .stars { opacity: .85; }
+  body[data-phase="night"] header .stars-b { opacity: .5; }
 
   .countdown {
     margin-top: 14px;
@@ -117,18 +203,18 @@
     color: rgba(255,255,255,.85);
     margin-top: 2px;
   }
-  .countdown .small .time { font-size: 13px; color: #ffd9a3; }
+  .countdown .small .time { font-size: 13px; color: var(--spark); }
 
   nav a.today {
-    color: #ffd9a3;
-    border-bottom-color: var(--pumpkin);
+    color: var(--spark);
+    border-bottom-color: var(--spark);
   }
   nav a.today .d::after {
     content: "";
     display: inline-block;
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--pumpkin);
+    background: var(--spark);
     margin-left: 4px;
     vertical-align: middle;
   }
@@ -136,8 +222,9 @@
     font-size: 12px;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: #e9b676;
+    color: var(--spark);
     font-weight: 600;
+    transition: color .8s ease;
   }
   header h1 {
     font-size: 30px;
@@ -156,9 +243,13 @@
     top: 0;
     z-index: 20;
     display: flex;
-    background: var(--plum-deep);
+    background: var(--chrome, var(--plum-deep));
     box-shadow: var(--shadow);
+    transition: background .55s ease;
   }
+  body[data-day="19"] { --chrome: var(--chrome-19); }
+  body[data-day="20"] { --chrome: var(--chrome-20); }
+  body[data-day="21"] { --chrome: var(--chrome-21); }
   nav a {
     flex: 1;
     text-align: center;
@@ -292,6 +383,27 @@
     color: var(--callout-ink);
   }
   .callout.plum { border-left-color: var(--plum); background: var(--callout-plum-bg); color: var(--callout-plum-ink); }
+  .callout.go { border-left-color: var(--teal); background: var(--go-bg); color: var(--go-ink); }
+
+  /* ---- Opening script timeline ---- */
+  ol.script { list-style: none; }
+  ol.script li {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  ol.script li:last-child { border-bottom: none; }
+  ol.script .t {
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--accent, var(--plum));
+    padding-top: 3px;
+  }
 
   /* ---- Reference collapsibles ---- */
   details.card { padding: 0; overflow: hidden; }
@@ -366,6 +478,18 @@
     #day21 { --accent: #a37ede; }
     .tag.accent { color: #171221; }
     .pri li::before { color: #171221; }
+
+    /* trip phase, dark variants — these must sit after :root to win on specificity */
+    body[data-trip="pre"]       { --spark: #b98f5f; --wash: #46527a; --wash-o: .40; }
+    body[data-trip="trip"]      { --spark: #ffd9a3; --wash: #ff9f2e; --wash-o: .14; }
+    body[data-trip="halloween"] { --spark: #ff9d3d; --wash: #ff5c00; --wash-o: .30;
+                                  --paper: #1c1420; --card: #271b2a; --line: #40303f;
+                                  --hairline: #362737; --plum-deep: #40200f; --plum: #e08a4a; }
+    body[data-trip="post"]      { --spark: #a99cb5; --wash: #3b3548; --wash-o: .42; }
+    body[data-day="19"] { --chrome: #123f34; }
+    body[data-day="20"] { --chrome: #6b2a0f; }
+    body[data-day="21"] { --chrome: #3d2461; }
+    header .ridge { opacity: .26; }
   }
 
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
@@ -375,14 +499,32 @@
 <body>
 
 <header>
-  <div class="moon"></div>
+  <div class="glow"></div>
   <div class="stars"></div>
-  <div class="eyebrow" id="greeting">Halloween Time · California</div>
-  <h1 class="display">Disneyland<br>Trip Guide</h1>
-  <div class="sub">August 18&ndash;22, 2026 · party of 4 · land late 8/18</div>
-  <div class="countdown" id="countdown" hidden>
-    <div class="big" id="cd-big"></div>
-    <div class="small" id="cd-small"></div>
+  <div class="stars-b"></div>
+  <div class="orb" id="orb"><div class="orb-shade"></div></div>
+  <svg class="ridge" viewBox="0 0 220 120" aria-hidden="true" focusable="false">
+    <g>
+      <rect x="0" y="104" width="220" height="16"/>
+      <rect x="46" y="76" width="128" height="32"/>
+      <rect x="58" y="52" width="16" height="56"/><polygon points="58,52 66,26 74,52"/>
+      <rect x="146" y="52" width="16" height="56"/><polygon points="146,52 154,26 162,52"/>
+      <rect x="84" y="40" width="18" height="68"/><polygon points="84,40 93,10 102,40"/>
+      <rect x="118" y="44" width="16" height="64"/><polygon points="118,44 126,16 134,44"/>
+      <rect x="101" y="24" width="20" height="84"/><polygon points="101,24 111,0 121,24"/>
+      <rect x="22" y="88" width="12" height="20"/><polygon points="22,88 28,72 34,88"/>
+      <rect x="188" y="88" width="12" height="20"/><polygon points="188,88 194,72 200,88"/>
+    </g>
+  </svg>
+  <div class="wash"></div>
+  <div class="hd-inner">
+    <div class="eyebrow" id="greeting">Anaheim · California</div>
+    <h1 class="display">Disneyland<br>Trip Guide</h1>
+    <div class="sub">August 18&ndash;22, 2026 · party of 4 · land late 8/18</div>
+    <div class="countdown" id="countdown" hidden>
+      <div class="big" id="cd-big"></div>
+      <div class="small" id="cd-small"></div>
+    </div>
   </div>
 </header>
 
@@ -403,22 +545,47 @@
     </div>
 
     <div class="card">
-      <span class="tag go">Open to full close</span>
+      <span class="tag go">Full hours, no party</span>
       <ul class="list">
-        <li>Not an Oogie Boogie Bash night, so the park stays open normal hours (no 6pm cutoff).</li>
-        <li>Halloween d&eacute;cor is already up. Cars Land becomes <strong>"Radiator Screams"</strong> after dark.</li>
-        <li><strong>World of Color &ndash; ONE</strong> runs at night. Worth staying for.</li>
+        <li><strong>Not an Oogie Boogie Bash night.</strong> Confirmed &mdash; the August parties are 8/18, 8/20, 8/23, 8/25, 8/27, 8/30. Normal hours, no 6pm cutoff.</li>
+        <li><strong>World of Color &ndash; ONE</strong> took over from Happiness on 8/10, so it's running. Worth staying for.</li>
       </ul>
+      <div class="callout">Halloween Time doesn't officially start until <strong>8/21</strong>. Cars Land's Haul-O-Ween overlay probably isn't up yet today. See <strong>What you'll miss</strong> in Info.</div>
+    </div>
+
+    <div class="card">
+      <span class="tag accent">First 120 minutes</span>
+      <h3>Opening script</h3>
+      <ol class="script">
+        <li><span class="t">T&minus;30</span><span>At the DCA turnstiles. <strong>Early Entry ended in 2026</strong>, so nobody gets in ahead of you. Thirty minutes early genuinely puts you near the front.</span></li>
+        <li><span class="t">Scan in</span><span>Book <strong>Guardians of the Galaxy: Mission Breakout</strong> immediately. Highest-demand Multi Pass ride in this park, so its window lands furthest out, which is exactly where the pass earns its money.</span></li>
+        <li><span class="t">Open</span><span>Cars Land for <strong>Radiator Springs Racers</strong> standby &mdash; but read the next card first, the numbers argue against it.</span></li>
+        <li><span class="t">+45</span><span><strong>Luigi's Rollickin' Roadsters</strong> and <strong>Mater's Junkyard Jamboree</strong> while you're there. Neither has a Lightning Lane, so early standby is the only cheap way on.</span></li>
+        <li><span class="t">+120</span><span>Rebook unlocks whether or not you've ridden Guardians yet. Take <strong>WEB SLINGERS</strong>, then <strong>Toy Story Midway Mania</strong>.</span></li>
+      </ol>
+      <div class="callout plum">Answering your question directly: <strong>yes, book a Lightning Lane at scan-in and rope drop something else</strong> &mdash; but rope drop a ride with <em>no</em> Lightning Lane, not the second-most-popular one. You can always buy your way onto the LL rides later. You can't onto the others.</div>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">Single Pass, not Multi Pass</span>
+      <h3>Radiator Springs Racers &mdash; pick one</h3>
+      <ul class="list">
+        <li><strong>Rope drop standby.</strong> Your call so far. Honest number: 2026 tracking puts the <span class="time">8 am</span> average at <strong>101 min</strong>, because the entire park sprints to Cars Land at open. Rope drop is not a shortcut here.</li>
+        <li><strong>Single rider.</strong> Over spring 2026, standby averaged 100 min while single rider ran <strong>20&ndash;30</strong>. Splits the four of you across cars, though it often reseats groups together.</li>
+        <li><strong>Single Pass.</strong> Roughly $10&ndash;25 per person on top of the Multi Pass. Decide day-of once you see the posted wait.</li>
+      </ul>
+      <div class="callout">Worst hour is <span class="time">11 am</span> at 115 min. Best daytime dip is <span class="time">3 pm</span> at 88. Best overall is <span class="time">9 pm</span> at 68, but that's World of Color.</div>
     </div>
 
     <div class="card">
       <h3>Multi Pass priority</h3>
       <ol class="pri">
-        <li><strong>Radiator Springs Racers</strong> &mdash; book first, longest standby by far.</li>
-        <li><strong>Guardians of the Galaxy: Mission Breakout</strong></li>
-        <li><strong>Incredicoaster</strong></li>
+        <li><strong>Guardians of the Galaxy: Mission Breakout</strong> &mdash; book at scan-in.</li>
+        <li><strong>WEB SLINGERS</strong></li>
+        <li><strong>Toy Story Midway Mania</strong></li>
+        <li><strong>Incredicoaster</strong>, then <strong>Soarin' Across America</strong></li>
       </ol>
-      <div class="callout">Book Racers the second you tap through the gate. Its return window pushes hours out fast.</div>
+      <div class="callout plum"><strong>Racers is not on Multi Pass.</strong> It's Single Pass, sold separately, same as Rise of the Resistance. Don't go hunting for it in the list.</div>
     </div>
 
     <div class="card">
@@ -461,27 +628,55 @@
     <div class="card">
       <span class="tag warn">Expect it packed</span>
       <ul class="list">
-        <li>DCA closes to regular guests at <strong>6pm</strong> for the party tonight, so crowds shift here.</li>
-        <li><strong>Haunted Mansion likely closed</strong> today (Holiday overlay install). You get it tomorrow.</li>
+        <li><strong>Oogie Boogie Bash night</strong> (confirmed). DCA clears out for the party at <strong>6pm</strong>, so that crowd lands over here.</li>
+        <li><strong>Haunted Mansion is closed</strong> today &mdash; confirmed refurb, 8/8 through 8/20. It reopens tomorrow as Holiday.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag accent">First 120 minutes</span>
+      <h3>Opening script &middot; Batuu morning</h3>
+      <ol class="script">
+        <li><span class="t">T&minus;30</span><span>At the Disneyland turnstiles.</span></li>
+        <li><span class="t">Scan in</span><span>Book <strong>Indiana Jones Adventure</strong>. Don't spend the pick on Haunted Mansion, it's down today.</span></li>
+        <li><span class="t">Open</span><span>Straight to <strong>Galaxy's Edge</strong>. <strong>Rise of the Resistance</strong> standby is the free way to settle that open question &mdash; roughly 40&ndash;70 min at open against 90&ndash;120 by midday.</span></li>
+        <li><span class="t">+60</span><span><strong>Millennium Falcon: Smugglers Run</strong> standby if it's under 30. Otherwise skip it, it's on Multi Pass and you can book it later.</span></li>
+        <li><span class="t">+120</span><span>Rebook. <strong>Space Mountain</strong>, then <strong>Big Thunder</strong>.</span></li>
+        <li><span class="t">10:30</span><span><strong>Docking Bay 7</strong> opens. Cold brew, $5.99.</span></li>
+      </ol>
+      <div class="callout">Staying put in Batuu until Docking Bay 7 opens keeps the whole morning in one corner of the park. Droid Depot and Oga's are both right there.</div>
+    </div>
+
+    <div class="card">
+      <h3>The Batuu block</h3>
+      <ul class="list">
+        <li><strong>Docking Bay 7</strong> &middot; opens <span class="time">10:30 am</span>, breakfast service isn't running so there's no rope-drop cold brew. Runs to <span class="time">8:30 pm</span>. You'll be back tomorrow anyway.</li>
+        <li><strong>Droid Depot</strong> &middot; <strong>walk-up only</strong>, reservations ended March 2025. ~$119 + tax. Go while it's quiet, it backs up in the afternoon.</li>
+        <li><strong>Oga's Cantina</strong> &middot; <strong>walk-up only</strong>, reservations ended Aug 2025. Standby queue, <strong>45 min</strong> per party, mostly standing, and you may share a table.</li>
+      </ul>
+      <div class="callout plum">Nothing here is bookable anymore, which is freeing &mdash; just check the Oga's queue every time you pass through Batuu and duck in when it's short. Demand there has dropped noticeably since reservations went away.</div>
     </div>
 
     <div class="card">
       <h3>Game plan</h3>
       <ul class="list">
-        <li>Start churning Lightning Lane bookings the moment you scan in. No need to ration anything.</li>
+        <li>Batuu in the morning, then work back toward Fantasyland and Tomorrowland through the afternoon.</li>
         <li>Split the headliners between today and tomorrow rather than cramming them into one day.</li>
         <li>Evening belongs to the shows. Don't count on riding much after <span class="time">8 pm</span>.</li>
       </ul>
     </div>
 
     <div class="card">
+      <span class="tag go">New booking</span>
       <h3>Dinner &mdash; booked</h3>
-      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">5:10 pm</span> &middot; Caf&eacute; Orleans</div>
+      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">4:00 pm</span> &middot; Blue Bayou</div>
       <ul class="list">
-        <li>New Orleans Square, right next to Blue Bayou. Vegetarian triple-cheese Monte Cristo is the pick.</li>
-        <li>Out around <span class="time">6:30</span>. Best-timed meal of the trip.</li>
+        <li>The one you actually wanted. Inside Pirates, permanent dusk, fireflies over the water.</li>
+        <li>Caf&eacute; Orleans <span class="time">5:10</span> is <strong>canceled</strong>.</li>
+        <li>Vegetarian holds up: pistachio lemon basil pasta (~$29) and the heirloom tomato &amp; watermelon salad (~$15) are on the current menu.</li>
+        <li>Out around <span class="time">5:30</span>, which beats the 5:10 slot &mdash; the whole evening is clear before you camp.</li>
       </ul>
+      <div class="callout">Don't let a return window sit unused during the <span class="time">4:00&ndash;5:30</span> block. The 120-minute rebook clock keeps running while you're seated, so you'll be free to book again the moment you stand up.</div>
     </div>
 
     <div class="card">
@@ -504,22 +699,49 @@
     </div>
 
     <div class="card">
-      <span class="tag accent">Halloween Time opening day</span>
+      <span class="tag accent">Day one of Halloween Time</span>
       <ul class="list">
-        <li>Main Street pumpkins go up, and <strong>Haunted Mansion Holiday</strong> opens with Jack Skellington.</li>
-        <li>Busiest of your three days (Friday + opening day + locals). <strong>Lean on Multi Pass hard.</strong></li>
+        <li><strong>Halloween Time runs 8/21 to 10/31</strong> (confirmed). Today is the first day of it &mdash; you caught the changeover by one day.</li>
+        <li><strong>Haunted Mansion Holiday</strong> reopens this morning after the 8/8&ndash;8/20 refurb, with Jack Skellington and a new gingerbread house in the ballroom.</li>
+        <li>Busiest of your three days: Friday, opening day, and locals. <strong>Lean on Multi Pass hard.</strong></li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>Headliner blitz order</h3>
+      <span class="tag accent">First 120 minutes</span>
+      <h3>Opening script</h3>
+      <ol class="script">
+        <li><span class="t">T&minus;30</span><span>At the Disneyland turnstiles. Busiest morning of the trip, so this is the day being early actually pays.</span></li>
+        <li><span class="t">Scan in</span><span>Book <strong>Haunted Mansion Holiday</strong>. Reopening day plus opening day of the season &mdash; it will drain faster than anything else in the park. The one genuinely obvious first pick of the trip.</span></li>
+        <li><span class="t">Open</span><span><strong>Fantasyland</strong>, and go to <strong>Peter Pan's Flight</strong> first. No Lightning Lane at all, and it goes from 10 minutes to an hour inside the first hour.</span></li>
+        <li><span class="t">+30</span><span><strong>Alice in Wonderland</strong>, <strong>Snow White's Enchanted Wish</strong>, <strong>Mr. Toad</strong>. Almost nothing in Fantasyland has a Lightning Lane, which is exactly why it deserves your rope drop.</span></li>
+        <li><span class="t">+120</span><span>Rebook. <strong>Space Mountain</strong>, then <strong>Big Thunder</strong>.</span></li>
+      </ol>
+      <div class="callout">Deliberately a different rope drop from yesterday. Batuu got Thursday morning, Fantasyland gets Friday, and neither day repeats the other.</div>
+    </div>
+
+    <div class="card">
+      <h3>Multi Pass priority</h3>
       <ol class="pri">
-        <li><strong>Haunted Mansion Holiday</strong> &mdash; opening-day line will be long, grab a Lightning Lane early.</li>
+        <li><strong>Haunted Mansion Holiday</strong> &mdash; at scan-in, no debate.</li>
         <li><strong>Space Mountain</strong></li>
         <li><strong>Big Thunder Mountain</strong></li>
-        <li>Then chain the rest (see churn tip in Info).</li>
+        <li><strong>Indiana Jones</strong>, <strong>Matterhorn</strong>, <strong>Runaway Railway</strong>, <strong>Roger Rabbit</strong></li>
+        <li>Then chain the rest (see the churn tip in Info).</li>
       </ol>
-      <div class="callout plum"><strong>Rise of the Resistance</strong> is NOT on Multi Pass. It's a separate paid <strong>Single Pass</strong> (~$20&ndash;25/person) if it's a must-do.</div>
+      <div class="callout plum">If you skipped <strong>Rise of the Resistance</strong> standby yesterday, today's the fallback &mdash; but it's Friday opening day, so expect the worst waits of the trip. Single Pass is ~$20&ndash;25/person.</div>
+    </div>
+
+    <div class="card">
+      <span class="tag warn">Tentative</span>
+      <h3>Lunch &mdash; held, undecided</h3>
+      <div style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">1:20 pm</span> &middot; Blue Bayou</div>
+      <ul class="list">
+        <li>Held in case you want a second run at it. Blue Bayou runs one combined lunch/dinner menu, so the early slot isn't a downgrade.</li>
+        <li>The tradeoff is two table-service meals in one day, with River Belle at <span class="time">6:10</span>.</li>
+        <li><strong>Decide by Thursday.</strong> Whichever you drop has to be canceled <strong>1+ day ahead</strong> or there's a per-person no-show fee.</li>
+      </ul>
+      <div class="callout">A 1:20 lunch also parks you in New Orleans Square mid-afternoon, which is the right side of the park for Haunted Mansion Holiday and Pirates.</div>
     </div>
 
     <div class="card">
@@ -528,7 +750,7 @@
       <ul class="list">
         <li>Frontierland, overlooking the Rivers of America. Vegetarian options on the Southern menu.</li>
         <li>Out around <span class="time">7:30&ndash;7:45</span>.</li>
-        <li><strong>Book Multi Pass return windows around the 6:10&ndash;7:45 block</strong> so you're not holding a slot while seated.</li>
+        <li>Keep return windows clear of the <span class="time">6:10&ndash;7:45</span> block so none expires while you're seated.</li>
       </ul>
     </div>
 
@@ -538,7 +760,7 @@
       <ul class="list">
         <li>Runs roughly <span class="time">9:00&ndash;9:30 pm</span>. Confirm the time in the app that morning.</li>
         <li>Projections hit the castle, Main Street, small world, and the Rivers of America. <strong>Castle-adjacent is the spot.</strong></li>
-        <li>Fireworks on select nights, usually weekends. Friday opening night is a good bet.</li>
+        <li><strong>You get the fireworks version.</strong> Weeknights are projections and effects only; weekend nights add pyro. Friday counts.</li>
       </ul>
       <div class="callout">Opening night + Friday = the heaviest crowd of your trip. Don't count on watching from the restaurant, River Belle closes around 9pm.</div>
     </div>
@@ -552,10 +774,14 @@
     <div class="body">
       <ul class="list">
         <li><strong>Return window</strong> = the 1-hour arrival slot the app gives you (e.g. "come 2:40&ndash;3:40"). Not whenever you want.</li>
-        <li><strong>The churn rule:</strong> you can only hold one booking at a time. Can't book the next until you either use the current one or 2 hours pass.</li>
-        <li><strong>Keep the wheel spinning:</strong> between headliners, book quick-loading rides (Pirates, Little Mermaid) whose window is often "right now." Ride it, and it instantly unlocks your next booking.</li>
-        <li><strong>Book at entry:</strong> you must be scanned into the park to book. Grab your first pick while walking in.</li>
+        <li><strong>You don't get to pick it.</strong> Unlike mobile order, there's no menu of times. You take the next available window for that ride, whatever it happens to be.</li>
+        <li><strong>Which is why you book the busiest ride first.</strong> Its next-available is furthest out, and a far window is precisely where the pass saves you an hour instead of ten minutes.</li>
+        <li><strong>The churn rule:</strong> one booking at a time. The next unlocks <strong>120 minutes after you booked</strong>, or the second you tap into the ride, whichever comes first. So a distant window never costs you a rebook.</li>
+        <li><strong>Rope drop what has no Lightning Lane.</strong> Peter Pan, Alice, Snow White, Mr. Toad, Pirates, Luigi's, Mater's &mdash; none are on Multi Pass, so early standby is the only cheap way on. Everything else you can buy into later.</li>
+        <li><strong>Keep the wheel spinning:</strong> between headliners, book quick-loaders whose window is often "right now" &mdash; Buzz Lightyear, Star Tours, small world, Autopia at DL; Little Mermaid, Monsters Inc., Goofy's Sky School at DCA. Ride it and your next booking unlocks instantly.</li>
+        <li><strong>Book at entry:</strong> you must be scanned into the park. No 7am head start &mdash; that's Florida.</li>
         <li><strong>Modify, don't cancel:</strong> refresh the "modify" screen to snag earlier return times without losing your slot.</li>
+        <li><strong>Two Single Pass rides,</strong> sold separately and not included: <strong>Rise of the Resistance</strong> (DL) and <strong>Radiator Springs Racers</strong> (DCA).</li>
         <li><strong>One purchase covers both parks</strong> at Disneyland Resort.</li>
       </ul>
     </div>
@@ -565,10 +791,47 @@
     <summary><span><span class="ic">&#127869;</span>Dining at a glance</span></summary>
     <div class="body">
       <div class="kv"><span class="k">Wed 8/19 &middot; DCA</span><span class="v">Lamplight Lounge<br>6:20 pm</span></div>
-      <div class="kv"><span class="k">Thu 8/20 &middot; DL</span><span class="v">Caf&eacute; Orleans<br>5:10 pm</span></div>
-      <div class="kv"><span class="k">Fri 8/21 &middot; DL</span><span class="v">River Belle Terrace<br>6:10 pm</span></div>
-      <div class="callout plum" style="margin-top:14px;"><strong>Blue Bayou watch.</strong> Still the best-themed meal at the resort. Refresh the app for 8/20 or 8/21 &mdash; cancellations appear <strong>24&ndash;48 hrs out</strong> and the morning of. Try odd times (11:00&ndash;11:30, 2:30&ndash;3:30) and smaller party sizes. Join the walk-up waitlist in the app on the day. If one opens, drop whichever DL dinner it replaces.</div>
-      <div class="callout">Cancel <strong>1+ day ahead</strong> if plans change. There's a per-person no-show fee on all three.</div>
+      <div class="kv"><span class="k">Thu 8/20 &middot; DL</span><span class="v">Blue Bayou<br>4:00 pm</span></div>
+      <div class="kv"><span class="k">Fri 8/21 &middot; DL &middot; lunch</span><span class="v">Blue Bayou<br>1:20 pm &middot; tentative</span></div>
+      <div class="kv"><span class="k">Fri 8/21 &middot; DL &middot; dinner</span><span class="v">River Belle Terrace<br>6:10 pm</span></div>
+      <div class="callout go" style="margin-top:14px;"><strong>Blue Bayou landed.</strong> Twice. Caf&eacute; Orleans on 8/20 is canceled.</div>
+      <div class="callout plum"><strong>The Friday call.</strong> Blue Bayou lunch and River Belle dinner are both held for 8/21. If you only want one, cancel the other <strong>by Thursday</strong> &mdash; 1+ day ahead, or there's a per-person no-show fee.</div>
+      <div class="callout"><strong>Not bookable, don't try:</strong> Oga's Cantina and Droid Depot both dropped reservations entirely (Aug 2025 and Mar 2025). Walk-up only now.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#128760;</span>Galaxy's Edge</span></summary>
+    <div class="body">
+      <div class="kv"><span class="k">Docking Bay 7 cold brew</span><span class="v">$5.99</span></div>
+      <div class="kv"><span class="k">Docking Bay 7 hours</span><span class="v">10:30 am &ndash; 8:30 pm</span></div>
+      <div class="kv"><span class="k">Build a droid</span><span class="v">~$119 + tax</span></div>
+      <div class="kv"><span class="k">Oga's time limit</span><span class="v">45 min per party</span></div>
+      <ul class="list" style="margin-top:12px;">
+        <li><strong>Everything here is walk-up now.</strong> Oga's dropped reservations Aug 2025, Droid Depot dropped them Mar 2025. Nothing to book, nothing to forget.</li>
+        <li><strong>No rope-drop cold brew.</strong> Docking Bay 7 breakfast service isn't running, so the earliest coffee is 10:30. Plan the Batuu morning around that.</li>
+        <li><strong>Oga's is standing room</strong> mostly, low light, loud, and separate parties get seated together. Forty-five minutes is plenty.</li>
+        <li><strong>Droid Depot</strong> is one builder plus one guest per droid, and someone in the pair has to be 14+.</li>
+        <li>On Multi Pass in Batuu: <strong>Millennium Falcon: Smugglers Run</strong>. Not on it: <strong>Rise of the Resistance</strong>, which is Single Pass.</li>
+      </ul>
+      <div class="callout">Cold brew both days is the easy part &mdash; Batuu is on the way to plenty. Droid Depot and Oga's are the ones worth doing Thursday, while Friday is fighting opening-day crowds.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span><span class="ic">&#9888;</span>Closures &amp; what you'll miss</span></summary>
+    <div class="body">
+      <ul class="list">
+        <li><strong>Haunted Mansion is closed 8/8&ndash;8/20.</strong> Confirmed refurb. You lose it on 8/20 and get the Holiday version on 8/21, which is the better outcome anyway.</li>
+        <li><strong>Halloween Time starts 8/21</strong>, your last park day. So 8/19 and 8/20 are pre-season &mdash; no Main Street pumpkin, no Haunted Mansion Holiday, no seasonal overlays.</li>
+        <li><strong>Cars Land Haul-O-Ween.</strong> Luigi's Honkin' Haul-O-Ween, Mater's Graveyard JamBOOree, and "Radiator Screams" after dark are Halloween Time offerings. Your DCA day is 8/19. <strong>You'll probably miss all of it.</strong> Décor may be partially up since the parties began 8/18 &mdash; check the app.</li>
+        <li><strong>Guardians: Monsters After Dark</strong> is the same story. Halloween Time, DCA, starts 8/21. You get the regular Mission Breakout on 8/19.</li>
+        <li><strong>Madame Leota's Swinging Wake</strong> is new for 2026 but it's an Oogie Boogie Bash exclusive at DCA, so it's out either way.</li>
+        <li><strong>Silly Symphony Swings</strong> (DCA) has been closed since 4/27 with no reopening date posted.</li>
+        <li><strong>Frontierland Shootin' Exposition</strong> (DL) closed 6/6, no reopening date posted.</li>
+      </ul>
+      <div class="callout plum">The flip side: <strong>8/20 is the last night ever</strong> for Paint the Night and Wondrous Journeys, and <strong>8/21 is day one</strong> of Halloween Time. You land on the exact seam between two seasons. Nobody plans that well.</div>
+      <div class="callout">Refurb calendars move. Recheck a week out &mdash; Disney announces short-notice closures on the app and their blog.</div>
     </div>
   </details>
 
@@ -596,8 +859,12 @@
     <div class="body">
       <div class="kv"><span class="k">Quick service meal</span><span class="v">$18&ndash;25 / person</span></div>
       <div class="kv"><span class="k">Snacks (churro, Dole Whip)</span><span class="v">$6&ndash;9</span></div>
+      <div class="kv"><span class="k">Docking Bay 7 cold brew</span><span class="v">$5.99</span></div>
       <div class="kv"><span class="k">Table service entree</span><span class="v">$25&ndash;45</span></div>
-      <div class="kv"><span class="k">Splurge (Blue Bayou, Oga's)</span><span class="v">$50+ / person</span></div>
+      <div class="kv"><span class="k">Blue Bayou</span><span class="v">$35&ndash;60 / person</span></div>
+      <div class="kv"><span class="k">Oga's drink</span><span class="v">$17&ndash;22</span></div>
+      <div class="kv"><span class="k">Build a droid</span><span class="v">~$119 + tax</span></div>
+      <div class="kv"><span class="k">Racers Single Pass, if you buy</span><span class="v">$10&ndash;25 / person</span></div>
       <div class="kv"><span class="k">Realistic day, 2 adults</span><span class="v">$100&ndash;250</span></div>
       <ul class="list" style="margin-top:12px;">
         <li><strong>Bring your own food + sealed drinks.</strong> Disneyland allows it. Biggest single saver.</li>
@@ -615,11 +882,14 @@
       <ul class="list">
         <li>Tickets + Multi Pass, all 3 days. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
         <li>Park reservations: DCA 8/19, Disneyland 8/20 &amp; 8/21. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
-        <li>Dining, all 3 nights. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
+        <li>Dining. <span style="color:var(--teal);font-weight:700;">Done.</span> Blue Bayou 8/20 4:00 and 8/21 1:20, River Belle 8/21 6:10, Lamplight 8/19 6:20.</li>
         <li>Q3 Freedom Flex bonus activated. <span style="color:var(--teal);font-weight:700;">Done.</span></li>
         <li>All 4 tickets linked in the app, everyone in the same party.</li>
-        <li>Decide on Rise of the Resistance Single Pass (separate purchase).</li>
-        <li>Keep refreshing for Blue Bayou.</li>
+        <li><strong>Decide Friday's meals by Thursday</strong> &mdash; keep both Blue Bayou lunch and River Belle, or cancel one. 1+ day ahead.</li>
+        <li><strong>Rise of the Resistance:</strong> plan is rope drop standby on 8/20. Single Pass (~$20&ndash;25/person) only if that falls through.</li>
+        <li><strong>Radiator Springs Racers:</strong> rope drop standby on 8/19, with single rider and Single Pass as day-of outs.</li>
+        <li>Recheck the refurb calendar a week out.</li>
+        <li>Confirm World of Color and Halloween Screams showtimes in the app each morning.</li>
       </ul>
     </div>
   </details>
@@ -641,29 +911,96 @@
     document.body.setAttribute("data-phase", phase);
   }
 
+  // ---- moon phase, so the orb matches the real sky ----
+  var SYNODIC = 29.530588853;
+  var NEW_MOON = Date.UTC(2000, 0, 6, 18, 14); // reference new moon
+
+  function setMoon(now) {
+    var orb = document.getElementById("orb");
+    if (!orb) return;
+    var days = (now.getTime() - NEW_MOON) / 864e5;
+    var frac = ((days / SYNODIC) % 1 + 1) % 1;          // 0 = new, .5 = full
+    var lit = (1 - Math.cos(2 * Math.PI * frac)) / 2;   // illuminated fraction
+    var dx = (frac < 0.5 ? -1 : 1) * lit * 112;         // waxing lights the right limb
+    orb.style.setProperty("--moon-dx", dx.toFixed(1) + "%");
+  }
+
+  // ---- palette follows the calendar ----
+  var CHROME = {
+    "19": ["#1a5c4c", "#123f34"],
+    "20": ["#8f3714", "#6b2a0f"],
+    "21": ["#553184", "#3d2461"]
+  };
+
+  function setChromeMeta(day) {
+    var pair = CHROME[day] || ["#3d2352", "#171221"];
+    var l = document.getElementById("tc-light");
+    var d = document.getElementById("tc-dark");
+    if (l) l.setAttribute("content", pair[0]);
+    if (d) d.setAttribute("content", pair[1]);
+  }
+
+  // ---- per-day chrome takeover on scroll ----
+  function watchSections() {
+    if (!("IntersectionObserver" in window)) return;
+    var seen = {};
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.id] = e.intersectionRatio; });
+      var best = null, bestRatio = 0;
+      Object.keys(seen).forEach(function (id) {
+        if (seen[id] > bestRatio) { bestRatio = seen[id]; best = id; }
+      });
+      if (best && bestRatio > 0.12) {
+        var day = best.replace("day", "");
+        document.body.setAttribute("data-day", day);
+        setChromeMeta(day);
+      } else {
+        document.body.removeAttribute("data-day");
+        setChromeMeta(null);
+      }
+    }, { threshold: [0, .12, .3, .5, .75, 1] });
+
+    ["day19", "day20", "day21"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+  }
+
   // ---- trip schedule (local device time; you'll be in Pacific) ----
   var TRIP_START = new Date(2026, 7, 18); // Aug 18
   var DAYS = {
-    "2026-08-18": { label: "Travel day", note: "Land, rest up. It starts tomorrow.", nav: null },
-    "2026-08-19": { label: "Day 1 · California Adventure", nav: "day19", events: [
+    "2026-08-18": { label: "Travel day", note: "Land, rest up. It starts tomorrow.", nav: null, greet: "Anaheim · arrival" },
+    "2026-08-19": { label: "Day 1 · California Adventure", nav: "day19", greet: "California Adventure", events: [
+      [7,  15, "Head for the DCA gate, be there by 7:30"],
+      [8,  0,  "Scan in, book Guardians, then Cars Land"],
+      [10, 0,  "Rebook window is open — WEB SLINGERS"],
       [18, 20, "Lamplight Lounge, 6:20 pm"],
       [19, 45, "Cars Land neon comes on around now"],
       [20, 15, "Head toward a World of Color spot"],
       [21, 0,  "World of Color \u2013 ONE (confirm time in app)"]
     ]},
-    "2026-08-20": { label: "Day 2 · Disneyland", nav: "day20", events: [
-      [17, 10, "Caf\u00e9 Orleans, 5:10 pm"],
+    "2026-08-20": { label: "Day 2 · Disneyland", nav: "day20", greet: "Last night of the 70th", events: [
+      [7,  15, "Head for the Disneyland gate"],
+      [8,  0,  "Scan in, book Indiana Jones, then Batuu"],
+      [9,  0,  "Rise of the Resistance standby while it's cheap"],
+      [10, 30, "Docking Bay 7 opens — cold brew"],
+      [16, 0,  "Blue Bayou, 4:00 pm"],
       [19, 30, "Camp on Main Street for the shows"],
       [20, 45, "Paint the Night \u2014 final night"],
       [21, 35, "Wondrous Journeys \u2014 final night"],
       [22, 45, "Paint the Night, second showing"]
     ]},
-    "2026-08-21": { label: "Day 3 · Disneyland", nav: "day21", events: [
+    "2026-08-21": { label: "Day 3 · Disneyland", nav: "day21", greet: "Halloween Time · day one", events: [
+      [7,  15, "Head for the Disneyland gate"],
+      [8,  0,  "Scan in, book Haunted Mansion Holiday"],
+      [8,  15, "Peter Pan first, then the rest of Fantasyland"],
+      [10, 0,  "Rebook window is open — Space Mountain"],
+      [13, 20, "Blue Bayou lunch, 1:20 pm (if you kept it)"],
       [18, 10, "River Belle Terrace, 6:10 pm"],
       [20, 30, "Camp near the castle"],
       [21, 0,  "Halloween Screams debut (confirm time in app)"]
     ]},
-    "2026-08-22": { label: "Last day in Cali", note: "No parks today. Safe travels home.", nav: null }
+    "2026-08-22": { label: "Last day in Cali", note: "No parks today. Safe travels home.", nav: null, greet: "Anaheim · heading home" }
   };
 
   function dayKey(d) {
@@ -675,6 +1012,7 @@
   function update() {
     setPhase();
     var now = new Date();
+    setMoon(now);
     var box = document.getElementById("countdown");
     var big = document.getElementById("cd-big");
     var small = document.getElementById("cd-small");
@@ -686,6 +1024,11 @@
 
     var key = dayKey(now);
     var today = DAYS[key];
+
+    // Halloween Time genuinely starts 8/21, so the page doesn't wear it before then
+    var trip = today ? (key >= "2026-08-21" ? "halloween" : "trip")
+             : (now < TRIP_START ? "pre" : "post");
+    document.body.setAttribute("data-trip", trip);
 
     if (today) {
       // ---- trip mode ----
@@ -705,7 +1048,7 @@
       } else {
         small.textContent = today.note || "";
       }
-      greet.textContent = "Halloween Time \u00b7 Anaheim";
+      greet.textContent = today.greet || "Anaheim";
     } else if (now < TRIP_START) {
       // ---- countdown mode ----
       var midnightNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -720,6 +1063,7 @@
   }
 
   update();
+  watchSections();
   setInterval(update, 60 * 1000);
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden) update();
