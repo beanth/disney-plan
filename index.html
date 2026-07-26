@@ -993,7 +993,7 @@
   <!-- ===================== REFERENCE ===================== -->
   <h2 class="ref-title" id="reference">Reference &amp; Strategy</h2>
 
-  <details class="card" open>
+  <details class="card">
     <summary><span><span class="ic">&#127903;</span>Multi Pass, dejargonified</span></summary>
     <div class="body">
       <ul class="list">
@@ -1451,11 +1451,41 @@
     }
   }
 
+  // ---- reference cards behave as an accordion ----
+  // One open at a time, so the reference list stays scannable on a phone instead of
+  // becoming a mile of prose. Collapsing a card that sits *above* the one you just
+  // tapped pulls the page up under your thumb, so re-anchor the scroll afterwards to
+  // leave the tapped header exactly where your finger left it. html has
+  // scroll-behavior:smooth, which would animate that correction into a visible drift,
+  // so the fix is forced instant.
+  function accordion() {
+    var cards = [].slice.call(document.querySelectorAll("details.card"));
+    var root = document.documentElement;
+    cards.forEach(function (card) {
+      card.addEventListener("toggle", function () {
+        if (!card.open) return;
+        var before = card.getBoundingClientRect().top;
+        var closedAny = false;
+        cards.forEach(function (other) {
+          if (other !== card && other.open) { other.open = false; closedAny = true; }
+        });
+        if (!closedAny) return;
+        var delta = card.getBoundingClientRect().top - before;
+        if (!delta) return;
+        var prev = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto";
+        window.scrollBy(0, delta);
+        root.style.scrollBehavior = prev;
+      });
+    });
+  }
+
   // It's a Halloween trip, so the page wears it by default rather than waiting
   // for the calendar to catch up.
   document.body.setAttribute("data-mood", "halloween");
   update();
   watchSections();
+  accordion();
   setInterval(update, 60 * 1000);
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden) update();
