@@ -65,14 +65,14 @@ downstairs room at check-in, which is the air-conditioned half.
 - **Seventeen rides are out of the plan** (see the "Not in the plan" card).
   Nothing is budgeted for them and nothing depends on them. Mr. Toad is the one
   with a real case if it's posting short.
-- **Thursday's curb: claimed at 6:15, all four planted at 6:45.** These are two
-  different beats and collapsing them breaks the plan. The old single 6:15 plant
-  measured 150 minutes against the 8:45 step-off, but the step-off is at the
-  small world gate — the parade doesn't reach the north end of Main Street until
-  ~9:05 and Wondrous Journeys is 9:30, so 6:45 is 140/165 minutes early, above
-  the 90–120 band, not below it. The half hour is bought by the pair claiming
-  ground at 6:15, ahead of the 6pm Oogie Boogie exodus out of DCA. **Don't
-  "simplify" it back to one time.**
+- **Thursday's curb: all four claim it together at 7:00.** No splitting into
+  pairs — that was tried and rejected. The arithmetic still holds: the 8:45
+  step-off is at the small world gate, so the parade doesn't reach the north end
+  of Main Street until ~9:05 and Wondrous Journeys is 9:30, which makes 7:00
+  125/150 minutes early against normal busy-night guidance of 90–120. The risk
+  is the crowd, not the clock — it's the final night for both shows and Oogie
+  Boogie Bash empties DCA into this park at 6pm — so if it looks brutal on the
+  walk up, go earlier.
 - **Flag Retreat cut** from the Friday loop — 45 minutes of a 180-minute block,
   and a round trip inside a card tagged "no backtracking."
 
