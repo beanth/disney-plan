@@ -26,7 +26,7 @@ context behind it.
 | Thu 8/20 | **2:30** | **Savi's Workshop** |
 | Thu 8/20 | 4:00 | Blue Bayou |
 | Fri 8/21 | 1:20 | Blue Bayou |
-| Fri 8/21 | 6:10 | River Belle Terrace |
+| Fri 8/21 | 5:40 | Carnation Café |
 
 Wine Country Trattoria was **cancelled** — with wine off the table it had three
 spritzes and a courtyard that isn't really air-conditioned. Carthay replaced it:
