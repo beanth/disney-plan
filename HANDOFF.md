@@ -12,8 +12,11 @@ context behind it.
   The guide is written for *one* couple: prices are scoped to two, logistics to
   four.
 - **One vegetarian.**
-- Hotel is 1.3 mi from the gate. You walk it, both ways, every day. Breakfast is
-  included and opens at **7:00** — that pins every morning.
+- Hotel is 1.3 mi from the gate, but you don't walk it: the **Toy Story lot bus**
+  (1854 S. Harbor, ~8 min up the road) runs the last 0.9 mi to the Esplanade,
+  free, no parking required, continuously from an hour before open to an hour
+  after close. Saves ~1.8 mi of walking a day. Breakfast is included and opens at
+  **7:00** — that pins every morning.
 - **Park days: 8/19 DCA, 8/20 and 8/21 Disneyland.**
 
 ## Bookings — all settled
@@ -37,7 +40,8 @@ downstairs room at check-in, which is the air-conditioned half.
 
 ## Galaxy's Edge
 
-- **Savi's: one builder booked, 2:30 on 8/20, $249.99.** Bring the card used at
+- **Savi's: booked, 2:30 on 8/20, $249.99 for your builder.** The other couple's
+  builder is booked into the same slot on their own card. Bring the card used at
   booking — it must be presented, and a no-show charges it in full.
 - **Droid Depot: walk-up, 10:00 on 8/20, $119.99.** Ask for an **R-series**; the
   goal is a **clear dome** (the R3 look), which is a standard part in the
@@ -78,21 +82,19 @@ downstairs room at check-in, which is the air-conditioned half.
 
 ## Open items
 
-1. **The other couple's Savi's builder must land in the same 2:30 slot**, on
-   their own card. Outside our control and the only unresolved booking.
-2. **The Odyssey in IMAX 70mm, 8/22.** Regal Edwards Ontario Palace, ~10 min
+1. **The Odyssey in IMAX 70mm, 8/22.** Regal Edwards Ontario Palace, ~10 min
    from ONT, one of ~25 US venues running 15-perf 70mm. 172 min plus a reported
    extended trailer ≈ 3h15m–3h25m in seat, so it's a morning/early-afternoon
    show against an evening flight. **Seats are the constraint, not the format** —
    as of late July there were no 70mm seats in LA or NY through 19 August and
    resales were reportedly into four figures. Four together, book immediately or
    drop it.
-3. **Decide whether to make the repo private.** It's public with Pages live. The
+2. **Decide whether to make the repo private.** It's public with Pages live. The
    hotel name has been stripped and the page carries `noindex`, but the dates and
    party size are still there, and commit metadata carries a real name and email.
-4. **Check the Halloween Time 2026 foodie guide** the week before — it wasn't
+3. **Check the Halloween Time 2026 foodie guide** the week before — it wasn't
    published as of late July, and Halloween Time opens 8/21, your last park day.
-5. **Confirm showtimes in the app each morning.** Nothing on either Disneyland
+4. **Confirm showtimes in the app each morning.** Nothing on either Disneyland
    night is confirmable a month out.
 
 ## Known limits on the facts
