@@ -63,9 +63,11 @@ downstairs room at check-in, which is the air-conditioned half.
   dinner menu; Friday is drinks-forward on the lunch menu and gets the $34 Monte
   Cristo that Thursday structurally cannot serve (lunch ends 3:55). Don't repeat
   an order across the two.
-- **Oga's moved from 10:00 to 11:30 on Thursday**, so a slow queue eats the
-  block's own slack instead of everything feeding the 2:30 Savi's deadline. Not
-  seated by 10:30 → walk away; Friday night has it again.
+- **Oga's runs last in Batuu, 11:15**, not first, so a slow queue eats the
+  block's own slack instead of everything feeding the 2:30 Savi's deadline. Docking
+  Bay 7 is quick service and only needs half an hour, which is where Oga's hour
+  came from. If the queue is over 20 min on arrival, skip it — Friday night has it
+  again.
 - **Seventeen rides are out of the plan** (see the "Not in the plan" card).
   Nothing is budgeted for them and nothing depends on them. Mr. Toad is the one
   with a real case if it's posting short.
@@ -77,6 +79,27 @@ downstairs room at check-in, which is the air-conditioned half.
   is the crowd, not the clock — it's the final night for both shows and Oogie
   Boogie Bash empties DCA into this park at 6pm — so if it looks brutal on the
   walk up, go earlier.
+- **Friday's 1:20 Blue Bayou is load-bearing — don't move it later.** The 2:45
+  Halloween cavalcade runs small world → Matterhorn → the Hub → Main Street →
+  Town Square, so New Orleans Square is *not* on the route. The Hub is the
+  nearest point at ~8 minutes, and the cavalcade reaches it about 2:55. An 80
+  minute sitting from 1:20 puts you out at 2:40, which just makes it. A 1:40
+  booking puts you out at 3:00 and the cavalcade is finishing at Town Square by
+  then — there is no later catch point. If the table ever moves later, cut the
+  cavalcade in the same edit rather than leaving an instruction that can't be
+  executed.
+- **Carnation Café is on Main Street, and that's why it won.** You walk out of
+  dinner into the Halloween Screams camping spot instead of crossing from
+  Frontierland. Dinner service ends at **7:00** — you're out then whether you're
+  finished or not, which is why the evening claims ground at 7:00 rather than
+  wandering off and returning.
+- **Timings are deliberately two-tier.** Clock times mean something external
+  enforces them (bookings, park opening, the 11:55 queue, the 12:30 Batuu exit,
+  showtimes). Estimated steps show a **duration** in a muted style instead —
+  "~100 min" for Cars Land — because roughly half the old clock times were
+  derived, and a made-up number reads as an appointment you're failing. Each
+  morning carries a *landmarks* line so being on track is still checkable. Don't
+  "helpfully" convert durations back into times.
 - **Flag Retreat cut** from the Friday loop — 45 minutes of a 180-minute block,
   and a round trip inside a card tagged "no backtracking."
 
@@ -119,11 +142,13 @@ Where that standard is strained:
   long time — that a new booking replaces the one you hold. It doesn't: you can
   hold several, and the 120-minute clock gives you a new pass whether or not
   you've ridden. All three mornings now carry a 10:00 "book another" beat.
-- **Two separate timeline bugs came from inserting an event without checking
-  chronological order.** The `DAYS` arrays in the `<script>` block drive the
-  "up next" widget by linear scan, so an out-of-order entry silently hides
-  everything after it — the 2:30 Grizzly alarm never fired for a while because
-  of this. **Always re-verify order after touching `DAYS`.**
+- **Three ordering bugs now, all the same shape: something inserted without
+  checking order.** The `DAYS` arrays drive the "up next" widget by linear scan,
+  so an out-of-order entry silently hides everything after it — the 2:30 Grizzly
+  alarm never fired for a while because of this. The third was a card folding at
+  15:00 while sitting above one that folds at 14:10. **Two invariants to re-check
+  after any edit: `DAYS` events chronological per day, and `data-until`
+  non-decreasing down each day section.**
 - **Deletion passes cost hedges.** Two "not confirmed for 2026" notes were
   removed to make sentences read better, and the pinned-vs-provisional showtime
   distinction was lost with a deleted card. Don't trade a hedge for prose.
@@ -133,3 +158,14 @@ Where that standard is strained:
 `index.html` is the whole product — one file, no build, no dependencies.
 Commit and push straight to `main`; no branches, no PRs. `CLAUDE.md` carries the
 working rules. After August this is a keepsake, not a live document.
+
+The page is more than static text. Day cards **auto-collapse once they're behind
+you**: `prepFolds()` wraps everything below each card's header in a `.fold` div
+at load, cards carry a `data-until` time and fold when it passes, and a whole day
+section collapses to its date header plus a reopen button once the day is over —
+defined as **3am the next morning**, because you're still travelling back when
+the calendar flips. Anything reopened by hand stays open. Cards are ordered
+chronologically so the next live thing is always the next one down.
+
+None of the JS has been exercised in a real browser — there's no automation in
+this environment. It's tested against a DOM shim across eight time points.
