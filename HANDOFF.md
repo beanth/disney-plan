@@ -1,6 +1,6 @@
 # Handoff — Disneyland, Aug 18–22 2026
 
-State of the plan as of 29 July 2026. Everything below is either settled or
+State of the plan as of 4 August 2026. Everything below is either settled or
 explicitly flagged as open. The guide itself is `index.html`; this file is the
 context behind it.
 
@@ -43,18 +43,36 @@ downstairs room at check-in, which is the air-conditioned half.
 - **Savi's: booked, 2:30 on 8/20, $249.99 for your builder.** The other couple's
   builder is booked into the same slot on their own card. Bring the card used at
   booking — it must be presented, and a no-show charges it in full.
-- **Droid Depot: walk-up, 10:00 on 8/20, $119.99.** Ask for an **R-series**; the
-  goal is a **clear dome** (the R3 look), which is a standard part in the
-  rotation. The belt is luck of the draw — put back what you don't want and let
-  it come round. If it never appears, buy a dome over the counter (~$15,
-  unadvertised, ask at the register) and swap the head.
-- **Your share: $369.98 before tax.**
-- **Getting them home:** saber and droid ride in the backpack they come with.
-  Neither goes on Big Thunder; the droid shouldn't get wet. Shipping was
-  rejected at $74.99.
+- **Droid Depot: walk-up, 10:00 on 8/20, $119.99.** Ask for a **BB-series** —
+  R-unit or BB-unit is the first question at the counter and both cost the same.
+  A BB is four parts off the belt (dome, dome connection plate, body sphere,
+  motivator); you assemble it yourself from a placemat diagram. The belt is luck
+  of the draw — put back what you don't want and let it come round. Parts also
+  sell over the counter (~$15, unadvertised, ask at the register), but whether
+  that shelf stocks BB parts as well as R-series ones is unconfirmed.
+- **Your share: $369.98 before tax.** Unchanged by the switch — same price either
+  series.
+- **Getting them home:** each comes with a case, the droid's a cardboard carrying
+  box. The padded Droid Depot backpack is a **separate purchase, reported
+  $49.99**; it has a chain that clips to a BB's magnetic head. Droids may not
+  roll loose in Batuu outside the play area by the shop. Neither goes on Big
+  Thunder; the droid shouldn't get wet. Shipping was rejected at $74.99.
 
 ## Decisions worth not relitigating
 
+- **BB-series over R-series, chosen 4 August, and the clear dome was the price
+  of it.** The R-series pick existed only to get a transparent dome (the R3
+  look); transparent is documented in the *R-series* rotation and the BB colours
+  that get listed are red, blue, purple, orange, white, black and grey, with no
+  clear among them. That's reported, not confirmed — Disney's own pages 403 from
+  this environment — so it's worth one question at the counter, but the guide
+  should not send anyone hunting a part that may not exist. Also given up:
+  bolt-on accessory panels are R-series only. Personality chips work on both.
+  Known BB downsides, all reported: harder to drive, wobbles, rolls best on
+  carpet, magnetic head that can shift, and restarting it means opening it up
+  rather than flicking a switch underneath. **Don't quietly revert this to
+  R-series to make the clear-dome advice work again** — the series was the
+  decision and the dome was the cost.
 - **Savi's over Dok-Ondar's.** Dok-Ondar's is a retail counter; legacy hilts run
   $159.99–400 *plus* a $44.99–49.99 blade, and there's no experience attached.
   Savi's includes hilt, blade, case and pin, and is the only path to a
@@ -131,6 +149,13 @@ Where that standard is strained:
 - **The 31 Royal Street Julep ($10.25, Friday's Blue Bayou pick) is probably
   non-alcoholic** — it names no spirit and sits far below the $18–20.50 cocktail
   band. Check before ordering.
+- **Everything about the BB build is search-result synthesis.** Disney's own
+  Droid Depot page and every aggregator tried return 403 from this environment,
+  so the four-part list, the colour rotation, the absent clear dome, the $49.99
+  backpack and the magnetic head are all *reported*. The counter settles them in
+  about ten seconds; nothing here was read from Disney directly.
+- **Walt Disney World raised its droids to $129.99** while Disneyland reportedly
+  held at $119.99. Same shape as the dining prices: treat $119.99 as a floor.
 - **Silly Symphony Swings may reopen.** It's a refurbishment, not a permanent
   closure, and parts were reportedly returning in July.
 - **Fantasmic, Wondrous Journeys and Halloween Screams times are unconfirmed**
@@ -149,6 +174,12 @@ Where that standard is strained:
   15:00 while sitting above one that folds at 14:10. **Two invariants to re-check
   after any edit: `DAYS` events chronological per day, and `data-until`
   non-decreasing down each day section.**
+- **"The backpack they come with" was never true.** The guide asserted for a
+  long time that the saber and droid ride home in an included backpack. The droid
+  includes a *cardboard carrying box*; the padded backpack is a separate ~$49.99
+  purchase. Caught 4 August while checking whether that backpack even fits a
+  sphere (it does — it's sold as fitting R, C and BB). An accessory casually
+  described as included is worth re-checking whenever it appears.
 - **Deletion passes cost hedges.** Two "not confirmed for 2026" notes were
   removed to make sentences read better, and the pinned-vs-provisional showtime
   distinction was lost with a deleted card. Don't trade a hedge for prose.
