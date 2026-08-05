@@ -198,5 +198,13 @@ defined as **3am the next morning**, because you're still travelling back when
 the calendar flips. Anything reopened by hand stays open. Cards are ordered
 chronologically so the next live thing is always the next one down.
 
-None of the JS has been exercised in a real browser — there's no automation in
-this environment. It's tested against a DOM shim across eight time points.
+**The fold behaviour is browser-tested.** `fold-test.mjs` drives real Chromium
+via Playwright, freezing the clock at fifteen points from three weeks out to
+after the trip, and asserts at each one that folded cards hide their body and
+keep their header, that a closed day hides its cards and offers a reopen button,
+that tapping a folded card reopens it and marks it `data-manual` so it stays
+open, and that the day reopen button works. Run it with
+`npm i playwright && node fold-test.mjs` (Chromium is preinstalled at
+`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`; the path is in the file).
+All fifteen pass as of 5 August. The rest of the page's JS — the countdown,
+the sky, the accordion — is still unexercised.
