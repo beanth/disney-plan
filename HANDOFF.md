@@ -1,8 +1,9 @@
 # Handoff — Disneyland, Aug 18–22 2026
 
-State of the plan as of 4 August 2026. Everything below is either settled or
-explicitly flagged as open. The guide itself is `index.html`; this file is the
-context behind it.
+State of the plan as of 4 August 2026, re-verified in a nine-agent sweep on
+**15 August** (see "The 15 August sweep" below). Everything below is either
+settled or explicitly flagged as open. The guide itself is `index.html`; this
+file is the context behind it.
 
 ## Trip parameters
 
@@ -123,20 +124,75 @@ downstairs room at check-in, which is the air-conditioned half.
 
 ## Open items
 
-1. **The Odyssey in IMAX 70mm, 8/22.** Regal Edwards Ontario Palace, ~10 min
-   from ONT, one of ~25 US venues running 15-perf 70mm. 172 min plus a reported
-   extended trailer ≈ 3h15m–3h25m in seat, so it's a morning/early-afternoon
-   show against an evening flight. **Seats are the constraint, not the format** —
-   as of late July there were no 70mm seats in LA or NY through 19 August and
-   resales were reportedly into four figures. Four together, book immediately or
-   drop it.
+1. **The Odyssey in IMAX 70mm, 8/22 — improved, still unbooked.** The 8/15 sweep
+   found the 70mm run reportedly extended through **Sept 16** (so 8/22 is mid-run),
+   the seat crunch reportedly easing from ~Aug 20, and Ontario Palace matinees
+   around 11:35/3:15 reported for that week — none of it checked against a live
+   seat map (every ticketing site is egress-blocked from this environment).
+   The old "six-minute extended trailer" claim was wrong: 70mm shows reportedly
+   run only ~4 min of Dune footage and start at the advertised time, so in-seat
+   is ~3h00m–3h05m, not 3h15m+. Guide updated. **Book now or drop it.**
 2. **Decide whether to make the repo private.** It's public with Pages live. The
    hotel name has been stripped and the page carries `noindex`, but the dates and
    party size are still there, and commit metadata carries a real name and email.
-3. **Check the Halloween Time 2026 foodie guide** the week before — it wasn't
-   published as of late July, and Halloween Time opens 8/21, your last park day.
-4. **Confirm showtimes in the app each morning.** Nothing on either Disneyland
-   night is confirmable a month out.
+   The 8/15 audit added: the stripped hotel name is still readable in git history
+   (parent of `7bc73f4`), and the page content narrows the hotel anyway
+   (1.3 mi from the gate, 0.4 mi south of 1854 S. Harbor, 7:00 breakfast).
+   Going private is the only fix that covers all of it. Still the user's call.
+3. ~~Check the Halloween Time 2026 foodie guide~~ **Done 8/15.** Published in
+   early August: Mint Julep Bar's 2026 beignet is reported as Caramel Apple (not
+   the guessed pumpkin/butterscotch), Blue Bayou has a pumpkin dessert again
+   (reported as the Doberge Cake returning; one listing says "Pumpkin Dulce").
+   Guide updated.
+4. **Confirm showtimes in the app each morning — still stands, but the basis
+   changed.** As of 8/15 the schedules are published and every planned time
+   matches them (reported, not read from Disney directly): DL 8–midnight all
+   three days, DCA 8–10 on 8/19 (8/19 is not a Bash night; 8/20 is, DCA closing
+   at 6), Paint the Night 8:45/10:45 and Wondrous Journeys ~9:30 with 8/20 their
+   reported final night, Fantasmic ~9:00/9:05 and 10:30 both nights, Screams
+   ~9:30 on 8/21 with pyro (a Friday). The guide's hedges now say "reported from
+   the published schedule, checked 8/15" instead of "unconfirmed a month out."
+
+## The 15 August sweep
+
+Nine agents re-verified the guide three days out (haiku: consistency + browser
+tests; sonnet: hours/showtimes, refurbs, dining, Galaxy's Edge, logistics,
+Odyssey; opus: editorial audit). WebFetch was egress-blocked for every domain —
+Disney, aggregators, ticketing, even weather.gov — so **everything found is
+REPORTED (search-snippet synthesis), nothing VERIFIED**. What changed:
+
+- **The plan's spine held.** Park hours, Bash nights (8/19 no, 8/20 yes), all
+  showtimes, Haunted Mansion Holiday reopening 8/21, no Early Entry, Racers
+  clean (no 2025-style August refurb), Toy Story shuttle terms, Multi Pass
+  stacking (3 max), and every settled decision (BB-series, single 7:00 curb,
+  1:20 Friday Bayou, Oga's last) — all intact, nothing reverted.
+- **The 70th contradiction resolved.** The anniversary ended 8/9; Paint the
+  Night and Wondrous Journeys were separately extended and 8/20 is *their*
+  final night. The "Last night of the 70th" greeting now names the shows.
+- **31 Royal Street Julep settled: non-alcoholic** (watermelon–citrus–mint
+  mocktail per menu listings). Hedge upgraded to a statement.
+- **Halloween overlays landed early** (as in 2025): Luigi's/Mater's reported
+  running since 8/17, Monsters After Dark (on Guardians, afternoons) since
+  8/18 — all three expected on the 19th. Silly Symphony Swings is still
+  closed, no reopen date; the "may be running" hedge was reversed.
+- **Prices drifted, all folded in as ranges:** Single Pass bands widened
+  (Rise ~$15–35, Racers ~$17–28), Bourbon Julep $18–20, Magnolia Park Pasta
+  $32–35, Parmesan patty melt $22–24, Award Wieners margarita $18–19, kyber
+  crystal $17.99 reported, Pixar Pier games down to $4–5, droid parts price
+  is a 2020 listing. Droid held at $119.99; Savi's, Carthay, Lamplight and
+  both Monte Cristos unchanged.
+- **Small factual fixes:** Monorail stops ~30 min before close and pauses for
+  fireworks (not a midnight exit); Route 43's past-midnight service is
+  unconfirmed; no sealing rule on drinks (glass/cans are the bans); the no-bag
+  line is Grand Californian-only; "Disney's own menu/pages" provenance claims
+  reworded — nothing was read from Disney directly, in July or now.
+- **Widget beats added** so "up next" matches the cards: Thursday's 10:00
+  rebook, the Indy pre-Savi's window, Friday's Mansion window, a Wednesday
+  walk-out. Savi's-window arithmetic corrected (a window opened ~2:00+, not
+  ~1:50, outlives the build). Both `DAYS`/`data-until` invariants re-verified
+  after the edits; the 18-assertion Playwright fold test passes.
+- **Forecast** (reported): 91/90/89°F on the three park days, lows mid-60s —
+  the "90s" heat framing stands. No heat advisory found for the dates.
 
 ## Known limits on the facts
 
@@ -146,9 +202,9 @@ Where that standard is strained:
 - **Roughly 40 dining prices came from search-result synthesis, not Disney's own
   pages** — fetching is blocked in this environment. Treat every price as a
   floor and expect drift; Disney raises prices in sweeps.
-- **The 31 Royal Street Julep ($10.25, Friday's Blue Bayou pick) is probably
-  non-alcoholic** — it names no spirit and sits far below the $18–20.50 cocktail
-  band. Check before ordering.
+- **The 31 Royal Street Julep ($10.25, Friday's Blue Bayou pick) is
+  non-alcoholic** — settled 8/15 by menu listings: a watermelon–citrus–mint
+  mocktail. The guide now states it rather than warning about it.
 - **Everything about the BB build is search-result synthesis.** Disney's own
   Droid Depot page and every aggregator tried return 403 from this environment,
   so the four-part list, the colour rotation, the absent clear dome, the $49.99
@@ -156,10 +212,13 @@ Where that standard is strained:
   about ten seconds; nothing here was read from Disney directly.
 - **Walt Disney World raised its droids to $129.99** while Disneyland reportedly
   held at $119.99. Same shape as the dining prices: treat $119.99 as a floor.
-- **Silly Symphony Swings may reopen.** It's a refurbishment, not a permanent
-  closure, and parts were reportedly returning in July.
-- **Fantasmic, Wondrous Journeys and Halloween Screams times are unconfirmed**
-  and timed within minutes of each other on both Disneyland nights.
+- **Silly Symphony Swings stayed closed.** As of mid-August the topper is back
+  and the scrim coming down, but no reopening date is posted — the guide no
+  longer suggests it might run on the 19th.
+- **Fantasmic, Wondrous Journeys and Halloween Screams times are now reported
+  from the published schedule (checked 8/15), still not read from Disney
+  directly** — and timed within minutes of each other on both Disneyland
+  nights, so the app check each morning stays load-bearing.
 
 ## Things that bit us, so they don't again
 
