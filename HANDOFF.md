@@ -119,19 +119,21 @@ downstairs room at check-in, which is the air-conditioned half.
   derived, and a made-up number reads as an appointment you're failing. Each
   morning carries a *landmarks* line so being on track is still checkable. Don't
   "helpfully" convert durations back into times.
+- **The Odyssey in 70mm is off, decided 15 August.** This one will look
+  re-openable to a future pass, because the facts moved the *right* way just
+  before it was dropped: the 15 August sweep found the 70mm run reportedly
+  extended to ~Sept 16, the seat crunch reportedly easing from ~Aug 20, and
+  Ontario Palace matinees around 11:35/3:15 reported for that week. It was
+  dropped anyway. **Finding available seats is not new information** — the
+  answer was no with seats on the table. Don't re-add the cinema block, and
+  don't re-research the run. Saturday is Downtown Disney and the drive to ONT.
 - **Flag Retreat cut** from the Friday loop — 45 minutes of a 180-minute block,
   and a round trip inside a card tagged "no backtracking."
 
 ## Open items
 
-1. **The Odyssey in IMAX 70mm, 8/22 — improved, still unbooked.** The 8/15 sweep
-   found the 70mm run reportedly extended through **Sept 16** (so 8/22 is mid-run),
-   the seat crunch reportedly easing from ~Aug 20, and Ontario Palace matinees
-   around 11:35/3:15 reported for that week — none of it checked against a live
-   seat map (every ticketing site is egress-blocked from this environment).
-   The old "six-minute extended trailer" claim was wrong: 70mm shows reportedly
-   run only ~4 min of Dune footage and start at the advertised time, so in-seat
-   is ~3h00m–3h05m, not 3h15m+. Guide updated. **Book now or drop it.**
+1. ~~The Odyssey in IMAX 70mm, 8/22.~~ **Dropped 15 August** — see "Decisions
+   worth not relitigating".
 2. **Decide whether to make the repo private.** It's public with Pages live. The
    hotel name has been stripped and the page carries `noindex`, but the dates and
    party size are still there, and commit metadata carries a real name and email.
@@ -193,6 +195,10 @@ REPORTED (search-snippet synthesis), nothing VERIFIED**. What changed:
   after the edits; the 18-assertion Playwright fold test passes.
 - **Forecast** (reported): 91/90/89°F on the three park days, lows mid-60s —
   the "90s" heat framing stands. No heat advisory found for the dates.
+- **The Odyssey lane's findings were then discarded** — the trip was dropped
+  the same day, on preference rather than availability. The guide's
+  departure-day section is now Downtown Disney, the ONT drive and the
+  Packing House.
 
 ## Known limits on the facts
 
