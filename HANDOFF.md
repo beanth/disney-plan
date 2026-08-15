@@ -335,10 +335,18 @@ was followed in the same bullet by "DCA closes at 10pm on 8/19."
 `CLAUDE.md` carries the working rules. After August this is a keepsake, not a
 live document.
 
-**Commit and push straight to `main`.** A session on 15 August was configured
-onto a `claude/page-content-cleanup-jedyst` branch, pushed one commit there, then
-fast-forwarded `main` on request; everything since went straight to `main`. The
-branch still exists on origin and is not ahead of `main` — it can be deleted.
+**Commit and push straight to `main`. It is now the only branch, local and
+remote.** A session on 15 August was configured onto a
+`claude/page-content-cleanup-jedyst` branch, pushed one commit there, then
+fast-forwarded `main` on request; everything since went straight to `main`. That
+branch has been deleted.
+
+Worth knowing if you ever need to tidy refs again: **this environment's git
+credentials can create and update refs but not delete them.** `git push origin
+--delete <branch>` returns a flat HTTP 403 (a refusal, not a flake — retrying
+and backing off will not help), and the GitHub MCP server offers `create_branch`
+with no delete counterpart. Deleting a remote branch needs the user, via the
+repo's branches page or their own clone.
 
 The page is more than static text. Day cards **auto-collapse once they're behind
 you**: `prepFolds()` wraps everything below each card's header in a `.fold` div
