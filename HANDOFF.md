@@ -144,14 +144,32 @@ downstairs room at check-in, which is the air-conditioned half.
 
 1. ~~The Odyssey in IMAX 70mm, 8/22.~~ **Dropped 15 August** — see "Decisions
    worth not relitigating".
-2. **Decide whether to make the repo private.** It's public with Pages live. The
+2. **8/21 is sold out, and park reservations are still required — confirm all
+   four are covered.** Reported by the user on 15 August from the booking
+   calendar; Disney's site is unreachable from here, so this pass could not
+   see it directly. What *was* verified (two sources, read 8/15): Disneyland
+   still requires a **park reservation per guest per day** in 2026. The June
+   2026 change removed the 11am park-hopping rule, **not** the reservation
+   requirement — an "After 6 Years, Disneyland Removes Park Reservations"
+   headline is about hopping and is misleading. So:
+   - A sold-out date **does not** affect anyone who already holds a
+     reservation for it. A linked ticket alone is *not* entry.
+   - **Open question: does the party hold 8/21 reservations for all four?**
+     If yes, this is only a crowd signal and the guide already carries it.
+     If no, Friday is in jeopardy and needs either a re-release watch
+     (dates release on a rolling basis; check the night before and early
+     that morning) or a re-plan onto DCA, which is *not* sold out.
+   - Note the wrong-coast trap fired again here: **Walt Disney World's**
+     Mickey's Not-So-Scary is genuinely sold out on 21 August. Do not let a
+     search result about that date settle a question about Disneyland.
+3. **Decide whether to make the repo private.** It's public with Pages live. The
    hotel name has been stripped and the page carries `noindex`, but the dates and
    party size are still there, and commit metadata carries a real name and email.
    The 8/15 audit added: the stripped hotel name is still readable in git history
    (parent of `7bc73f4`), and the page content narrows the hotel anyway
    (1.3 mi from the gate, 0.4 mi south of 1854 S. Harbor, 7:00 breakfast).
    Going private is the only fix that covers all of it. Still the user's call.
-3. ~~Check the Halloween Time 2026 foodie guide~~ **Done 8/15, then corrected
+4. ~~Check the Halloween Time 2026 foodie guide~~ **Done 8/15, then corrected
    the same day.** The guide was read in full (updated 12 August). Both claims
    the sweep took from it were wrong: there is **no Halloween beignet at Mint
    Julep Bar** (its seasonal item is a Frightfully Festive Cocoa Dip, from
@@ -161,7 +179,7 @@ downstairs room at check-in, which is the air-conditioned half.
    Carnation Café** (Friday's 5:40 table) and a **Seaborn Cherry Temple
    cocktail at Café Orléans** (Thursday's 12:50 table and Friday's loop).
    Neither is in the guide yet; both are worth a look at the table.
-4. **Confirm showtimes in the app each morning — still stands, but the basis
+5. **Confirm showtimes in the app each morning — still stands, but the basis
    changed.** As of 8/15 the schedules are published and every planned time
    matches them (reported, not read from Disney directly): DL 8–midnight all
    three days, DCA 8–10 on 8/19 (8/19 is not a Bash night; 8/20 is, DCA closing
