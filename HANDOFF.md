@@ -144,24 +144,23 @@ downstairs room at check-in, which is the air-conditioned half.
 
 1. ~~The Odyssey in IMAX 70mm, 8/22.~~ **Dropped 15 August** — see "Decisions
    worth not relitigating".
-2. **8/21 is sold out, and park reservations are still required — confirm all
-   four are covered.** Reported by the user on 15 August from the booking
-   calendar; Disney's site is unreachable from here, so this pass could not
-   see it directly. What *was* verified (two sources, read 8/15): Disneyland
-   still requires a **park reservation per guest per day** in 2026. The June
-   2026 change removed the 11am park-hopping rule, **not** the reservation
-   requirement — an "After 6 Years, Disneyland Removes Park Reservations"
-   headline is about hopping and is misleading. So:
-   - A sold-out date **does not** affect anyone who already holds a
-     reservation for it. A linked ticket alone is *not* entry.
-   - **Open question: does the party hold 8/21 reservations for all four?**
-     If yes, this is only a crowd signal and the guide already carries it.
-     If no, Friday is in jeopardy and needs either a re-release watch
-     (dates release on a rolling basis; check the night before and early
-     that morning) or a re-plan onto DCA, which is *not* sold out.
-   - Note the wrong-coast trap fired again here: **Walt Disney World's**
-     Mickey's Not-So-Scary is genuinely sold out on 21 August. Do not let a
-     search result about that date settle a question about Disneyland.
+2. ~~8/21 is sold out — confirm all four are covered.~~ **Resolved 15 August:
+   all four hold a park reservation for 8/21**, so it's a crowd signal, not
+   an entry problem. Sold out means Disney has stopped selling the date; it
+   doesn't touch anyone already booked onto it. Keep the surrounding facts,
+   because they're the reason that distinction is real:
+   - Disneyland **still requires a park reservation per guest per day** in
+     2026 (two sources, read 8/15), and a linked ticket alone is *not*
+     entry. The June 2026 change removed the 11am park-hopping rule, **not**
+     the reservation requirement — an "After 6 Years, Disneyland Removes
+     Park Reservations" headline is about hopping and is misleading.
+   - Sold-out dates do re-release on a rolling basis, so a future pass
+     shouldn't treat "sold out" as permanent for any date.
+   - The wrong-coast trap fired again here: **Walt Disney World's** Mickey's
+     Not-So-Scary is genuinely sold out on 21 August. Don't let a search
+     result about that date settle a question about Disneyland.
+   - Friday's card keeps the escalated crowd framing this prompted, which
+     stands on its own regardless of reservations.
 3. **Decide whether to make the repo private.** It's public with Pages live. The
    hotel name has been stripped and the page carries `noindex`, but the dates and
    party size are still there, and commit metadata carries a real name and email.
