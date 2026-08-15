@@ -1256,11 +1256,15 @@
   </details>
 
   <details class="card">
-    <summary><span><span class="ic">&#9888;</span>Halloween starts on your last day</span></summary>
+    <summary><span><span class="ic">&#9888;</span>When Halloween actually starts</span></summary>
     <div class="body">
-      <ul class="list">
-        <li><strong>Halloween Time runs 8/21&ndash;10/31 in both parks</strong> (Disney's own post, read 8/15). So <strong>Wednesday and Thursday are pre-season</strong> &mdash; no pumpkin over the entrance, no Main Street d&eacute;cor. Friday is opening day and the whole reason that day looks different from the other two.</li>
-        <li><strong>The seasonal food arrives early, from 8/18</strong>, which is why Thursday's and Friday's menus carry Halloween items the d&eacute;cor doesn't match yet.</li>
+      <div class="callout plum" style="margin-top:0;"><strong>The season badge says 8/21, but the two parks arrive at it differently.</strong> DCA is running Halloween before the season opens; Disneyland Park genuinely isn't.</div>
+      <ul class="list" style="margin-top:12px;">
+        <li><strong>DCA on Wednesday should look like Halloween.</strong> Disney's own press release starts <strong>Oogie Boogie Bash on 8/18</strong> at DCA, and the Cars Land overlays flip on <strong>8/17</strong> &mdash; a park does not host a hard-ticket Halloween party in undressed streets. <strong>This is an inference, not a read fact:</strong> no source we could open gives a date for DCA's d&eacute;cor going up. Treat Buena Vista Street as probably dressed and be pleased rather than disappointed.</li>
+        <li><strong>Cars Land is the sure thing, and it's your rope drop.</strong> <strong>Luigi's Honkin' Haul-O-Ween</strong> and <strong>Mater's Graveyard JamBOOree</strong> are reported returning <strong>8/17</strong> &mdash; one outlet, with Disney's release silent rather than contradicting. Same queue, same ride; the overlay is a bonus.</li>
+        <li><strong>Disneyland Park really is pre-season on Thursday.</strong> Halloween Time is <strong>8/21&ndash;10/31</strong> (Disney's press release), so no pumpkin over the entrance and no Main Street d&eacute;cor until Friday. That's the whole reason Friday looks different.</li>
+        <li><strong>8/19 is not a party night</strong> &mdash; the August Bash dates are 18, 20, 23, 25, 27 and 30. So DCA keeps normal hours on your day there and the <span class="time">6:20</span> dinner and <span class="time">9:00</span> World of Color are untouched. <strong>Thursday 8/20 is one</strong>, which is why Disneyland gets that crowd from 6pm.</li>
+        <li><strong>Seasonal food runs from 8/18</strong>, so it's available on all three park days regardless of d&eacute;cor.</li>
         <li><strong>Haunted Mansion is closed until 8/21</strong>, so you miss the regular version and get Holiday on Friday. The better trade.</li>
         <li><strong>Confirm Radiator Springs Racers in the app at scan-in.</strong> Nothing is posted against it (checked 8/15), but the whole Wednesday morning leans on it.</li>
       </ul>
@@ -1348,12 +1352,13 @@
     if (d) d.setAttribute("content", pair[1]);
   }
 
-  // 8/21 is Halloween Time day one. 8/20 is the final night of the 70th's shows
-  // (the anniversary itself ended 8/9), so gold not pumpkin.
-  // 8/19 keeps the halloween mood as a *mood*, not a claim: DCA is still
-  // pre-season on the 19th (décor and Monsters After Dark are both dated 8/21).
-  // Don't read this map as evidence that anything is decorated — see the
-  // "Closures & what you'll miss" card for what actually runs on the 19th.
+  // 8/21 is Halloween Time day one at Disneyland Park. 8/20 is the final night
+  // of the 70th's shows (the anniversary itself ended 8/9), so gold not pumpkin.
+  // 8/19 gets the halloween mood because DCA is very likely already dressed:
+  // Oogie Boogie Bash starts there 8/18 and the Cars Land overlays flip 8/17.
+  // That's an inference, not a read fact — Monsters After Dark is separately
+  // dated 8/21 and does *not* run on the 19th. See "When Halloween actually
+  // starts" for the split between the two parks.
   var MOOD = { "19": "halloween", "20": "seventieth", "21": "halloween" };
 
   // ---- per-day chrome takeover on scroll ----
@@ -1552,8 +1557,9 @@
     var key = dayKey(now);
     var today = DAYS[key];
 
-    // DCA decorates 8/18 and Disneyland Park 8/21, per Disney's own FAQ. Your first
-    // decorated park day is 8/19, so the palette turns over then and stays turned.
+    // Your first likely-decorated park day is 8/19 (DCA, hosting Bash nights from
+    // 8/18), so the palette turns over then and stays turned. Disneyland Park's own
+    // season doesn't open until 8/21.
     var trip = today ? (key >= "2026-08-19" ? "halloween" : "trip")
              : (now < TRIP_START ? "pre" : "post");
     document.body.setAttribute("data-trip", trip);
