@@ -216,13 +216,27 @@ was followed in the same bullet by "DCA closes at 10pm on 8/19."
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
    and the blurb on Disney's own page disagree; the guide backs the schedule.
    This is the one live fact the Wednesday evening now leans on.
-2. **Decide whether to make the repo private.** It's public with Pages live. The
-   hotel name has been stripped and the page carries `noindex`, but the dates and
-   party size are still there, and commit metadata carries a real name and email.
-   The stripped hotel name is still readable in git history (parent of `7bc73f4`),
-   and the page content narrows the hotel anyway (1.3 mi from the gate, 0.4 mi
-   south of 1854 S. Harbor, 7:00 breakfast). Going private is the only fix that
-   covers all of it. **Still the user's call.**
+2. **Privacy — and "go private" was never the fix it was written up as.** The
+   exposure has two halves, and they need different answers:
+   - **Git side:** commit metadata carries a real name and email, and the
+     stripped hotel name is still readable in history (parent of `7bc73f4`).
+     A private repo fixes this.
+   - **Page side:** the dates, party size, and details that narrow the hotel
+     anyway (1.3 mi from the gate, 0.4 mi south of 1854 S. Harbor, 7:00
+     breakfast). **A private repo does not fix this.** Pages sites are
+     publicly reachable by URL even when the source repo is private, on every
+     plan below Enterprise Cloud. Only `noindex` plus an unadvertised URL
+     protects the page, which is the status quo.
+
+   And going private may not be available: **GitHub Pages requires a public
+   repo on Free**; private-repo Pages needs **Pro or above**. On Free,
+   flipping the repo private takes the site down.
+
+   So the earlier claim that "going private is the only fix that covers all of
+   it" was wrong twice over — it covers only half, and may not be possible.
+   **Do not flip this during the trip**; on Free the guide goes dark mid-park.
+   The natural moment is after 8/22, when the README says to archive it
+   anyway. **Still the user's call.**
 3. **Confirm showtimes in the app each morning.** As of 8/15 the published
    schedules match every planned time (reported, not read from Disney directly):
    DL 8–midnight all three days, DCA 8–10 on 8/19, Paint the Night 8:45/10:45 and
