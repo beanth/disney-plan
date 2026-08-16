@@ -1398,6 +1398,14 @@
 </main>
 <script>
 (function () {
+  // ---- TEST MODE (temporary) ----
+  // Open the page with #test (or ?test) and every time-gated state renders at
+  // once: nothing folds, a "Now" ring on each day's first block, the urgent
+  // countdown and park-close line with example text, and the live strip showing
+  // the whole trip's rides across both parks. The clock still drives the sky.
+  // Remove by deleting the TEST branches; the normal path is untouched.
+  var TEST = /(^|[?#&])test/.test(location.search + location.hash);
+
   // ---- time of day sky ----
   function setPhase() {
     var h = new Date().getHours();
@@ -1596,6 +1604,20 @@
   }
 
   function applyFolds(now) {
+    if (TEST) {
+      Object.keys(DAY_SECTIONS).forEach(function (k) {
+        var sec = document.getElementById(DAY_SECTIONS[k]);
+        if (!sec) return;
+        sec.classList.remove("day-done");
+        var first = true;
+        sec.querySelectorAll(".card[data-until]").forEach(function (card) {
+          card.classList.remove("folded");
+          card.classList.toggle("now", first);
+          first = false;
+        });
+      });
+      return;
+    }
     var todayKey = dayKey(now);
     Object.keys(DAY_SECTIONS).forEach(function (k) {
       var sec = document.getElementById(DAY_SECTIONS[k]);
@@ -1742,9 +1764,9 @@
     var card = document.getElementById("livewaits");
     var today = DAYS[dayKey(now)];
     var park = today && today.nav && LW_PARKS[today.nav];
-    card.hidden = !park;
-    if (!park) return;
-    document.getElementById("lw-park").textContent = park.label;
+    card.hidden = !park && !TEST;
+    if (card.hidden) return;
+    document.getElementById("lw-park").textContent = TEST ? "test · both parks" : park.label;
     var list = document.getElementById("lw-list");
     var meta = document.getElementById("lw-meta");
     if (!lwData) {
@@ -1753,11 +1775,23 @@
       return;
     }
     var pool = lwData.filter(function (e) {
-      return e.parkId === park.id && e.entityType === "ATTRACTION" &&
+      return (TEST || e.parkId === park.id) && e.entityType === "ATTRACTION" &&
              lwNorm(e.name).indexOf("single rider") === -1;
     });
+    var rides;
+    if (TEST) {
+      rides = [];
+      var seen = {};
+      ["day19", "day20", "day21"].forEach(function (d) {
+        LW_RIDES[d].forEach(function (r) {
+          if (!seen[r[1]]) { seen[r[1]] = 1; rides.push(r); }
+        });
+      });
+    } else {
+      rides = LW_RIDES[today.nav];
+    }
     list.textContent = "";
-    LW_RIDES[today.nav].forEach(function (row) {
+    rides.forEach(function (row) {
       var key = lwNorm(row[0]), hit = null;
       for (var i = 0; i < pool.length; i++) {
         if (lwNorm(pool[i].name).indexOf(key) !== -1) { hit = pool[i]; break; }
@@ -1803,7 +1837,7 @@
   function mpRender(now) {
     var card = document.getElementById("mptimer");
     var today = DAYS[dayKey(now)];
-    card.hidden = !(today && today.nav);
+    card.hidden = !TEST && !(today && today.nav);
     if (card.hidden) return;
     var btn = document.getElementById("mp-btn");
     var t = mpGet();
@@ -1843,6 +1877,25 @@
 
     // clear any previous today marker
     document.querySelectorAll("nav a.today").forEach(function (a) { a.classList.remove("today"); });
+
+    if (TEST) {
+      document.body.setAttribute("data-trip", "halloween");
+      big.textContent = "Test mode";
+      small.textContent = "";
+      var tl = document.createElement("span");
+      tl.className = "cd-in";
+      tl.textContent = "in 8 min";
+      small.appendChild(tl);
+      small.appendChild(document.createTextNode(" · World of Color virtual queue — join at 12:00:00 (example)"));
+      box.classList.add("urgent");
+      closing.hidden = false;
+      closing.textContent = "Park closes in 40 min · anyone in line at closing still rides (example)";
+      greet.textContent = "Test mode · all timed states exposed";
+      mpRender(now);
+      lwRender(now);
+      if (!document.hidden && Date.now() - lwAt > 55000) lwFetch();
+      return;
+    }
 
     var key = dayKey(now);
     var today = DAYS[key];
