@@ -379,10 +379,17 @@ repo's branches page or their own clone.
   destination-level call covers both parks. Refresh rides on `update()`'s
   60-second tick, gated on the page being visible and the data >55s old; the
   API's own server cache is 60s (`cache-control: max-age=60`), so polling
-  faster only re-reads the same payload. Shows the *plan's* rides per day (a
-  curated `LW_RIDES` map, matched as normalised substrings against API names —
-  the API uses `™` and curly apostrophes), with standby, single-rider, and the
-  next Lightning Lane return (`LL`) or paid Single Pass return (`SP`).
+  faster only re-reads the same payload. Rendered 8:00–22:00 on park days
+  (the user's spec; DL runs to midnight, so the card hides two hours before
+  close), as a collapsible `details` open by default and excluded from the
+  reference accordion. Shows only the plan's rides for that day's park (a
+  curated `LW_PLAN` map — the union of both DL days when at Disneyland; the
+  "not in the plan" rides are excluded on the user's instruction), matched as
+  normalised substrings against API names — the API uses `™`, curly
+  apostrophes and `Monsters, Inc.`'s comma, all stripped by `lwNorm`. Sorted
+  longest standby first, then walk-ins, then down, then closed. Each row:
+  standby, single-rider (`SR`), next Lightning Lane return (`LL`, or `LL out`
+  when sold through) or paid Single Pass return (`SP`).
   Statuses DOWN/CLOSED/REFURBISHMENT render as "down"/"closed". Fetch failure
   keeps the last data with an "Offline — showing old times" label, or shows
   "use the app" if nothing was ever fetched. The meta line names the source
@@ -413,8 +420,7 @@ ridge at dusk/night (`pyro-pop`); fog drifts along the header base in
 halloween mood (`fog-drift`, inside `.spooky`); the day-title glows flicker
 (`candle`, slower on 8/20 — lantern, not jack-o'-lantern); 8/19+21 day heads
 get a candy-corn `border-image` underline (both pseudo-elements were taken by
-the spider and the glow); a ghost bobs on the 8/21 head (`ghost-bob`);
-Wednesday's evening h3 has `class="neon"` (`neon-flicker`); the nav gets
+the spider and the glow); Wednesday's evening h3 has `class="neon"` (`neon-flicker`); the nav gets
 `parade` sweep only in the 8/20 gold mood; the tab title starts with 🎃; the
 day-reopen buttons are prefixed 🎃/✨/👻 per day.
 
