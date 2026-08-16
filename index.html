@@ -364,6 +364,20 @@
       #e8720f 0 26px, #ffc247 26px 52px, #fdf0d8 52px 78px) 1;
   }
 
+  /* a ghost bobbing beside the 8/21 day head — Mansion Holiday reopens today */
+  #day21 .day-head .ghost {
+    position: absolute; right: 58px; bottom: 6px;
+    width: 20px; height: 24px;
+    color: var(--ink-soft);
+    opacity: .35;
+    pointer-events: none;
+    animation: ghost-bob 5.2s ease-in-out infinite;
+  }
+  @keyframes ghost-bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-6px) rotate(3deg); }
+  }
+
   /* Cars Land neon on Wednesday's evening card — you walk out into the 7:45 switch-on */
   #day19 h3.neon {
     color: var(--accent-ink);
@@ -377,17 +391,6 @@
     95% { opacity: .7; }
     96% { opacity: 1; }
   }
-
-  /* parade lights sweep the nav in the 8/20 gold mood — Paint the Night's last run */
-  body[data-mood="seventieth"] nav::before {
-    content: "";
-    position: absolute; inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(90deg,
-      transparent 0 34px, rgba(255,228,160,.14) 34px 40px);
-    animation: parade 8s linear infinite;
-  }
-  @keyframes parade { to { background-position: 40px 0; } }
 
   /* season wash, blended over the sky */
   header .wash {
@@ -513,8 +516,7 @@
     header .bat, header .fog, header .pyro i,
     body[data-phase="night"] header .stars, body[data-phase="night"] header .stars-b,
     #day19 .day-head::after, #day20 .day-head::after, #day21 .day-head::after,
-    #day19 h3.neon,
-    body[data-mood="seventieth"] nav::before { animation: none; }
+    #day19 h3.neon, #day21 .day-head .ghost { animation: none; }
   }
 
   /* ---- live strip: Multi Pass clock + wait times, park days only ---- */
@@ -1183,6 +1185,11 @@
     <div class="day-head">
       <span class="date">Fri 8/21</span>
       <h2 class="display">Disneyland &middot; Day 2</h2>
+      <svg class="ghost" viewBox="0 0 24 28" aria-hidden="true" focusable="false">
+        <path d="M12 1 C6 1 3 6 3 11 L3 25 Q4.5 23 6 25 Q7.5 27 9 25 Q10.5 23 12 25 Q13.5 27 15 25 Q16.5 23 18 25 L18 11 C18 6 16 1 12 1 Z" fill="currentColor"/>
+        <circle cx="9" cy="10" r="1.6" fill="var(--paper)"/>
+        <circle cx="14.5" cy="10" r="1.6" fill="var(--paper)"/>
+      </svg>
     </div>
 
     <div class="card">
@@ -1896,17 +1903,18 @@
     });
   }
 
-  // The waits card lives 8:00–22:00 on park days (the user's spec), all day in #test.
-  function lwWindow(now) {
+  // The waits card lives from 8:00 to 22:00 at DCA and to 23:59 on Disneyland
+  // days (the parks' own closes); all day in #test.
+  function lwWindow(now, park) {
     var h = now.getHours();
-    return h >= 8 && h < 22;
+    return h >= 8 && h < (park && park.plan === "dl" ? 24 : 22);
   }
 
   function lwRender(now) {
     var card = document.getElementById("livewaits");
     var today = DAYS[dayKey(now)];
     var park = today && today.nav && LW_PARKS[today.nav];
-    card.hidden = TEST ? false : !(park && lwWindow(now));
+    card.hidden = TEST ? false : !(park && lwWindow(now, park));
     if (card.hidden) return;
     document.getElementById("lw-park").textContent = TEST ? "test · both parks" : park.label;
     var list = document.getElementById("lw-list");
@@ -2099,7 +2107,7 @@
         }
       }
       greet.textContent = today.greet || "Anaheim";
-      if (today.nav && lwWindow(now) && !document.hidden && Date.now() - lwAt > 55000) lwFetch();
+      if (today.nav && lwWindow(now, LW_PARKS[today.nav]) && !document.hidden && Date.now() - lwAt > 55000) lwFetch();
     } else if (now < TRIP_START) {
       // ---- countdown mode ----
       var midnightNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());

@@ -379,9 +379,8 @@ repo's branches page or their own clone.
   destination-level call covers both parks. Refresh rides on `update()`'s
   60-second tick, gated on the page being visible and the data >55s old; the
   API's own server cache is 60s (`cache-control: max-age=60`), so polling
-  faster only re-reads the same payload. Rendered 8:00–22:00 on park days
-  (the user's spec; DL runs to midnight, so the card hides two hours before
-  close), as a collapsible `details` open by default and excluded from the
+  faster only re-reads the same payload. Rendered from 8:00 to 22:00 at DCA
+  and to 23:59 on Disneyland days (per-park, matching each park's close), as a collapsible `details` open by default and excluded from the
   reference accordion. Shows only the plan's rides for that day's park (a
   curated `LW_PLAN` map — the union of both DL days when at Disneyland; the
   "not in the plan" rides are excluded on the user's instruction), matched as
@@ -420,8 +419,11 @@ ridge at dusk/night (`pyro-pop`); fog drifts along the header base in
 halloween mood (`fog-drift`, inside `.spooky`); the day-title glows flicker
 (`candle`, slower on 8/20 — lantern, not jack-o'-lantern); 8/19+21 day heads
 get a candy-corn `border-image` underline (both pseudo-elements were taken by
-the spider and the glow); Wednesday's evening h3 has `class="neon"` (`neon-flicker`); the nav gets
-`parade` sweep only in the 8/20 gold mood; the tab title starts with 🎃; the
+the spider and the glow); Wednesday's evening h3 has `class="neon"` (`neon-flicker`); a ghost bobs on
+the 8/21 head (`ghost-bob`) — removed once on a misread instruction, restored
+by name ("the ghost looked great"); a `parade` nav sweep for the 8/20 gold
+mood was built and then removed as ugly (the vertical light bands read as
+artifacts on the gold bar) — don't rebuild it; the tab title starts with 🎃; the
 day-reopen buttons are prefixed 🎃/✨/👻 per day.
 
 The page is more than static text. Day cards **auto-collapse once they're behind
