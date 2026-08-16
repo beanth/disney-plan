@@ -6,7 +6,7 @@ Commit and push directly to `main`. Do not create feature branches or pull reque
 
 ## What this repo is
 
-`index.html` is a self-contained Disneyland trip guide for Aug 18–22, 2026 (party of four — two couples). All content, styles, and scripts live in that one file. There is no build step.
+`index.html` is a Disneyland trip guide for Aug 18–22, 2026 (party of four — two couples). All content, core styles, and scripts live in that file; `festive.css` is the seasonal decoration layer (the page works identically without it). There is no build step. (The repo was single-file until 16 Aug, when the user lifted that rule for the decoration split.)
 
 ## Standard for facts
 

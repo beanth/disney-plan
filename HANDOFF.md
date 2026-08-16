@@ -345,9 +345,16 @@ was followed in the same bullet by "DCA closes at 10pm on 8/19."
 
 ## Repo
 
-`index.html` is the whole product — one file, no build, no dependencies.
-`CLAUDE.md` carries the working rules. After August this is a keepsake, not a
-live document.
+`index.html` carries the content, core styles and scripts; `festive.css` is
+the body-level seasonal decoration layer, added 16 Aug when the user lifted the
+single-file rule — the page works identically without it (bunting off the nav,
+per-day section background tiles including the 8/21 Mansion-damask, sparkle
+bullets on 8/20, bat ornaments on the reference title and footer, and six
+`ember-rise` dots gated to halloween mood at dusk/night with their own
+reduced-motion kill inside that file). The earlier header/day animations stay
+in index.html's style block — moving them was churn without benefit. No build
+step, no dependencies. `CLAUDE.md` carries the working rules. After August this
+is a keepsake, not a live document.
 
 **Commit and push straight to `main`. It is now the only branch, local and
 remote.** A session on 15 August was configured onto a
