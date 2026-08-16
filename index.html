@@ -401,7 +401,34 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,176,87,0); }
     50%      { box-shadow: 0 0 0 4px rgba(255,176,87,.22); }
   }
-  @media (prefers-reduced-motion: reduce) { .countdown.urgent { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .countdown.urgent, .mp-btn.due { animation: none; } }
+
+  /* ---- live strip: Multi Pass clock + wait times, park days only ---- */
+  .mp-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--callout-plum-bg);
+    color: var(--callout-plum-ink);
+    cursor: pointer;
+  }
+  .mp-btn.run { background: var(--go-bg); color: var(--go-ink); border-color: transparent; }
+  .mp-btn.due {
+    background: var(--warn-bg);
+    color: var(--warn-ink);
+    border-color: transparent;
+    animation: nudge 2.4s ease-in-out infinite;
+  }
+  .mp-note, .lw-meta { font-size: 12px; color: var(--ink-soft); margin-top: 8px; }
+  .kv .v .sub { font-weight: 600; font-size: 12px; color: var(--ink-soft); }
+  .kv .v.lw-down { color: var(--warn-ink); }
+  .kv .v.lw-go { color: var(--go-ink); }
 
   /* the block you're in right now */
   .nowtag {
@@ -803,6 +830,20 @@
 </nav>
 
 <main>
+
+  <!-- Live strip: only rendered on park days. Sits outside the day sections so
+       prepFolds() never wraps it and the fold clock can't hide it. -->
+  <div class="card" id="mptimer" hidden>
+    <h3>Multi Pass clock</h3>
+    <button type="button" class="mp-btn" id="mp-btn"></button>
+    <div class="mp-note">Tap whenever you book. Tapping <em>into</em> a ride unlocks the next pass early, so the clock is the worst case, not a rule. One phone runs the clock &mdash; this one.</div>
+  </div>
+
+  <div class="card" id="livewaits" hidden>
+    <h3>Live waits &middot; <span id="lw-park"></span></h3>
+    <div id="lw-list"></div>
+    <div class="lw-meta" id="lw-meta"></div>
+  </div>
 
   <!-- ===================== DAY 19 ===================== -->
   <section id="day19">
@@ -1618,6 +1659,174 @@
     return "in " + h + "h" + (m ? " " + m + "m" : "");
   }
 
+  // ---- live waits ----
+  // themeparks.wiki: the one wait-time API that sends CORS headers, so a static
+  // page can call it. Its server cache is 60s, so polling faster than update()'s
+  // minute would only re-read the same cached payload. queue-times.com has the
+  // same data but no CORS — a browser can't use it.
+  var LW_URL = "https://api.themeparks.wiki/v1/entity/disneylandresort/live";
+  var LW_PARKS = {
+    day19: { id: "832fcd51-ea19-4e77-85c7-75d5843b127c", label: "California Adventure" },
+    day20: { id: "7340550b-c14d-4def-80bb-acdb51d49a66", label: "Disneyland" },
+    day21: { id: "7340550b-c14d-4def-80bb-acdb51d49a66", label: "Disneyland" }
+  };
+  // The day's plan rides, in plan order — not a full park list. Keys are matched
+  // as substrings of the API's names after normalising ™ ’ etc.
+  var LW_RIDES = {
+    day19: [
+      ["guardians of the galaxy", "Guardians"],
+      ["radiator springs", "Racers"],
+      ["web slingers", "WEB SLINGERS"],
+      ["midway mania", "Toy Story Mania"],
+      ["soarin", "Soarin'"],
+      ["incredicoaster", "Incredicoaster"],
+      ["luigi", "Luigi's"],
+      ["mater's junkyard", "Mater's"],
+      ["grizzly river", "Grizzly River Run"],
+      ["little mermaid", "Little Mermaid"]
+    ],
+    day20: [
+      ["indiana jones adventure", "Indiana Jones"],
+      ["rise of the resistance", "Rise of the Resistance"],
+      ["millennium falcon", "Smugglers Run"],
+      ["big thunder", "Big Thunder"],
+      ["matterhorn", "Matterhorn"],
+      ["space mountain", "Space Mountain"],
+      ["pirates of the caribbean", "Pirates"]
+    ],
+    day21: [
+      ["haunted mansion", "Mansion Holiday"],
+      ["peter pan", "Peter Pan"],
+      ["alice in wonderland", "Alice"],
+      ["big thunder", "Big Thunder"],
+      ["runaway railway", "Runaway Railway"],
+      ["roger rabbit", "Roger Rabbit"],
+      ["tiana", "Tiana's"],
+      ["buzz lightyear", "Buzz Lightyear"],
+      ["pirates of the caribbean", "Pirates"],
+      ["jungle cruise", "Jungle Cruise"]
+    ]
+  };
+  var lwData = null, lwAt = 0, lwErr = false, lwBusy = false;
+
+  function lwNorm(s) {
+    return s.toLowerCase().replace(/[’'™®:!.\-–&]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function clockShort(iso) {
+    var d = new Date(iso);
+    var h = d.getHours(), m = d.getMinutes(), ap = h >= 12 ? "p" : "a";
+    h = h % 12 || 12;
+    return h + ":" + String(m).padStart(2, "0") + ap;
+  }
+
+  function lwFetch() {
+    if (lwBusy) return;
+    lwBusy = true;
+    fetch(LW_URL).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    }).then(function (d) {
+      lwData = d.liveData || [];
+      lwAt = Date.now();
+      lwErr = false;
+    }).catch(function () {
+      lwErr = true;
+    }).then(function () {
+      lwBusy = false;
+      lwRender(new Date());
+    });
+  }
+
+  function lwRender(now) {
+    var card = document.getElementById("livewaits");
+    var today = DAYS[dayKey(now)];
+    var park = today && today.nav && LW_PARKS[today.nav];
+    card.hidden = !park;
+    if (!park) return;
+    document.getElementById("lw-park").textContent = park.label;
+    var list = document.getElementById("lw-list");
+    var meta = document.getElementById("lw-meta");
+    if (!lwData) {
+      list.textContent = "";
+      meta.textContent = lwErr ? "Can't reach wait times — use the app." : "Fetching wait times…";
+      return;
+    }
+    var pool = lwData.filter(function (e) {
+      return e.parkId === park.id && e.entityType === "ATTRACTION" &&
+             lwNorm(e.name).indexOf("single rider") === -1;
+    });
+    list.textContent = "";
+    LW_RIDES[today.nav].forEach(function (row) {
+      var key = lwNorm(row[0]), hit = null;
+      for (var i = 0; i < pool.length; i++) {
+        if (lwNorm(pool[i].name).indexOf(key) !== -1) { hit = pool[i]; break; }
+      }
+      if (!hit) return;
+      var q = hit.queue || {};
+      var div = document.createElement("div"); div.className = "kv";
+      var k = document.createElement("span"); k.className = "k"; k.textContent = row[1];
+      var v = document.createElement("span"); v.className = "v";
+      if (hit.status === "DOWN") { v.textContent = "down"; v.classList.add("lw-down"); }
+      else if (hit.status !== "OPERATING") { v.textContent = "closed"; v.classList.add("lw-down"); }
+      else {
+        var sb = q.STANDBY ? q.STANDBY.waitTime : null;
+        v.textContent = (sb == null) ? "open" : sb + " min";
+        if (sb != null && sb <= 15) v.classList.add("lw-go");
+        var extras = [];
+        if (q.SINGLE_RIDER && q.SINGLE_RIDER.waitTime != null) extras.push("SR " + q.SINGLE_RIDER.waitTime);
+        if (q.RETURN_TIME && q.RETURN_TIME.returnStart) extras.push("LL " + clockShort(q.RETURN_TIME.returnStart));
+        else if (q.PAID_RETURN_TIME && q.PAID_RETURN_TIME.returnStart) extras.push("SP " + clockShort(q.PAID_RETURN_TIME.returnStart));
+        if (extras.length) {
+          var sub = document.createElement("span");
+          sub.className = "sub";
+          sub.textContent = " · " + extras.join(" · ");
+          v.appendChild(sub);
+        }
+      }
+      div.appendChild(k); div.appendChild(v); list.appendChild(div);
+    });
+    var age = Math.round((Date.now() - lwAt) / 60000);
+    meta.textContent = (lwErr ? "Offline — showing old times · " : "") +
+      (age < 1 ? "updated just now" : "updated " + age + " min ago") +
+      " · themeparks.wiki, not Disney — the app is the truth";
+  }
+
+  // ---- Multi Pass clock ----
+  // The guide's most-repeated instruction is "run a two-hour timer". This is that
+  // timer. One tap when you book; localStorage so it survives reloads. Per-device
+  // by nature — whichever phone taps it is the phone that carries it.
+  var MP_KEY = "mp-clock-start";
+  function mpGet() { try { return +localStorage.getItem(MP_KEY) || 0; } catch (e) { return 0; } }
+  function mpSet(v) { try { localStorage.setItem(MP_KEY, String(v)); } catch (e) {} }
+
+  function mpRender(now) {
+    var card = document.getElementById("mptimer");
+    var today = DAYS[dayKey(now)];
+    card.hidden = !(today && today.nav);
+    if (card.hidden) return;
+    var btn = document.getElementById("mp-btn");
+    var t = mpGet();
+    if (!t) {
+      btn.className = "mp-btn";
+      btn.textContent = "Booked a pass? Tap to start the 2-hour clock";
+    } else {
+      var left = Math.ceil((t + 7200000 - now.getTime()) / 60000);
+      if (left > 0) {
+        btn.className = "mp-btn run";
+        btn.textContent = "Next pass unlocks " + untilText(left) + " · tap if you book again";
+      } else {
+        btn.className = "mp-btn due";
+        btn.textContent = "Clock's up — book another pass, then tap";
+      }
+    }
+  }
+
+  document.getElementById("mp-btn").addEventListener("click", function () {
+    mpSet(Date.now());
+    mpRender(new Date());
+  });
+
   function update() {
     setPhase();
     var now = new Date();
@@ -1687,6 +1896,7 @@
         }
       }
       greet.textContent = today.greet || "Anaheim";
+      if (today.nav && !document.hidden && Date.now() - lwAt > 55000) lwFetch();
     } else if (now < TRIP_START) {
       // ---- countdown mode ----
       var midnightNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -1698,6 +1908,9 @@
       big.textContent = "Trip complete";
       small.textContent = "Hope it was magical. See you next time.";
     }
+
+    mpRender(now);
+    lwRender(now);
   }
 
   // ---- reference cards behave as an accordion ----

@@ -362,6 +362,38 @@ and backing off will not help), and the GitHub MCP server offers `create_branch`
 with no delete counterpart. Deleting a remote branch needs the user, via the
 repo's branches page or their own clone.
 
+**The live strip (added 16 August, user-requested).** Two cards at the top of
+`main`, rendered only on park days, hidden otherwise:
+
+- **Live waits** — fetched from `api.themeparks.wiki/v1/entity/disneylandresort/live`,
+  the only wait-time API that sends `access-control-allow-origin: *` (verified
+  with an Origin header; **queue-times.com has the same data but no CORS
+  headers, so a browser page cannot use it — don't switch to it**). One
+  destination-level call covers both parks. Refresh rides on `update()`'s
+  60-second tick, gated on the page being visible and the data >55s old; the
+  API's own server cache is 60s (`cache-control: max-age=60`), so polling
+  faster only re-reads the same payload. Shows the *plan's* rides per day (a
+  curated `LW_RIDES` map, matched as normalised substrings against API names —
+  the API uses `™` and curly apostrophes), with standby, single-rider, and the
+  next Lightning Lane return (`LL`) or paid Single Pass return (`SP`).
+  Statuses DOWN/CLOSED/REFURBISHMENT render as "down"/"closed". Fetch failure
+  keeps the last data with an "Offline — showing old times" label, or shows
+  "use the app" if nothing was ever fetched. The meta line names the source
+  and says the app is the truth.
+- **Multi Pass clock** — the guide's "run a two-hour timer" instruction made
+  tappable. One button: tap when you book, it counts down 120 minutes,
+  escalates when the clock is up. State is one `localStorage` key
+  (`mp-clock-start`), so it's per-device — whichever phone taps it carries it.
+  This is the page's only stored state.
+
+Both are tested in `fold-test.mjs`-style Chromium runs with the API mocked from
+a captured fixture and the clock frozen: all plan rides resolve against real
+API names on both parks, plan order is preserved, the offline path degrades to
+a message rather than an error, the timer's three states render, and pre-/post-
+trip loads make **zero** network calls. One test-environment artifact to not
+"fix": LL times render in the *viewer's* timezone (correct on a phone in
+Anaheim, shifted in a UTC container).
+
 The page is more than static text. Day cards **auto-collapse once they're behind
 you**: `prepFolds()` wraps everything below each card's header in a `.fold` div
 at load, cards carry a `data-until` time and fold when it passes, and a whole day
@@ -382,6 +414,7 @@ All fifteen pass as of 15 August.
 
 Editorial passes since have also been checked by rendering the page in that same
 Chromium at a 390px viewport and asserting no console errors, no stray markup
-from a broken edit, and the expected card counts (**32 total, 11 reference**).
+from a broken edit, and the expected card counts (**34 total, 11 reference** —
+32 plan/reference cards plus the live strip's two).
 That is a structural check, not a verification of any fact on the page. The rest
 of the page's JS — the countdown, the sky, the accordion — is still unexercised.
