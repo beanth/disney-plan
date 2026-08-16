@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="Disneyland">
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
-<title>Disneyland Trip Guide · Aug 2026</title>
+<title>🎃 Disneyland Trip Guide · Aug 2026</title>
 <style>
   :root {
     --paper: #fbf6ee;
@@ -211,12 +211,39 @@
     fill: #140d1c;
     opacity: .55;
     will-change: transform;
+    /* rotation lives in --r so the bob animation can compose with it */
+    transform: rotate(var(--r, 0deg));
+    animation: bat-bob var(--bob, 5s) ease-in-out infinite;
   }
-  header .b1 { width: 32px; top: 92px;  left: 64%; transform: rotate(-7deg); }
-  header .b2 { width: 21px; top: 40px;  left: 49%; transform: rotate(6deg); }
-  header .b3 { width: 27px; top: 132px; left: 81%; transform: rotate(-3deg); }
-  header .b4 { width: 16px; top: 24px;  left: 33%; transform: rotate(9deg); opacity: .38; }
-  header .drifter { width: 24px; top: 60px; left: 22%; transform: rotate(4deg); opacity: .42; }
+  header .b1 { width: 32px; top: 92px;  left: 64%; --r: -7deg; --bob: 5.3s; }
+  header .b2 { width: 21px; top: 40px;  left: 49%; --r: 6deg;  --bob: 4.1s; animation-delay: 1.2s; }
+  header .b3 { width: 27px; top: 132px; left: 81%; --r: -3deg; --bob: 6.2s; animation-delay: 2.3s; }
+  header .b4 { width: 16px; top: 24px;  left: 33%; --r: 9deg;  --bob: 4.7s; animation-delay: .6s; opacity: .38; }
+  header .drifter { width: 24px; top: 60px; left: 22%; --r: 4deg; opacity: .42;
+                    animation: bat-drift 52s linear infinite; }
+  @keyframes bat-bob {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50%      { transform: translateY(-7px) rotate(calc(var(--r, 0deg) + 5deg)); }
+  }
+  @keyframes bat-drift {
+    0%   { transform: translate(-34vw, 0)     rotate(var(--r)); }
+    30%  { transform: translate(4vw, -12px)   rotate(calc(var(--r) + 7deg)); }
+    55%  { transform: translate(38vw, 6px)    rotate(calc(var(--r) - 5deg)); }
+    80%  { transform: translate(68vw, -8px)   rotate(calc(var(--r) + 4deg)); }
+    100% { transform: translate(96vw, 2px)    rotate(var(--r)); }
+  }
+
+  /* low fog along the header's bottom edge — inside .spooky, so halloween mood only */
+  header .fog {
+    position: absolute; left: -15%; right: -15%; bottom: -10px;
+    height: 46px;
+    background:
+      radial-gradient(55% 100% at 28% 100%, rgba(255,255,255,.11), transparent 70%),
+      radial-gradient(45% 100% at 72% 100%, rgba(255,255,255,.08), transparent 70%);
+    filter: blur(7px);
+    animation: fog-drift 26s ease-in-out infinite alternate;
+  }
+  @keyframes fog-drift { to { transform: translateX(5%); } }
 
   /* harvest moon once the sun is down */
   body[data-mood="halloween"][data-phase="dusk"]  header .orb,
@@ -315,6 +342,66 @@
     background: radial-gradient(ellipse at 74% 100%, rgba(214,178,92,.38), transparent 68%);
   }
 
+  /* the glows behind the day titles flicker like the candle they imply */
+  #day19 .day-head::after, #day21 .day-head::after { animation: candle 4.6s linear infinite; }
+  #day20 .day-head::after { animation: candle 7.5s linear infinite; }  /* slower — lantern, not jack-o'-lantern */
+  @keyframes candle {
+    0%, 100% { opacity: 1; }
+    9%  { opacity: .74; }
+    21% { opacity: .95; }
+    33% { opacity: .68; }
+    52% { opacity: .9; }
+    71% { opacity: .78; }
+    84% { opacity: 1; }
+  }
+
+  /* candy-corn underline on the Halloween days — border-image because both
+     pseudo-elements on day-head are already spoken for (spider, glow) */
+  #day19 .day-head, #day21 .day-head {
+    border-bottom-width: 3px;
+    border-image: repeating-linear-gradient(90deg,
+      #e8720f 0 26px, #ffc247 26px 52px, #fdf0d8 52px 78px) 1;
+  }
+
+  /* a ghost bobbing beside the 8/21 day head — Mansion Holiday reopens today */
+  #day21 .day-head .ghost {
+    position: absolute; right: 58px; bottom: 6px;
+    width: 20px; height: 24px;
+    color: var(--ink-soft);
+    opacity: .35;
+    pointer-events: none;
+    animation: ghost-bob 5.2s ease-in-out infinite;
+  }
+  @keyframes ghost-bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-6px) rotate(3deg); }
+  }
+
+  /* Cars Land neon on Wednesday's evening card — you walk out into the 7:45 switch-on */
+  #day19 h3.neon {
+    color: var(--accent-ink);
+    text-shadow: 0 0 5px rgba(255,140,46,.7), 0 0 14px rgba(255,110,30,.4), 0 0 26px rgba(255,110,30,.25);
+    animation: neon-flicker 4.8s linear infinite;
+  }
+  @keyframes neon-flicker {
+    0%, 90%, 100% { opacity: 1; }
+    91% { opacity: .55; }
+    92% { opacity: 1; }
+    95% { opacity: .7; }
+    96% { opacity: 1; }
+  }
+
+  /* parade lights sweep the nav in the 8/20 gold mood — Paint the Night's last run */
+  body[data-mood="seventieth"] nav::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(90deg,
+      transparent 0 34px, rgba(255,228,160,.14) 34px 40px);
+    animation: parade 8s linear infinite;
+  }
+  @keyframes parade { to { background-position: 40px 0; } }
+
   /* season wash, blended over the sky */
   header .wash {
     position: absolute; inset: 0;
@@ -355,8 +442,41 @@
       radial-gradient(1px 1px at 51% 20%, #fff, transparent);
   }
   body[data-phase="dusk"]  header .stars { opacity: .3; }
-  body[data-phase="night"] header .stars { opacity: .85; }
-  body[data-phase="night"] header .stars-b { opacity: .5; }
+  body[data-phase="night"] header .stars { opacity: .85; animation: twinkle-a 3.6s ease-in-out infinite; }
+  body[data-phase="night"] header .stars-b { opacity: .5; animation: twinkle-b 2.9s ease-in-out infinite; }
+  @keyframes twinkle-a { 0%, 100% { opacity: .85; } 50% { opacity: .5; } }
+  @keyframes twinkle-b { 0%, 100% { opacity: .5; }  50% { opacity: .22; } }
+
+  /* fireworks over the castle — both parks run pyro nightly on this trip */
+  header .pyro {
+    position: absolute; inset: 0;
+    z-index: 2; pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+  body[data-phase="dusk"] header .pyro,
+  body[data-phase="night"] header .pyro { opacity: 1; }
+  header .pyro i {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #ffe2b0;
+    box-shadow: 0 0 10px 3px rgba(255,190,120,.75);
+    opacity: 0;
+    transform: scale(.3);
+    animation: pyro-pop 6.4s linear infinite;
+  }
+  header .pyro i:nth-child(2) { right: 58px;  top: 40px; animation-delay: 2.1s;
+    background: #d9c8ff; box-shadow: 0 0 10px 3px rgba(180,150,255,.7); }
+  header .pyro i:nth-child(3) { right: 152px; top: 76px; animation-delay: 4.3s;
+    background: #ffc9c0; box-shadow: 0 0 10px 3px rgba(255,140,120,.7); }
+  header .pyro i:nth-child(1) { right: 118px; top: 58px; }
+  @keyframes pyro-pop {
+    0%, 86% { opacity: 0; transform: scale(.3); }
+    89%     { opacity: 1; transform: scale(1); }
+    95%     { opacity: 0; transform: scale(1.9); }
+    100%    { opacity: 0; transform: scale(.3); }
+  }
 
   .countdown {
     margin-top: 14px;
@@ -401,7 +521,14 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,176,87,0); }
     50%      { box-shadow: 0 0 0 4px rgba(255,176,87,.22); }
   }
-  @media (prefers-reduced-motion: reduce) { .countdown.urgent, .mp-btn.due { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .countdown.urgent, .mp-btn.due,
+    header .bat, header .fog, header .pyro i,
+    body[data-phase="night"] header .stars, body[data-phase="night"] header .stars-b,
+    #day19 .day-head::after, #day20 .day-head::after, #day21 .day-head::after,
+    #day19 h3.neon, #day21 .day-head .ghost,
+    body[data-mood="seventieth"] nav::before { animation: none; }
+  }
 
   /* ---- live strip: Multi Pass clock + wait times, park days only ---- */
   .mp-btn {
@@ -808,7 +935,9 @@
     <svg class="bat b3" viewBox="0 0 64 24"><use href="#bat"/></svg>
     <svg class="bat b4" viewBox="0 0 64 24"><use href="#bat"/></svg>
     <svg class="bat drifter" viewBox="0 0 64 24"><use href="#bat"/></svg>
+    <div class="fog"></div>
   </div>
+  <div class="pyro" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wash"></div>
   <div class="hd-inner">
     <div class="eyebrow" id="greeting">Anaheim · California</div>
@@ -943,7 +1072,7 @@
 
     <div class="card">
       <span class="tag warn">In your area when the app says</span>
-      <h3>Tonight's run of show</h3>
+      <h3 class="neon">Tonight's run of show</h3>
       <ol class="script">
         <li><span class="t">7:45</span><span><strong>Cars Land neon</strong> switches on and stays lit all night. You're at the table for the switch-on itself, but you walk out into it.</span></li>
         <li><span class="t">7:50</span><span>Out of <strong>Lamplight</strong>.</span></li>
@@ -1058,6 +1187,11 @@
     <div class="day-head">
       <span class="date">Fri 8/21</span>
       <h2 class="display">Disneyland &middot; Day 2</h2>
+      <svg class="ghost" viewBox="0 0 24 28" aria-hidden="true" focusable="false">
+        <path d="M12 1 C6 1 3 6 3 11 L3 25 Q4.5 23 6 25 Q7.5 27 9 25 Q10.5 23 12 25 Q13.5 27 15 25 Q16.5 23 18 25 L18 11 C18 6 16 1 12 1 Z" fill="currentColor"/>
+        <circle cx="9" cy="10" r="1.6" fill="var(--paper)"/>
+        <circle cx="14.5" cy="10" r="1.6" fill="var(--paper)"/>
+      </svg>
     </div>
 
     <div class="card">
@@ -1631,7 +1765,8 @@
           var btn = document.createElement("button");
           btn.type = "button";
           btn.className = "dayreopen";
-          btn.textContent = "Day complete \u00b7 tap to reopen";
+          var EMO = { day19: "\ud83c\udf83 ", day20: "\u2728 ", day21: "\ud83d\udc7b " };
+          btn.textContent = (EMO[DAY_SECTIONS[k]] || "") + "Day complete \u00b7 tap to reopen";
           btn.addEventListener("click", function () {
             sec.dataset.manual = "1";
             sec.classList.remove("day-done");

@@ -394,6 +394,23 @@ trip loads make **zero** network calls. One test-environment artifact to not
 "fix": LL times render in the *viewer's* timezone (correct on a phone in
 Anaheim, shifted in a UTC container).
 
+**Festive layer (added 16 August).** All decorative, all CSS keyframes on
+opacity/transform only, and every animation name is listed in the
+`prefers-reduced-motion: reduce` rule, which kills the lot — the night-star
+twinkle needs its `body[data-phase="night"]` selector repeated there or the
+phase rule outspecifies the kill switch (that bug was hit and fixed). The
+pieces: bats bob (`bat-bob`, rotation refactored into a `--r` custom property
+so the animation composes) and the drifter crosses the header (`bat-drift`);
+night stars twinkle (`twinkle-a/b`); three pyro sparks pop above the castle
+ridge at dusk/night (`pyro-pop`); fog drifts along the header base in
+halloween mood (`fog-drift`, inside `.spooky`); the day-title glows flicker
+(`candle`, slower on 8/20 — lantern, not jack-o'-lantern); 8/19+21 day heads
+get a candy-corn `border-image` underline (both pseudo-elements were taken by
+the spider and the glow); a ghost bobs on the 8/21 head (`ghost-bob`);
+Wednesday's evening h3 has `class="neon"` (`neon-flicker`); the nav gets
+`parade` sweep only in the 8/20 gold mood; the tab title starts with 🎃; the
+day-reopen buttons are prefixed 🎃/✨/👻 per day.
+
 The page is more than static text. Day cards **auto-collapse once they're behind
 you**: `prepFolds()` wraps everything below each card's header in a `.fold` div
 at load, cards carry a `data-until` time and fold when it passes, and a whole day
