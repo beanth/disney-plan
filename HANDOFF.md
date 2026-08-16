@@ -345,9 +345,10 @@ was followed in the same bullet by "DCA closes at 10pm on 8/19."
 
 ## Repo
 
-`index.html` carries the content, core styles and scripts; `festive.css` is
-the body-level seasonal decoration layer, added 16 Aug when the user lifted the
-single-file rule — the page works identically without it (bunting off the nav,
+The repo split 16 Aug (user lifted the single-file rule twice over):
+`index.html` is markup only, `styles.css` is the core look plus the header/day
+animation layer, `app.js` is all behavior, and `festive.css` is
+the body-level seasonal decoration layer — the page works identically without it (bunting off the nav,
 per-day section background tiles including the 8/21 Mansion-damask, sparkle
 bullets on 8/20, bat ornaments on the reference title and footer, and six
 `ember-rise` dots gated to halloween mood at dusk/night with their own
@@ -356,10 +357,11 @@ on each Blue Bayou card (`firefly`, ::after only — the Friday card's ::before
 is the cobweb, and sharing it would animate the web; stilled while folded), an
 ignited saber blade under the Savi's heading (`saber-hum`; reduced motion
 keeps the blade, stops the hum), and a post-trip footer sign-off
-(`data-trip="post"` only). In index.html's sky: a hidden Mickey among the
+(`data-trip="post"` only). In styles.css's sky layer: a hidden Mickey among the
 night stars (three of the twelve star-field gradients, lower left), a
 `shoot`ing star streaking every 23s at night, a three-burst `volley` over the
-castle every 84s at dusk/night (user chose timer over tap), and Tinker Bell's
+castle at dusk/night — each burst on a 6.4–7.9s period (user first chose a
+timer over tap, then tightened 84s to every 6–8s), and Tinker Bell's
 `tink-flight` across the header every 63s in the 8/20 gold mood only — the
 approved replacement for the rejected nav stripes. Also user-approved:
 `hitch`hiking ghosts that ride position:sticky through the #day21 scroll and
