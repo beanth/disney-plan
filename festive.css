@@ -96,6 +96,62 @@ body[data-mood="halloween"][data-phase="night"] .embers { display: block; }
   100% { transform: translate(var(--sway, 10px), -108vh); opacity: 0; }
 }
 
+/* ---- fireflies on the Blue Bayou cards ---- */
+/* The restaurant sits inside Pirates in permanent dusk with fireflies over the
+   water — so its two cards get one. ::after only: the Friday card's ::before
+   is already the day-21 cobweb, and sharing it would animate the web. */
+.card.bayou { position: relative; overflow: hidden; }
+.card.bayou::after {
+  content: "";
+  position: absolute;
+  top: 20px; right: 30px;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #d9f29b;
+  box-shadow: 0 0 6px 2px rgba(190,230,110,.45);
+  pointer-events: none;
+  opacity: 0;
+  animation: firefly 11s ease-in-out infinite;
+}
+.card.folded.bayou::after { animation: none; }
+@keyframes firefly {
+  0%   { opacity: 0;   transform: translate(0, 0); }
+  10%  { opacity: .55; }
+  28%  { opacity: .08; transform: translate(-16px, 12px); }
+  46%  { opacity: .5;  transform: translate(-26px, -2px); }
+  64%  { opacity: .05; transform: translate(-10px, -12px); }
+  80%  { opacity: .45; transform: translate(4px, -6px); }
+  100% { opacity: 0;   transform: translate(0, 0); }
+}
+
+/* ---- Savi's Workshop: the heading wears an ignited blade ---- */
+.card h3.saber::after {
+  content: "";
+  display: block;
+  margin-top: 6px;
+  height: 3px;
+  width: 58%;
+  border-radius: 2px;
+  background: linear-gradient(90deg,
+    #3a3a40 0 7px, #8e8e96 7px 10px,          /* hilt */
+    #eaf7ff 10px 14px, #4fc3ff 30%, #2fa7ee 92%, transparent);
+  box-shadow: 0 0 7px 1px rgba(80,190,255,.5);
+  animation: saber-hum 3.2s ease-in-out infinite;
+}
+@keyframes saber-hum {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.4); }
+}
+
+/* ---- after the trip, the footer signs off properly ---- */
+body[data-trip="post"] footer::after {
+  content: "\201CSee ya real soon!\201D";
+  display: block;
+  margin-top: 6px;
+  font-style: italic;
+  opacity: .8;
+}
+
 /* ---- dark mode: re-tint the tiles that carry baked-in colors ---- */
 @media (prefers-color-scheme: dark) {
   nav .bunting {
@@ -118,4 +174,7 @@ body[data-mood="halloween"][data-phase="night"] .embers { display: block; }
 /* ---- this layer's reduced-motion switch ---- */
 @media (prefers-reduced-motion: reduce) {
   .embers { display: none !important; }
+  /* fireflies rest at opacity 0, so stopping the animation removes them;
+     the saber keeps its blade, just stops humming */
+  .card.bayou::after, .card h3.saber::after { animation: none; }
 }

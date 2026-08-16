@@ -410,6 +410,10 @@
   }
   header .stars {
     background-image:
+      /* a hidden Mickey, as is tradition — head and two ears, lower left */
+      radial-gradient(2px 2px at 18% 42%, #fff7e8, transparent),
+      radial-gradient(1.2px 1.2px at 16.4% 36%, #fff7e8, transparent),
+      radial-gradient(1.2px 1.2px at 19.6% 36%, #fff7e8, transparent),
       radial-gradient(1.5px 1.5px at 12% 30%, #fff, transparent),
       radial-gradient(1px 1px at 34% 15%, #fff, transparent),
       radial-gradient(1.5px 1.5px at 55% 45%, #ffe9c9, transparent),
@@ -431,6 +435,24 @@
       radial-gradient(1px 1px at 68% 78%, #cdd8ff, transparent),
       radial-gradient(1px 1px at 51% 20%, #fff, transparent);
   }
+  /* a wishing star: one streak every 23s, night only */
+  header .shoot {
+    position: absolute;
+    top: 26%; left: -8%;
+    width: 46px; height: 1.5px;
+    border-radius: 1px;
+    background: linear-gradient(90deg, transparent, #fff);
+    transform: rotate(8deg);
+    opacity: 0;
+    z-index: 0; pointer-events: none;
+  }
+  body[data-phase="night"] header .shoot { animation: shoot 23s linear infinite; }
+  @keyframes shoot {
+    0%, 90% { opacity: 0; transform: rotate(8deg) translateX(0); }
+    91%     { opacity: .9; }
+    100%    { opacity: 0; transform: rotate(8deg) translateX(74vw) translateY(6vw); }
+  }
+
   body[data-phase="dusk"]  header .stars { opacity: .3; }
   body[data-phase="night"] header .stars { opacity: .85; animation: twinkle-a 3.6s ease-in-out infinite; }
   body[data-phase="night"] header .stars-b { opacity: .5; animation: twinkle-b 2.9s ease-in-out infinite; }
@@ -516,7 +538,8 @@
     header .bat, header .fog, header .pyro i,
     body[data-phase="night"] header .stars, body[data-phase="night"] header .stars-b,
     #day19 .day-head::after, #day20 .day-head::after, #day21 .day-head::after,
-    #day19 h3.neon, #day21 .day-head .ghost { animation: none; }
+    #day19 h3.neon, #day21 .day-head .ghost,
+    body[data-phase="night"] header .shoot { animation: none; }
   }
 
   /* ---- live strip: Multi Pass clock + wait times, park days only ---- */
@@ -882,6 +905,7 @@
   <div class="glow"></div>
   <div class="stars"></div>
   <div class="stars-b"></div>
+  <div class="shoot"></div>
   <div class="orb" id="orb"><div class="orb-shade"></div></div>
   <svg class="ridge" viewBox="0 0 220 120" aria-hidden="true" focusable="false">
     <g>
@@ -1138,7 +1162,7 @@
 
     <div class="card" data-until="15:00">
       <span class="tag warn">Booked &middot; nonrefundable</span>
-      <h3>Savi's Workshop</h3>
+      <h3 class="saber">Savi's Workshop</h3>
       <div class="when" style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">2:30 pm</span> &middot; back in Batuu</div>
       <ol class="script">
         <li><span class="t">2:00</span><span><strong>Leave the table.</strong> Out through Bayou Country again, 15 minutes; check in no more than 15 early, everyone on the booking present.
@@ -1149,7 +1173,7 @@
       <div class="callout go"><strong>You carry the saber and the droid for the rest of the night</strong> &mdash; the droid shouldn't get wet. Each comes with its own case, the droid's being a cardboard carrying box; a padded <strong>backpack is a separate purchase, reported at $49.99</strong>, if you'd rather not carry the box.</div>
     </div>
 
-    <div class="card" data-until="17:35">
+    <div class="card bayou" data-until="17:35">
       <h3>Dinner &mdash; booked</h3>
       <div class="when" style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">4:00 pm</span> &middot; Blue Bayou</div>
       <ul class="list">
@@ -1232,7 +1256,7 @@
       <div class="callout"><strong>Tiana's is the one that sells out.</strong> Its Multi Pass availability runs dry around 4:45pm, earlier than anything else, so take it as soon as the wheel comes round. Back rows stay driest.</div>
     </div>
 
-    <div class="card" data-until="14:45">
+    <div class="card bayou" data-until="14:45">
       <span class="tag accent">Drinks &amp; a snack &middot; peak heat</span>
       <h3>Afternoon stop &mdash; booked</h3>
       <div class="when" style="font-size:19px;font-weight:700;margin-bottom:4px;"><span class="time" style="font-size:19px;">1:20 pm</span> &middot; Blue Bayou</div>

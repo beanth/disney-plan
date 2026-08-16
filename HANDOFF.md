@@ -351,8 +351,15 @@ single-file rule — the page works identically without it (bunting off the nav,
 per-day section background tiles including the 8/21 Mansion-damask, sparkle
 bullets on 8/20, bat ornaments on the reference title and footer, and six
 `ember-rise` dots gated to halloween mood at dusk/night with their own
-reduced-motion kill inside that file). The earlier header/day animations stay
-in index.html's style block — moving them was churn without benefit. No build
+reduced-motion kill inside that file). Later additions to the layer: a firefly
+on each Blue Bayou card (`firefly`, ::after only — the Friday card's ::before
+is the cobweb, and sharing it would animate the web; stilled while folded), an
+ignited saber blade under the Savi's heading (`saber-hum`; reduced motion
+keeps the blade, stops the hum), and a post-trip footer sign-off
+(`data-trip="post"` only). In index.html's sky: a hidden Mickey among the
+night stars (three of the twelve star-field gradients, lower left) and a
+`shoot`ing star streaking every 23s at night. The earlier header/day
+animations stay in index.html's style block — moving them was churn without benefit. No build
 step, no dependencies. `CLAUDE.md` carries the working rules. After August this
 is a keepsake, not a live document.
 
