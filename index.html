@@ -377,6 +377,47 @@
     margin-top: 2px;
   }
   .countdown .small .time { font-size: 13px; color: var(--spark); }
+  /* how long you have, not just what's next */
+  .countdown .cd-in {
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-weight: 700;
+    color: var(--spark);
+  }
+  .countdown .closing {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255,255,255,.18);
+    font-size: 12px;
+    color: rgba(255,255,255,.72);
+  }
+  /* a hard deadline inside 20 minutes — one that can't be repaired on the ground */
+  .countdown.urgent {
+    background: rgba(255,92,0,.28);
+    border-color: rgba(255,176,87,.75);
+    animation: nudge 2.4s ease-in-out infinite;
+  }
+  .countdown.urgent .cd-in { color: #fff; }
+  @keyframes nudge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,176,87,0); }
+    50%      { box-shadow: 0 0 0 4px rgba(255,176,87,.22); }
+  }
+  @media (prefers-reduced-motion: reduce) { .countdown.urgent { animation: none; } }
+
+  /* the block you're in right now */
+  .nowtag {
+    display: none;
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent-ink, var(--accent, var(--plum)));
+  }
+  .card.now .nowtag { display: block; }
+  .card.now {
+    border-color: var(--accent, var(--plum));
+    box-shadow: 0 0 0 1px var(--accent, var(--plum)), var(--shadow);
+  }
 
   nav a.today {
     color: var(--spark);
@@ -749,6 +790,7 @@
     <div class="countdown" id="countdown" hidden>
       <div class="big" id="cd-big"></div>
       <div class="small" id="cd-small"></div>
+      <div class="small closing" id="cd-close" hidden></div>
     </div>
   </div>
 </header>
@@ -1396,19 +1438,22 @@
   var TRIP_START = new Date(2026, 7, 18); // Aug 18
   var DAYS = {
     "2026-08-18": { label: "Travel day", note: "Land, rest up. It starts tomorrow.", nav: null, greet: "Anaheim · arrival" },
-    "2026-08-19": { label: "California Adventure", nav: "day19", greet: "California Adventure", events: [
-      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25"],
+    // A 4th element marks a *hard* deadline — a door that shuts, which the header
+    // escalates for inside 20 minutes. Everything else absorbs a late start, so
+    // don't mark a step just because it has a clock time.
+    "2026-08-19": { label: "California Adventure", nav: "day19", greet: "California Adventure", close: [22, 0], events: [
+      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25", 1],
       [7,  25, "Walk to the Toy Story lot — bus to the Esplanade"],
       [8,  0,  "Scan in, book Guardians, then Cars Land"],
       [10, 0,  "Two-hour mark — book a second pass, you keep both"],
       [11, 20, "Guardians window likely open — ride when the app says, rebook on tap-in"],
-      [11, 55, "World of Color virtual queue — join at 12:00:00"],
-      [12, 50, "Carthay Circle Lounge, 12:50 pm — ask for indoors"],
+      [11, 55, "World of Color virtual queue — join at 12:00:00", 1],
+      [12, 50, "Carthay Circle Lounge, 12:50 pm — ask for indoors", 1],
       [14, 30, "Grizzly River Run now, so you're dry by dinner"],
       [15, 15, "Sonoma Terrace after Grizzly — second drink, 10.5% Craftwell"],
       [15, 30, "Hollywood Land until 5: Animation Academy, PhilharMagic"],
       [17, 15, "Paradise Gardens and the pier, ending at Lamplight"],
-      [18, 20, "Lamplight Lounge, 6:20 pm"],
+      [18, 20, "Lamplight Lounge, 6:20 pm", 1],
       [19, 50, "Out of Lamplight \u2014 Incredicoaster in the dark"],
       [20, 15, "World of Color ticket lands in the app \u2014 check your area"],
       [20, 30, "Drink at Bayside Brews, then walk to your spot"],
@@ -1416,22 +1461,22 @@
       [21, 30, "Guardians again if Monsters After Dark is running \u2014 park closes 10:00"],
       [21, 55, "Out through the Cars Land neon \u2014 bus from the Esplanade"]
     ]},
-    "2026-08-20": { label: "Disneyland · Day 1", nav: "day20", greet: "Paint the Night · final night", events: [
-      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25"],
+    "2026-08-20": { label: "Disneyland · Day 1", nav: "day20", greet: "Paint the Night · final night", close: [24, 0], events: [
+      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25", 1],
       [7,  25, "Walk to the Toy Story lot — bus to the Esplanade"],
       [8,  0,  "Scan in, book Indiana Jones, then Batuu"],
       [8,  5,  "Rise of the Resistance standby while the wait is short"],
       [10, 0,  "Droid Depot — and the two-hour mark: book a second pass from the queue"],
       [10, 45, "Docking Bay 7 for lunch"],
       [11, 15, "Oga's Cantina — a full hour, use it"],
-      [12, 30, "Leave Batuu via Bayou Country — 15 min walk"],
-      [12, 50, "Café Orléans — drinks stop, 12:50 pm"],
+      [12, 30, "Leave Batuu via Bayou Country — 15 min walk", 1],
+      [12, 50, "Café Orléans — drinks stop, 12:50 pm", 1],
       [13, 45, "If the Indy window is open by ~1:45, ride it — 90 seconds from the table"],
-      [14, 0,  "Out of Café Orléans — walk back for Savi's, check in by 2:25"],
-      [14, 30, "Savi's Workshop — booked, 2:30"],
-      [16, 0,  "Blue Bayou, 4:00 pm"],
+      [14, 0,  "Out of Café Orléans — walk back for Savi's, check in by 2:25", 1],
+      [14, 30, "Savi's Workshop — booked, 2:30", 1],
+      [16, 0,  "Blue Bayou, 4:00 pm", 1],
       [17, 30, "Out of Blue Bayou — Pirates fits now if it's posting short"],
-      [19, 0,  "Curb claimed \u2014 east curb, north end of Main Street"],
+      [19, 0,  "Curb claimed \u2014 east curb, north end of Main Street", 1],
       [20, 45, "Paint the Night steps off at the far end — reaches you ~9:05 (confirm in app)"],
       [21, 5,  "Parade reaches you, tail clears ~9:25"],
       [21, 30, "Wondrous Journeys \u2014 turn to face the castle"],
@@ -1440,8 +1485,8 @@
       [23, 0,  "Hang back, ride one more thing, then out"],
       [23, 45, "Out and walking back \u2014 25-30 min"]
     ]},
-    "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", events: [
-      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25"],
+    "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", close: [24, 0], events: [
+      [7,  0,  "Breakfast at the hotel — first seating, out by 7:25", 1],
       [7,  25, "Walk to the Toy Story lot — bus to the Esplanade"],
       [8,  0,  "Scan in, book Haunted Mansion Holiday"],
       [8,  5,  "Peter Pan, then Alice, then out to Big Thunder or Matterhorn"],
@@ -1450,12 +1495,12 @@
       [11, 15, "Big Thunder or Runaway Railway on the pass you rebooked"],
       [12, 0,  "A boat on the Rivers of America — Columbia if it's sailing"],
       [13, 10, "Walk to Blue Bayou"],
-      [13, 20, "Blue Bayou — drinks stop, 1:20 pm"],
-      [14, 40, "Walk east for the 2:45 Halloween cavalcade at the Hub"],
+      [13, 20, "Blue Bayou — drinks stop, 1:20 pm", 1],
+      [14, 40, "Walk east for the 2:45 Halloween cavalcade at the Hub", 1],
       [15, 10, "Back west — Pirates, Tiki Room, the Adventureland loop"],
-      [17, 40, "Carnation Caf\u00e9, 5:40 pm — dinner service ends 7:00"],
+      [17, 40, "Carnation Caf\u00e9, 5:40 pm — dinner service ends 7:00", 1],
       [19, 0,  "Out of Carnation — claim the Main Street sidewalk now"],
-      [20, 15, "Planted on Main Street east sidewalk"],
+      [20, 15, "Planted on Main Street east sidewalk", 1],
       [21, 30, "Halloween Screams debut (confirm time in app)"],
       [21, 55, "Head to the river for the 10:30 Fantasmic!"],
       [22, 30, "Fantasmic! — last show of the trip"],
@@ -1488,6 +1533,12 @@
       card.appendChild(fold);
 
       if (card.hasAttribute("data-until")) {
+        // Both live outside .fold so they survive folding; CSS decides which shows.
+        var badge = document.createElement("div");
+        badge.className = "nowtag";
+        badge.textContent = "Now";
+        card.insertBefore(badge, fold);
+
         var hint = document.createElement("div");
         hint.className = "reopen";
         hint.textContent = "Done \u00b7 tap to reopen";
@@ -1528,7 +1579,9 @@
       }
 
       var isToday = (k === todayKey);
-      sec.querySelectorAll(".card[data-until]").forEach(function (card) {
+      var cards = sec.querySelectorAll(".card[data-until]");
+
+      cards.forEach(function (card) {
         if (card.dataset.manual) return;
         // `over` lags by three hours, so between midnight and 3am the calendar has
         // moved on but the section hasn't closed — keep yesterday's blocks folded.
@@ -1541,7 +1594,28 @@
         }
         card.classList.toggle("folded", past);
       });
+
+      // Mark the block you're actually in. Derived from the clock rather than from
+      // which cards are folded, so a card you reopened by hand doesn't claim "now".
+      var live = null;
+      if (isToday && !over) {
+        for (var i = 0; i < cards.length; i++) {
+          var chm = cards[i].getAttribute("data-until").split(":");
+          var ct = new Date(now);
+          ct.setHours(+chm[0], +chm[1], 0, 0);
+          if (now < ct) { live = cards[i]; break; }
+        }
+      }
+      cards.forEach(function (card) { card.classList.toggle("now", card === live); });
     });
+  }
+
+  // "in 12 min" / "in 1h 20m" — the thing the plan never told you.
+  function untilText(mins) {
+    if (mins <= 0) return "now";
+    if (mins < 60) return "in " + mins + " min";
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return "in " + h + "h" + (m ? " " + m + "m" : "");
   }
 
   function update() {
@@ -1552,8 +1626,11 @@
     var box = document.getElementById("countdown");
     var big = document.getElementById("cd-big");
     var small = document.getElementById("cd-small");
+    var closing = document.getElementById("cd-close");
     var greet = document.getElementById("greeting");
     box.hidden = false;
+    closing.hidden = true;
+    box.classList.remove("urgent");
 
     // clear any previous today marker
     document.querySelectorAll("nav a.today").forEach(function (a) { a.classList.remove("today"); });
@@ -1576,15 +1653,38 @@
         if (tab) tab.classList.add("today");
       }
       if (today.events) {
-        var next = null;
+        var next = null, nextIn = 0;
         for (var i = 0; i < today.events.length; i++) {
           var e = today.events[i];
           var t = new Date(now); t.setHours(e[0], e[1], 0, 0);
-          if (t > now) { next = e; break; }
+          if (t > now) { next = e; nextIn = Math.round((t - now) / 60000); break; }
         }
-        small.textContent = next ? "Up next \u00b7 " + next[2] : "That's the day. Enjoy the night.";
+        small.textContent = "";
+        if (next) {
+          var lede = document.createElement("span");
+          lede.className = "cd-in";
+          lede.textContent = untilText(nextIn);
+          small.appendChild(lede);
+          small.appendChild(document.createTextNode(" \u00b7 " + next[2]));
+        } else {
+          small.textContent = "That's the day. Enjoy the night.";
+        }
+        // Escalate only for doors that shut, and only once they're close enough
+        // that the warning is actionable.
+        box.classList.toggle("urgent", !!(next && next[3] && nextIn <= 20));
       } else {
         small.textContent = today.note || "";
+      }
+
+      // Park close, once it's near enough to change whether you join a queue.
+      if (today.close) {
+        var cl = new Date(now); cl.setHours(today.close[0], today.close[1], 0, 0);
+        var clIn = Math.round((cl - now) / 60000);
+        if (clIn > 0 && clIn <= 90) {
+          closing.hidden = false;
+          closing.textContent = "Park closes " + untilText(clIn) +
+            " \u00b7 anyone in line at closing still rides";
+        }
       }
       greet.textContent = today.greet || "Anaheim";
     } else if (now < TRIP_START) {
