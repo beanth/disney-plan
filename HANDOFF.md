@@ -357,8 +357,16 @@ is the cobweb, and sharing it would animate the web; stilled while folded), an
 ignited saber blade under the Savi's heading (`saber-hum`; reduced motion
 keeps the blade, stops the hum), and a post-trip footer sign-off
 (`data-trip="post"` only). In index.html's sky: a hidden Mickey among the
-night stars (three of the twelve star-field gradients, lower left) and a
-`shoot`ing star streaking every 23s at night. The earlier header/day
+night stars (three of the twelve star-field gradients, lower left), a
+`shoot`ing star streaking every 23s at night, a three-burst `volley` over the
+castle every 84s at dusk/night (user chose timer over tap), and Tinker Bell's
+`tink-flight` across the header every 63s in the 8/20 gold mood only — the
+approved replacement for the rejected nav stripes. Also user-approved:
+`hitch`hiking ghosts that ride position:sticky through the #day21 scroll and
+relocate to the footer (`.ghostlets`) when `data-trip="post"` — the Mansion's
+"they follow you home" — and live Anaheim temperature in the header sub-line
+on park days (open-meteo, CORS verified, one call per 10 min, hidden on
+failure, zero calls off-trip). The earlier header/day
 animations stay in index.html's style block — moving them was churn without benefit. No build
 step, no dependencies. `CLAUDE.md` carries the working rules. After August this
 is a keepsake, not a live document.
