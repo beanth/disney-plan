@@ -381,8 +381,10 @@ card — line-art pumpkin (8/19), gold sparkles (8/20), damask medallion (8/21),
 castle (reference and live-strip cards), dropped while a card is folded; a
 dashed accent "trail" stitched down the left of each day section (replaced the
 same day — it sat under the opaque cards and only showed in the 12px gaps, so
-it read as nothing; the replacement is a **day-colored ribbon along the top
-edge of every card**, which survives folding while the watermark does not);
+it read as nothing; the replacement was meant to be a **day-colored ribbon
+along the top edge of every card** and ships as a **full-height wash off the
+left edge** on open day cards — see the wash note below — surviving folding
+as the intended 3px hairline while the watermark does not);
 and the between-card tiles bumped ~60%, then the whole light-mode layer raised
 again on user feedback ("most of the effects are hard to see especially on
 light mode") — watermark strokes to ~.24–.3, tiles to ~.13–.19, bunting fills
@@ -428,6 +430,37 @@ the day layer on and off puts 81–486 tile pixels in each gutter where there we
 motif is cut by the screen edge, which reads as the pattern continuing off
 screen. Both scratch harnesses were disposable; `fold-test.mjs` is still the
 only committed test.
+
+**The card wash: an accident the user kept, then softened** (same 17 Aug turn,
+"making the color gradient starting on the left of each content card more
+transparent"). The card color layer was written as a 3px top ribbon
+(`background-size: 100% 3px, <watermark>`), but each per-day rule below it
+re-declares `background-size` with a single value (`88px auto`), which applies
+to *both* layers — and `auto` height on a gradient means "fill the box". So an
+open day card has always painted an 84–88px-wide, full-height wash down its left
+edge, not a hairline, in both schemes. Nobody noticed until the user screenshotted
+it. They asked for it softer, not gone, so:
+
+- the sizes are now stated per layer (`88px auto, 88px auto`) so the wash is
+  deliberate, and the two dead `100% 3px, NNpx auto` lines are gone. **Don't
+  "restore" the ribbon** — the wash is the approved look.
+- alphas came down ~45% on the washes (8/19 .6→.32, 8/20 .65→.34, 8/21
+  .55→.3, plus the same values in the dark block) and ~27% on the hairlines
+  that folded and non-day cards still use (plum .55→.4, dark .5→.36; folded
+  .6→.42, .65→.45, .55→.38, dark .55/.55/.5→.4/.4/.36). The hairlines were
+  eased rather than halved because they're 3px and the standing note is to
+  judge this in bright sun on a phone.
+
+Measured at 390px, sampling the card interior 1px in from the left edge: 8/19
+went from rgb(242,171,112) to rgb(248,210,179), and the wash now fades out
+around 60px in rather than 80px. Geometry re-asserted in both schemes after the
+change: open cards `88px, 88px` / `84px, 84px`, folded and base cards
+`100% 3px`. `fold-test.mjs` passes; no facts touched.
+
+The general lesson, third of its kind in this file: **a single-value
+`background-size` after a two-layer `background-image` silently resizes every
+layer.** Same family as the `background` shorthand wiping festive layers. If a
+comment says ribbon and the screen says wash, measure before you "fix" either.
 
 No build step, no dependencies. `CLAUDE.md` carries the working rules. After
 August this is a keepsake, not a live document.
