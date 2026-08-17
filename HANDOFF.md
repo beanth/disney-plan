@@ -462,6 +462,42 @@ The general lesson, third of its kind in this file: **a single-value
 layer.** Same family as the `background` shorthand wiping festive layers. If a
 comment says ribbon and the screen says wash, measure before you "fix" either.
 
+**Then the wash switched sides, and the page grew edge garlands** (user, later
+the same day: "move gradient from left side to right side… keep in mind we
+have designs on the right side already", plus "I'm also not seeing anything
+fun on the left and right sides of the page (the little slivers of white
+space)"). Current card geography, after inventorying the right side first:
+
+- **Wash: right edge, fading leftward** — every card gradient is now
+  `linear-gradient(270deg, …)`, and open day cards anchor it
+  `background-position: 100% 0`. Folded hairlines flipped direction too, so
+  the color pools at the right end of the 3px line.
+- **Watermarks: bottom-LEFT** (`left -10px bottom -12px`, all cards, both
+  schemes) — moved because a pumpkin in its own orange wash would drown.
+- **Stayed right**: the cobweb (top-right, styles.css), the Bayou firefly, the
+  hitchhiking ghosts. Dark strokes and a lit dot read fine over a .3 tint.
+
+The "slivers" complaint was real and the day-underlay fix hadn't answered it:
+the underlay tiles are sparse (2–3 marks per 90×70), so a 16px gutter catches
+almost nothing. The answer is two **edge garlands on `body`**: a 16×150 tile
+(sparkle/dot/sparkle/dot in the trio hues, opacities .28–.32 light, .3–.34
+dark) as extra background layers, `repeat-y`, one at `left top`, one at
+`right 0 top 75px` — the 75px phase shift keeps the sides from reading as
+mirrored. On `body`, not the sections, so the whole page's edges are dressed,
+reference cards included. This forced `body`'s background to explicit
+`background-repeat`/`background-position` lists (repeat, no-repeat, repeat-y,
+repeat-y) — keep the layer order (scatter, glow, left garland, right garland)
+in sync across all three lists and the dark block.
+
+Verified same harness style as before, light and dark at 320/390/768/1280px:
+gradients all 270deg with washes at `100% 0`, watermarks at `left -10px
+bottom -12px`, folded cards still `100% 3px`; by pixel, the right interior
+edge of an open 8/19 card is tinted and the left edge matches the card color,
+and a 16×600 strip of each screen-edge sliver now carries garland marks (>6
+distinct colors) on both sides at every width. No horizontal overflow, no
+console errors, `body` falls back to zero background layers with festive.css
+blocked, fold-test passes.
+
 No build step, no dependencies. `CLAUDE.md` carries the working rules. After
 August this is a keepsake, not a live document.
 
