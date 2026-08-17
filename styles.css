@@ -271,7 +271,7 @@
     position: absolute; top: 0; right: 0;
     width: 60px; height: 60px;
     pointer-events: none;
-    opacity: .14;
+    opacity: .22;
     background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'1.5'%3E%20%3Cpath%20d%3D'M100%200%20L2%207%20M100%200%20L10%2038%20M100%200%20L28%2066%20M100%200%20L55%2088%20M100%200%20L86%20100'%2F%3E%20%3C%2Fg%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'1.15'%3E%20%3Cpath%20d%3D'M78.4%201.5%20Q%2078%206.4%2080.2%208.4%20Q%2081.4%2012.2%2084.2%2014.5%20Q%2086.9%2017.8%2090.1%2019.4%20Q%2093.7%2021.2%2096.9%2022'%2F%3E%20%3Cpath%20d%3D'M55.9%203.2%20Q%2056.8%2011.4%2062.2%2016%20Q%2062.4%2025.3%2065.4%2031.7%20Q%2071.4%2036.9%2080.2%2038.7%20Q%2087.3%2043.2%2093.6%2046'%2F%3E%20%3Cpath%20d%3D'M29.4%205%20Q%2031.6%2018.4%2038.8%2025.8%20Q%2040.3%2039.6%2046%2049.5%20Q%2055.4%2057.9%2068.5%2061.6%20Q%2079.3%2068.8%2089.8%2073'%2F%3E%20%3Cpath%20d%3D'M6.9%206.7%20Q%209.4%2024.1%2014.5%2036.1%20Q%2020.3%2051.4%2031.6%2062.7'%2F%3E%20%3C%2Fg%3E%20%3Cg%20fill%3D'none'%20stroke%3D'%23000'%20stroke-linecap%3D'round'%20stroke-width%3D'0.9'%3E%20%3Cpath%20d%3D'M31.6%2062.7%20Q%2034.4%2070.2%2029.8%2076.4'%2F%3E%20%3Cpath%20d%3D'M46%2049.5%20Q%2041.2%2055.8%2043.6%2061'%2F%3E%20%3C%2Fg%3E%20%3C%2Fsvg%3E") no-repeat top right;
     background-size: 60px 60px;
   }
@@ -282,7 +282,7 @@
     position: absolute; top: -10px; right: 30px;
     width: 15px; height: 36px;
     pointer-events: none;
-    opacity: .45;
+    opacity: .55;
     background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2040%27%3E%3Cline%20x1%3D%2712%27%20y1%3D%270%27%20x2%3D%2712%27%20y2%3D%2722%27%20stroke%3D%27%23000%27%20stroke-width%3D%271%27%2F%3E%3Cg%20stroke%3D%27%23000%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M9%2027%20C%204%2025%2C%203%2021%2C%201%2019%27%2F%3E%3Cpath%20d%3D%27M9%2030%20C%204%2030%2C%202%2028%2C%200%2026%27%2F%3E%3Cpath%20d%3D%27M15%2027%20C%2020%2025%2C%2021%2021%2C%2023%2019%27%2F%3E%3Cpath%20d%3D%27M15%2030%20C%2020%2030%2C%2022%2028%2C%2024%2026%27%2F%3E%3C%2Fg%3E%3Cellipse%20cx%3D%2712%27%20cy%3D%2728.5%27%20rx%3D%274.2%27%20ry%3D%275%27%20fill%3D%27%23000%27%2F%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2723.5%27%20r%3D%272.4%27%20fill%3D%27%23000%27%2F%3E%3C%2Fsvg%3E") no-repeat top center;
     background-size: 15px 36px;
   }
@@ -325,14 +325,14 @@
     position: absolute; right: -4px; bottom: 2px;
     width: 96px; height: 34px;
     pointer-events: none;
-    background: radial-gradient(ellipse at 74% 100%, rgba(255,138,26,.40), transparent 68%);
+    background: radial-gradient(ellipse at 74% 100%, rgba(255,138,26,.52), transparent 68%);
   }
   #day20 .day-head::after {
     content: "";
     position: absolute; right: -4px; bottom: 2px;
     width: 96px; height: 34px;
     pointer-events: none;
-    background: radial-gradient(ellipse at 74% 100%, rgba(214,178,92,.38), transparent 68%);
+    background: radial-gradient(ellipse at 74% 100%, rgba(214,178,92,.5), transparent 68%);
   }
 
   /* the glows behind the day titles flicker like the candle they imply */
