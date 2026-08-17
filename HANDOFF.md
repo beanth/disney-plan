@@ -396,6 +396,39 @@ with **no console error** — backgroundImage just computes to `none`; and
 test-side, aborting API routes logs console errors for fetches the page
 handles fine, so "no console errors" assertions must fulfill mocks instead.
 
+**The decoration is full-bleed as of 17 Aug** (user, with a phone screenshot:
+"can we make the background expand to the side of my screen as well instead of
+just inline with the content?"). The per-day motif tiles used to sit on the
+`<section>`'s own background, so they died at the content column: measured
+16→374 on a 390px phone and 336→944 at 1280px, i.e. **zero** tile pixels in
+either 16px screen-edge gutter at any width. They now ride a `::before`
+underlay on each day section — `position: absolute; z-index: -1; top/bottom:
+-11px; left: 50%; width: 100vw; margin-left: -50vw` — so the field spans the
+viewport while staying anchored to its own day's vertical run. Three things
+hold that up and shouldn't be casually changed:
+
+- `z-index: -1` is what keeps the underlay above the canvas (body's scatter and
+  paper still paint below it) and behind every card, including the
+  `position: relative` ones. Without it the layer covers positioned cards.
+- `html { overflow-x: clip }` contains the 100vw overhang. **Not `hidden`** —
+  that makes the root a scroll container and breaks the sticky nav and the
+  sticky hitchers. `clip` doesn't, and it leaves `overflow-y` alone. It lives in
+  festive.css, so removing that file still restores stock overflow.
+- `top/bottom: -11px` is half of `section`'s 22px bottom margin, so consecutive
+  days meet in the gutters instead of leaving a bare stripe between them. If
+  that margin changes, this changes with it.
+
+Verified in Chromium at 320/390/430/768/1280px, light and dark: underlay width
+equals `innerWidth`, `scrollWidth === innerWidth` (no horizontal scrollbar), nav
+still sticks while scrolled, embers still `fixed`, cards still win the hit-test,
+no console errors, and the same in `#test` and with festive.css blocked. The
+gutter claim is a pixel diff, not a look: rendering the 16×640 edge strip with
+the day layer on and off puts 81–486 tile pixels in each gutter where there were
+0 before. The left gutter carries fewer than the right by design — the leftmost
+motif is cut by the screen edge, which reads as the pattern continuing off
+screen. Both scratch harnesses were disposable; `fold-test.mjs` is still the
+only committed test.
+
 No build step, no dependencies. `CLAUDE.md` carries the working rules. After
 August this is a keepsake, not a live document.
 
