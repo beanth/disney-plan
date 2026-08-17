@@ -443,32 +443,84 @@
     100%    { opacity: 0; transform: rotate(8deg) translateX(74vw) translateY(6vw); }
   }
 
-  /* the castle's own show: a three-burst volley every 84s after dark */
+  /* the castle's own show: three-layer bursts after dark, each on a 6–8s
+     period. Layers: the element is the shell — it rises with a small tail and
+     pops white; ::before is 14 streaking rays (currentColor through an SVG
+     mask); ::after is an irregular ember cloud that drifts down as it dies. */
   header .volley i {
     position: absolute;
-    width: 3px; height: 3px;
+    width: 5px; height: 5px;
     border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, currentColor 55%, transparent 72%);
+    box-shadow: 0 6px 0 -1.5px currentColor, 0 11px 0 -2px currentColor;
     opacity: 0;
     z-index: 1; pointer-events: none;
-    box-shadow:
-      0 -5px 0 currentColor, 3.5px -3.5px 0 currentColor,
-      5px 0 0 currentColor, 3.5px 3.5px 0 currentColor,
-      0 5px 0 currentColor, -3.5px 3.5px 0 currentColor,
-      -5px 0 0 currentColor, -3.5px -3.5px 0 currentColor;
-    animation: volley 7.2s linear infinite paused;
+    animation: volley-core var(--vd, 7.2s) linear var(--vdel, 0s) infinite paused;
   }
-  /* each burst recurs every 6–8s; unequal periods keep the volley from
-     feeling metronomic */
-  header .volley .v1 { right: 112px; top: 46px; color: #ffd9a3; animation-duration: 6.4s; }
-  header .volley .v2 { right: 58px;  top: 32px; color: #d9b3ff; animation-delay: 2.3s; }
-  header .volley .v3 { right: 152px; top: 62px; color: #ffb057; animation-duration: 7.9s; animation-delay: 4.6s; }
+  header .volley i::before, header .volley i::after {
+    content: "";
+    position: absolute; left: 50%; top: 50%;
+    width: 40px; height: 40px;
+    margin: -20px 0 0 -20px;
+    opacity: 0;
+    animation: volley-rays var(--vd, 7.2s) linear var(--vdel, 0s) infinite paused;
+  }
+  header .volley i::before {
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Cg%20stroke='%23fff'%20stroke-width='1.7'%20stroke-linecap='round'%3E%3Cline%20x1='24.5'%20y1='20.0'%20x2='38.0'%20y2='20.0'/%3E%3Cline%20x1='24.1'%20y1='22.0'%20x2='30.8'%20y2='25.2'/%3E%3Cline%20x1='22.8'%20y1='23.5'%20x2='30.0'%20y2='32.5'/%3E%3Cline%20x1='21.0'%20y1='24.4'%20x2='22.4'%20y2='30.7'/%3E%3Cline%20x1='19.0'%20y1='24.4'%20x2='16.2'%20y2='36.6'/%3E%3Cline%20x1='17.2'%20y1='23.5'%20x2='11.9'%20y2='30.2'/%3E%3Cline%20x1='15.9'%20y1='22.0'%20x2='6.5'%20y2='26.5'/%3E%3Cline%20x1='15.5'%20y1='20.0'%20x2='8.0'%20y2='20.0'/%3E%3Cline%20x1='15.9'%20y1='18.0'%20x2='3.8'%20y2='12.2'/%3E%3Cline%20x1='17.2'%20y1='16.5'%20x2='13.1'%20y2='11.4'/%3E%3Cline%20x1='19.0'%20y1='15.6'%20x2='16.4'%20y2='4.4'/%3E%3Cline%20x1='21.0'%20y1='15.6'%20x2='22.9'%20y2='7.3'/%3E%3Cline%20x1='22.8'%20y1='16.5'%20x2='30.6'%20y2='6.7'/%3E%3Cline%20x1='24.1'%20y1='18.0'%20x2='30.8'%20y2='14.8'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Cg%20stroke='%23fff'%20stroke-width='1.7'%20stroke-linecap='round'%3E%3Cline%20x1='24.5'%20y1='20.0'%20x2='38.0'%20y2='20.0'/%3E%3Cline%20x1='24.1'%20y1='22.0'%20x2='30.8'%20y2='25.2'/%3E%3Cline%20x1='22.8'%20y1='23.5'%20x2='30.0'%20y2='32.5'/%3E%3Cline%20x1='21.0'%20y1='24.4'%20x2='22.4'%20y2='30.7'/%3E%3Cline%20x1='19.0'%20y1='24.4'%20x2='16.2'%20y2='36.6'/%3E%3Cline%20x1='17.2'%20y1='23.5'%20x2='11.9'%20y2='30.2'/%3E%3Cline%20x1='15.9'%20y1='22.0'%20x2='6.5'%20y2='26.5'/%3E%3Cline%20x1='15.5'%20y1='20.0'%20x2='8.0'%20y2='20.0'/%3E%3Cline%20x1='15.9'%20y1='18.0'%20x2='3.8'%20y2='12.2'/%3E%3Cline%20x1='17.2'%20y1='16.5'%20x2='13.1'%20y2='11.4'/%3E%3Cline%20x1='19.0'%20y1='15.6'%20x2='16.4'%20y2='4.4'/%3E%3Cline%20x1='21.0'%20y1='15.6'%20x2='22.9'%20y2='7.3'/%3E%3Cline%20x1='22.8'%20y1='16.5'%20x2='30.6'%20y2='6.7'/%3E%3Cline%20x1='24.1'%20y1='18.0'%20x2='30.8'%20y2='14.8'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  header .volley i::after {
+    width: 3px; height: 3px;
+    margin: -1.5px 0 0 -1.5px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow:
+      10px -14px 0 .4px currentColor, 16px 4px 0 -.3px currentColor,
+      7px 15px 0 .2px currentColor, -6px 17px 0 -.4px currentColor,
+      -15px 9px 0 .3px currentColor, -18px -3px 0 -.2px currentColor,
+      -11px -13px 0 .4px currentColor, -2px -18px 0 -.3px currentColor,
+      14px 12px 0 0 currentColor, -9px -6px 0 -.5px currentColor;
+    animation-name: volley-sparks;
+  }
+  /* unequal periods keep the volley from feeling metronomic */
+  header .volley .v1 { right: 112px; top: 46px; color: #ffd9a3; --vd: 6.4s; }
+  header .volley .v2 { right: 58px;  top: 32px; color: #d9b3ff; --vdel: 2.3s; }
+  header .volley .v3 { right: 152px; top: 62px; color: #ffb057; --vd: 7.9s; --vdel: 4.6s; }
   body[data-phase="dusk"] header .volley i,
-  body[data-phase="night"] header .volley i { animation-play-state: running; }
-  @keyframes volley {
-    0%         { opacity: 0; transform: scale(.2); }
-    3%         { opacity: .95; }
-    26%        { opacity: 0; transform: scale(7); }
-    27%, 100%  { opacity: 0; transform: scale(.2); }
+  body[data-phase="night"] header .volley i,
+  body[data-phase="dusk"] header .volley i::before,
+  body[data-phase="night"] header .volley i::before,
+  body[data-phase="dusk"] header .volley i::after,
+  body[data-phase="night"] header .volley i::after { animation-play-state: running; }
+  /* the shell: rise with tail, then a white pop that hands off to the rays */
+  @keyframes volley-core {
+    0%        { opacity: 0; transform: translateY(26px) scale(.6); }
+    2%        { opacity: .85; }
+    7%        { opacity: .9; transform: translateY(0) scale(.7); }
+    9%        { opacity: 1; transform: translateY(0) scale(2.4); }
+    14%       { opacity: 0; transform: translateY(0) scale(1.2); }
+    100%      { opacity: 0; transform: translateY(26px) scale(.6); }
+  }
+  /* the rays: fast expansion that decelerates, a flicker, a slight droop */
+  @keyframes volley-rays {
+    0%, 7%    { opacity: 0; transform: scale(.12); }
+    9%        { opacity: .95; transform: scale(.55); }
+    14%       { transform: scale(.88) translateY(1px); }
+    20%       { opacity: .75; transform: scale(1) translateY(3px); }
+    22%       { opacity: .35; }
+    24%       { opacity: .5; }
+    26%       { opacity: 0; transform: scale(1.05) translateY(7px); }
+    27%, 100% { opacity: 0; transform: scale(.12); }
+  }
+  /* the embers: lag the rays slightly, sink further, die last */
+  @keyframes volley-sparks {
+    0%, 8%    { opacity: 0; transform: scale(.15); }
+    10%       { opacity: .9; transform: scale(.6); }
+    16%       { transform: scale(1) translateY(2px); }
+    22%       { opacity: .5; transform: scale(1.15) translateY(5px); }
+    26%       { opacity: 0; transform: scale(1.2) translateY(10px); }
+    27%, 100% { opacity: 0; transform: scale(.15); }
   }
 
   /* Tinker Bell's flight, gold-mood days only — her real pre-fireworks run */
@@ -584,7 +636,8 @@
     #day19 .day-head::after, #day20 .day-head::after, #day21 .day-head::after,
     #day19 h3.neon, #day21 .day-head .ghost,
     body[data-phase="night"] header .shoot,
-    header .volley i, body[data-mood="seventieth"] header .tink { animation: none; }
+    header .volley i, header .volley i::before, header .volley i::after,
+    body[data-mood="seventieth"] header .tink { animation: none; }
   }
 
   /* ---- live strip: Multi Pass clock + wait times, park days only ---- */

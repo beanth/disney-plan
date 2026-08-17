@@ -361,7 +361,10 @@ keeps the blade, stops the hum), and a post-trip footer sign-off
 night stars (three of the twelve star-field gradients, lower left), a
 `shoot`ing star streaking every 23s at night, a three-burst `volley` over the
 castle at dusk/night — each burst on a 6.4–7.9s period (user first chose a
-timer over tap, then tightened 84s to every 6–8s), and Tinker Bell's
+timer over tap, then tightened 84s to every 6–8s, then rejected the plain
+expanding-dot-ring look; each burst is now three layers — `volley-core` shell
+rise/pop, `volley-rays` via an SVG-masked currentColor spoke burst,
+`volley-sparks` ember cloud — so don't simplify it back to one ring), and Tinker Bell's
 `tink-flight` across the header every 63s in the 8/20 gold mood only — the
 approved replacement for the rejected nav stripes. Also user-approved:
 `hitch`hiking ghosts that ride position:sticky through the #day21 scroll and
