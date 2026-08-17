@@ -84,7 +84,7 @@ html { overflow-x: clip; }   /* contain the overhang. NOT `hidden`, which would
                                 make the root a scroll container and break the
                                 sticky nav and the sticky hitchers. */
 #day19, #day20, #day21 { position: relative; }
-#day19::before, #day20::before, #day21::before {
+#day19::before, #day20::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -102,10 +102,6 @@ html { overflow-x: clip; }   /* contain the overhang. NOT `hidden`, which would
 #day20::before {
   background-image:
     url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='110'%20height='90'%3E%3Cpath%20d='M22%208%20L24%2016%20L32%2018%20L24%2020%20L22%2028%20L20%2020%20L12%2018%20L20%2016%20Z'%20fill='%23b8912e'%20fill-opacity='.19'/%3E%3Cpath%20d='M78%2044%20L79.4%2049.6%20L85%2051%20L79.4%2052.4%20L78%2058%20L76.6%2052.4%20L71%2051%20L76.6%2049.6%20Z'%20fill='%23b8912e'%20fill-opacity='.18'/%3E%3Cpath%20d='M44%2072%20L45%2076%20L49%2077%20L45%2078%20L44%2082%20L43%2078%20L39%2077%20L43%2076%20Z'%20fill='%23b8912e'%20fill-opacity='.15'/%3E%3C/svg%3E");
-}
-#day21::before {
-  background-image:
-    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='56'%20height='56'%3E%3Cg%20fill='none'%20stroke='%236b3fa0'%20stroke-opacity='.16'%20stroke-width='1.6'%3E%3Cpath%20d='M28%2010%20C%2020%2016,%2020%2024,%2028%2030%20C%2036%2024,%2036%2016,%2028%2010%20Z'/%3E%3Cpath%20d='M28%2030%20C%2022%2036,%2022%2042,%2028%2046%20C%2034%2042,%2034%2036,%2028%2030%20Z'/%3E%3Cpath%20d='M16%2028%20C%2010%2024,%208%2018,%2012%2012'/%3E%3Cpath%20d='M40%2028%20C%2046%2024,%2048%2018,%2044%2012'/%3E%3C/g%3E%3Ccircle%20cx='4'%20cy='4'%20r='1.3'%20fill='%236b3fa0'%20fill-opacity='.15'/%3E%3Ccircle%20cx='52'%20cy='52'%20r='1.3'%20fill='%236b3fa0'%20fill-opacity='.15'/%3E%3C/svg%3E");
 }
 
 /* ---- 8/20's plain list bullets become 4-point pixie sparkles ---- */
@@ -293,10 +289,6 @@ body[data-mood="halloween"][data-phase="night"] .embers { display: block; }
   #day20::before {
     background-image:
         url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='110'%20height='90'%3E%3Cpath%20d='M22%208%20L24%2016%20L32%2018%20L24%2020%20L22%2028%20L20%2020%20L12%2018%20L20%2016%20Z'%20fill='%23ddbc68'%20fill-opacity='.19'/%3E%3Cpath%20d='M78%2044%20L79.4%2049.6%20L85%2051%20L79.4%2052.4%20L78%2058%20L76.6%2052.4%20L71%2051%20L76.6%2049.6%20Z'%20fill='%23ddbc68'%20fill-opacity='.18'/%3E%3Cpath%20d='M44%2072%20L45%2076%20L49%2077%20L45%2078%20L44%2082%20L43%2078%20L39%2077%20L43%2076%20Z'%20fill='%23ddbc68'%20fill-opacity='.15'/%3E%3C/svg%3E");
-  }
-  #day21::before {
-    background-image:
-        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='56'%20height='56'%3E%3Cg%20fill='none'%20stroke='%23b78ce8'%20stroke-opacity='.24'%20stroke-width='1.6'%3E%3Cpath%20d='M28%2010%20C%2020%2016,%2020%2024,%2028%2030%20C%2036%2024,%2036%2016,%2028%2010%20Z'/%3E%3Cpath%20d='M28%2030%20C%2022%2036,%2022%2042,%2028%2046%20C%2034%2042,%2034%2036,%2028%2030%20Z'/%3E%3Cpath%20d='M16%2028%20C%2010%2024,%208%2018,%2012%2012'/%3E%3Cpath%20d='M40%2028%20C%2046%2024,%2048%2018,%2044%2012'/%3E%3C/g%3E%3Ccircle%20cx='4'%20cy='4'%20r='1.3'%20fill='%23b78ce8'%20fill-opacity='.18'/%3E%3Ccircle%20cx='52'%20cy='52'%20r='1.3'%20fill='%23b78ce8'%20fill-opacity='.18'/%3E%3C/svg%3E");
   }
   h2.ref-title::before, h2.ref-title::after, footer::before {
     background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2014%207'%3E%3Cpath%20d='M7%200.5%20C5.5%202%205.5%202.8%204%202.8%20C2.5%202.8%202%202%200.5%202.8%20C1.8%203.6%202.6%203.6%203.2%204.4%20L4.6%203.8%20L5.6%205.6%20L7%204.4%20L8.4%205.6%20L9.4%203.8%20L10.8%204.4%20C11.4%203.6%2012.2%203.6%2013.5%202.8%20C12%202%2011.5%202.8%2010%202.8%20C8.5%202.8%208.5%202%207%200.5%20Z'%20fill='%23fff'/%3E%3C/svg%3E");

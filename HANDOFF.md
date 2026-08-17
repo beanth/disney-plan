@@ -498,6 +498,41 @@ distinct colors) on both sides at every width. No horizontal overflow, no
 console errors, `body` falls back to zero background layers with festive.css
 blocked, fold-test passes.
 
+**17 Aug, later: the packing card, a pumpkin redraw, and the 8s.** Three user
+requests in sequence, on top of the wash/garland work above:
+
+- **"Before you go" is now the packing card** ("Before you go & what to pack",
+  six groups, 18 items), scoped to this trip's shape: the four
+  break-the-trip items (Savi's booking card, IDs, power banks plus offline
+  screenshots of every ticket, blister kit), heat gear, day-specific items
+  (Grizzly socks, a Thursday-only sit pad — Friday is a standing night, the
+  droid-backpack decision), bags/security, flying home, small stuff. Fact
+  limits: the forecast figures were read 8/17 from open-meteo (90–92° highs,
+  76° lows on the DL nights, UV ~8, rain ≤2%) and the card carries that date;
+  the TSA lightsaber claim (fine in carry-on and checked, battery in the
+  cabin if checked) comes from TSA's own item page **via search snippets** —
+  tsa.gov 403s from this environment — so it's worded as reported; the
+  costume-14+, selfie-stick and no-folding-chairs rules are long-stable
+  published park policy stated plainly. The old card's four items all
+  survive inside the groups.
+- **The day-19 pumpkins were redrawn.** The card watermark was three
+  concentric ellipses (an onion wearing a stem); the tile minis were circles
+  with rect stems. Both now come from one generated design — six ribs
+  converging at stem and base, a cut-cap stem, a tendril; minis are lobed
+  silhouettes with green stems. Colors, opacities, sizes and rotations all
+  unchanged — geometry only. The drawing was QA'd by rendering the SVGs
+  standalone at full opacity (a private design check; page verification
+  stayed computed-style, per the no-screenshots preference).
+- **Day-21's damask section tile is REMOVED** (user: the background "looks
+  like an 8 repeated" — and it did: the tile's motif was two stacked buds,
+  which tiled into a wall of numerals). `#day21` keeps `position: relative`
+  (the hitchhiking ghosts need the ancestor) but no longer has a `::before`
+  underlay; 8/19 and 8/20 keep theirs. The single medallion watermark on
+  8/21 cards — same family but with side curls, and not repeated — survives.
+  **Don't reintroduce a stacked-bud tile behind 8/21**; if that day ever
+  needs an underlay again, pick a motif that can't read as a numeral and
+  look at it tiled before shipping it.
+
 No build step, no dependencies. `CLAUDE.md` carries the working rules. After
 August this is a keepsake, not a live document.
 
