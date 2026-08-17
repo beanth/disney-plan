@@ -58,7 +58,9 @@
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--paper);
+    /* background-color, not the shorthand: festive.css layers scatter and
+       watermark images under content, and the shorthand would wipe them */
+    background-color: var(--paper);
     color: var(--ink);
     line-height: 1.5;
     font-size: 16px;
@@ -780,7 +782,7 @@
   #day21 { --accent: var(--acc-21); --accent-ink: var(--ink-21); }
 
   .card {
-    background: var(--card);
+    background-color: var(--card);  /* not shorthand — see body note */
     border: 1px solid var(--line);
     border-radius: 14px;
     padding: 15px 16px;
