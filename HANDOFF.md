@@ -211,6 +211,57 @@ no Carnation drink list while Friday's dinner card named three seasonal drinks
 from the foodie guide; and "the park is open until midnight all three nights"
 was followed in the same bullet by "DCA closes at 10pm on 8/19."
 
+## The 18 August in-park pass — what left the page
+
+Third cut, the night the trip starts, on the user's brief "will we actually
+care about this while reading this in the park, or is this a time waste I'll
+skip anyway?" index.html 77,996 → 73,508 bytes. **No cards deleted, no facts
+changed, every hedge kept**; `data-until` and `DAYS` untouched.
+
+Gone outright:
+
+- **Both "core move" strategy callouts** (8/19 and 8/21) — the scripts embody
+  the strategy and the Multi Pass reference card still states it in general
+  form ("rope drop what has no Lightning Lane"). No fact was unique to them.
+- **The 7:45 "Cars Land neon" run-of-show item** — a non-action in an action
+  list. The neon survives untouched as the `DAYS` 21:55 exit line and the
+  `h3.neon` flicker; the styles.css comment naming 7:45 stands and is still true.
+- **Carthay's "most serious cocktail list in either park" bullet** — a pitch
+  for a table already booked; the sell remains in *Drinks, 21+*.
+- **"One spot covers both"** (Thu evening) — kept only the don't-drift-into-
+  Galaxy's-Edge warning; the script already has you never moving.
+- **"You get both, comfortably"** (Fri evening) — every clause duplicated by
+  the 9:30 script item and the settled/not-settled warn-note beside it.
+- **The "Bags slow you down" callout** (Getting there) — near-duplicate of the
+  packing bullet; its one unique fact (no-bag line reported only at the Grand
+  Californian entrance) moved into that packing bullet.
+- **The packing card's Droid Depot bullet** — third copy; the 8/20 script and
+  the Galaxy's Edge card carry all of it.
+- **Money's refillable-bottle/ban details** — the packing card keeps the full
+  rules; Money keeps the one-line "bring your own, biggest saver".
+- **The breakfast chain in Getting there's Early Entry callout** — the
+  7:00/7:25/7:55 chain lives in all three scripts and Alarms; the callout
+  keeps only "nobody enters before 8:00" and "an 8:00 breakfast kills it".
+- **Arrival card's "nothing outside the resort is booked" meta callout**, and
+  Multi Pass's "it's the rule people get wrong" editorializing.
+
+Compressed with hedges intact: **"When Halloween actually starts"** (intro
+callout + 8 bullets → 6 bullets; the décor inference wording, the one-outlet
+Cars Land hedge, the blurb-vs-picker contradiction, and both confirm-in-app
+instructions all survive; the Mansion bullet folded into the pre-season bullet,
+which now states the Thursday closure explicitly instead of implying it);
+Thursday's "Why 7:00 is enough" (arithmetic trimmed, crowd-risk framing and
+"go earlier if brutal" kept); the Quiet-wins boat callout (the Mark
+Twain/Friday-table collision already lives in the 8/21 loop card); the Toy
+Story bus bullets (address, cadence, service hours kept — the kv table above
+them carries distances); Friday Blue Bayou's expect-nothing-seasonal bullet;
+Carnation's seasonal list (all four items and the no-price hedge kept).
+
+Moved, not cut: **the Seaborn Cherry Temple Cocktail now sits in Thursday's
+Café Orléans card** — the table where it's actually orderable (listed from
+8/18) — instead of Friday's loop bullet, whose "also available at Thursday's
+table" cross-reference pointed at a day that would already be over when read.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
