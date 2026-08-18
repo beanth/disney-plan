@@ -62,6 +62,20 @@ needs to via specificity, not order. Keep that link order.
   403s from here; the user reading a Disney page and relaying it has already
   reversed one months-old claim. When Disney's live pages matter, ask.
 
+## Delegation
+
+Rote work goes to cheaper subagents (Sonnet, or Haiku for the most mechanical
+jobs) via the Agent tool's `model` parameter; the main model's context is for
+judgment. Delegate: running the test battery and reporting failures verbatim,
+repo-wide greps when a claim changes, polling the live Pages deploy or a
+workflow run, re-capturing API fixtures, applying a mechanical edit across many
+sites *after* the pattern is settled, and summarizing oversized tool output.
+Hand the agent exact commands and the expected output shape — it reports, the
+main loop decides. Do **not** delegate anything covered by the standard below
+(facts, hedges, sources), plan logic or timings, design judgment, HANDOFF
+edits, or commit messages: those are the judgment calls this file exists to
+protect, and a summary of a summary is where hedges have historically died.
+
 ## Standard for facts
 
 Prices, times and menu items were checked against Disney's pages and menu
