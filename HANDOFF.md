@@ -533,6 +533,15 @@ requests in sequence, on top of the wash/garland work above:
   needs an underlay again, pick a motif that can't read as a numeral and
   look at it tiled before shipping it.
 
+**18 Aug: cache-busting convention and the trip checklist.** The three asset
+links in index.html now carry a stable per-deploy version param
+(`?v=20260818a` — bump on any asset change; the rule lives in CLAUDE.md's
+Caching bullet, born from the day-21 stale-CSS incident and the failed deploy
+that compounded it). `CHECKLIST.md` is the user's act-on-it-tonight trip
+checklist — it repeats guide facts deliberately (screenshots, Savi's card,
+Monsters After Dark app check) because it's read standing in a hotel room, not
+alongside the guide; keep it in sync if those facts move.
+
 No build step, no dependencies. `CLAUDE.md` carries the working rules. After
 August this is a keepsake, not a live document.
 

@@ -49,6 +49,15 @@ needs to via specificity, not order. Keep that link order.
   `scroll-behavior: smooth`, which races measurements. Run `node fold-test.mjs`
   plus a 390px render check (no console errors, no horizontal overflow, in
   light and dark schemes).
+- **Caching.** GitHub Pages serves everything with `max-age=600` and its
+  headers can't be changed, so the three asset links carry a **stable
+  per-deploy version param** (`styles.css?v=YYYYMMDD<rev>`) — bump all three
+  in index.html whenever any asset changes, or phones hold stale CSS/JS for
+  up to 10 minutes (the day-21 "8s" incident). Stable per deploy, never
+  random per load — busting should be gentle, not aggressive. index.html
+  itself can't be busted: page-markup fixes still take up to 10 minutes to
+  reach a phone, and a "green push" is not a deployed page — the deploy job
+  can fail or hang (it did on 17 Aug); check the live file when it matters.
 - **Network.** Two external APIs, both chosen for CORS (`allow-origin: *`,
   verified by sending an Origin header): `api.themeparks.wiki` for waits
   (60s server cache — never poll faster) and `api.open-meteo.com` for weather
