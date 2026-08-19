@@ -262,6 +262,37 @@ Café Orléans card** — the table where it's actually orderable (listed from
 8/18) — instead of Friday's loop bullet, whose "also available at Thursday's
 table" cross-reference pointed at a day that would already be over when read.
 
+## 19 August — the live-day pivot (in the park, updating as they go)
+
+The user is in DCA texting check-ins and has asked for **live site updates,
+kept loose** — "don't get too specific since we are already deviating from the
+plan." So the 8/19 morning stopped being a script and became rules of thumb;
+keep future in-day edits at that altitude.
+
+What actually happened, against the plan: bus lot at **8:40** (plan said 7:25
+walk-out), in the park ~9:00. First Multi Pass booked was **Incredicoaster,
+9:25–10:25** — not Guardians — and **WEB Slingers was ridden by standby**
+(~30 min posted) while holding it. Live API reads at 8:40: Racers standby
+already 95, Guardians 55, **Grizzly River Run DOWN**, Silly Symphony Swings
+in refurb (the 8/15 refurb check predates that; Racers itself was operating).
+
+Page changes made for this (v=20260819a): opening-script card → a loose
+"Morning — rewritten live" card (the 11:55 WoC item kept verbatim — it's the
+one hard gate left); landmarks callout reduced to the 11:55 line; priority
+card now Guardians → Soarin' → Toy Story with Incredicoaster/WEB removed as
+spent/ridden — **Soarin' moved above Toy Story on the guide's own
+tightest-window callout; no HANDOFF rationale for the old order was found**,
+so if one existed, it lived nowhere and lost to the drift argument; the
+Racers card dropped its rope-drop option (dead after 9am); Grizzly card and
+DAYS both carry the down-this-morning hedge; DAYS 8/19 morning collapsed to
+"rebook every tap-in" + "Cars Land before the heat".
+
+Judgment logged for the post-trip record: Incredicoaster-first was the
+guide's lowest-priority first booking (flattest return curve), but the fast
+9:25 redemption re-arms the next booking quickly, so the real cost is only
+Guardians' window drifting later into the afternoon. Told the user as much,
+gently — the plan absorbs it.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
