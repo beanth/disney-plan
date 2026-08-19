@@ -412,13 +412,19 @@
       rides = LW_PLAN[park.plan];
     }
     var rows = [];
+    // A key can match more than one entity: seasonal overlays are separate
+    // API entries (Guardians runs as "Mission: BREAKOUT!" by day and "Monsters
+    // After Dark" at night, one CLOSED while the other operates), so take the
+    // best-ranked match, not the first — payload order isn't meaningful.
     rides.forEach(function (row) {
+      var best = null;
       for (var i = 0; i < pool.length; i++) {
-        if (lwNorm(pool[i].name).indexOf(row[0]) !== -1) {
-          rows.push({ label: row[1], e: pool[i] });
-          return;
+        if (lwNorm(pool[i].name).indexOf(row[0]) !== -1 &&
+            (!best || lwRank(pool[i]) < lwRank(best))) {
+          best = pool[i];
         }
       }
+      if (best) rows.push({ label: row[1], e: best });
     });
     rows.sort(function (a, b) {
       var r = lwRank(a.e) - lwRank(b.e);

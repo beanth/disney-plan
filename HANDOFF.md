@@ -293,6 +293,20 @@ guide's lowest-priority first booking (flattest return curve), but the fast
 Guardians' window drifting later into the afternoon. Told the user as much,
 gently — the plan absorbs it.
 
+**Mid-morning bug, caught by the user in the park (v=20260819b): the live
+waits strip showed Guardians "closed" while it was running.** The overlay
+publishes as a *separate API entity* — "Guardians of the Galaxy - Monsters
+After Dark" sat CLOSED in the payload ahead of "…Mission: BREAKOUT!"
+OPERATING — and the strip took the first substring match for each plan key.
+Fix in `lwRender`: take the best match by `lwRank` (operating beats down
+beats closed), which also covers the evening mirror-image when After Dark
+runs 2pm–10pm and BREAKOUT reports closed. Regression-tested in real
+Chromium with a mocked payload in both orders. Same trap to watch on 8/20–21:
+**Haunted Mansion Holiday** and **Luigi's/Mater's seasonal renames** are the
+other overlay-named entities the substring keys touch; the rank-based pick
+handles a closed twin, but a *renamed-only* entity (no twin) still matches
+fine. This is the attraction-vs-season trap wearing an API costume.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
