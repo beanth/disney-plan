@@ -122,7 +122,7 @@
       [16, 0,  "Blue Bayou, 4:00 pm", 1],
       [19, 0,  "Main Street curb if you want the parade — final night, crowd builds from 6"],
       [20, 45, "Paint the Night steps off at the far end — reaches you ~9:05 (confirm in app)"],
-      [21, 30, "Wondrous Journeys — turn to face the castle"],
+      [21, 35, "Wondrous Journeys, 9:35 — turn to face the castle"],
       [22, 30, "Fantasmic! — the 10:30 show"],
       [23, 45, "Out and walking back — 25-30 min"]
     ]},

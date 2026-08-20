@@ -136,7 +136,8 @@ blurb but confirm in the app at scan-in.
   night has it again.
 - **Thursday's curb: all four claim it together at 7:00.** No splitting into
   pairs — that was tried and rejected. The parade doesn't reach the north end of
-  Main Street until ~9:05 and Wondrous Journeys is 9:30, so 7:00 is two hours of
+  Main Street until ~9:05 and Wondrous Journeys is 9:35 (app, 8/20 morning; the
+  8/15 aggregator check said 9:30), so 7:00 is two hours of
   margin against normal busy-night guidance of 90–120 minutes. The risk is the
   crowd, not the clock — final night for both shows, and Oogie Boogie Bash
   empties DCA into this park at 6pm — so if it looks brutal on the walk up, go
@@ -391,6 +392,11 @@ cards still two-layer. Don't reintroduce a base watermark.
    DL 8–midnight all three days, DCA 8–10 on 8/19, Paint the Night 8:45/10:45 and
    Wondrous Journeys ~9:30 with 8/20 their final night, Fantasmic ~9:00/9:05 and
    10:30 both nights, Screams ~9:30 on 8/21 with pyro.
+   **8/20 morning, user relaying the app** (their browser beats this
+   environment): Fantasmic 9:05 + 10:30 and Paint the Night 8:45 + 10:45
+   confirmed as planned; **Wondrous Journeys is 9:35, not ~9:30**, and it's the
+   fireworks version. Guide and `DAYS` updated. 8/21's times are still the 8/15
+   read — Friday morning's app check remains open.
 4. ~~The Odyssey in IMAX 70mm~~ · ~~8/21 sold out~~ · ~~the foodie guide~~ —
    all closed 15 August. On 8/21: **all four hold a park reservation**, so
    sold-out is a crowd signal, not an entry problem. Disneyland still requires a
@@ -406,7 +412,8 @@ cards still two-layer. Don't reintroduce a base watermark.
   strategy. The rope-drop shape and the 10:00 "book another" beat are safe.
 - **Cavalcade times** — 1:30 and 2:45 on 8/21 specifically. The 1:30 really is
   lost to the 1:20 table.
-- **Fantasmic!** — 9:05 + 10:30 on 8/20, 9:00 + 10:30 on 8/21.
+- **Fantasmic!** — 9:05 + 10:30 on 8/20 (confirmed in the app that morning),
+  9:00 + 10:30 on 8/21.
 - **Park hours and Bash nights** — DL 8–midnight all three days; DCA 8–10 on
   8/19. August Bash nights are **18, 20, 23, 25, 27, 30**, so 8/19 is not one
   and 8/20 is.
