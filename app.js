@@ -106,14 +106,15 @@
       [9,  0,  "In and riding — rebook a pass every time you tap one in"],
       [12, 50, "Carthay Circle Lounge, 12:50 pm — ask for indoors", 1],
       [18, 20, "Lamplight Lounge, 6:20 pm", 1],
-      [19, 50, "Out of Lamplight \u2014 Incredicoaster in the dark"],
-      [20, 30, "Drink at Bayside Brews, then walk to your entrance"],
-      [21, 0,  "World of Color \u2013 ONE, 9:00 \u2014 Yellow or Blue entrance", 1],
-      [21, 30, "Monsters After Dark if there's energy \u2014 park closes 10:00"],
+      [19, 50, "Out of Lamplight — the gap fits one: Incredicoaster dark, or Racers single rider"],
+      [20, 50, "Walk to your World of Color entrance"],
+      [21, 0,  "World of Color – ONE, 9:00 — Yellow or Blue entrance", 1],
+      [21, 10, "Guardians window opens — Monsters After Dark, straight from the show", 1],
       [21, 55, "Out through the Cars Land neon \u2014 bus from the Esplanade"]
     ]},
     "2026-08-20": { label: "Disneyland · Day 1", nav: "day20", greet: "Paint the Night · final night", close: [24, 0], events: [
       [7,  0,  "Breakfast from 7:00 — bus whenever you're ready, park opens 8:00"],
+      [8,  0,  "Book Indiana Jones the moment you scan in — it drifts latest"],
       [9,  0,  "Rebook every tap-in — Rise is standby or Single Pass, never Multi Pass"],
       [12, 50, "Café Orléans — drinks stop, 12:50 pm", 1],
       [14, 0,  "Out of Café Orléans — walk back for Savi's, check in by 2:25", 1],
@@ -127,6 +128,7 @@
     ]},
     "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", close: [24, 0], events: [
       [7,  0,  "Breakfast from 7:00 — busiest day of the trip: sold out, Halloween opens"],
+      [8,  0,  "Book Haunted Mansion Holiday at scan-in — back out if the window is after 4:00"],
       [9,  0,  "Take every pass window first time round — Tiana's dries up by ~4:45"],
       [13, 20, "Blue Bayou — drinks stop, 1:20 pm", 1],
       [17, 40, "Carnation Caf\u00e9, 5:40 pm — dinner service ends 7:00", 1],

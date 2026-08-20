@@ -328,6 +328,21 @@ logic, Peter Pan/Alice rope-drop, landmarks callouts) was **cut, not moved**
 — it exists only in git history now. Don't rebuild the itinerary; the user
 runs on live waits and the booked tables.
 
+**Same evening, one partial reversal on the user's ask (v=20260819d): the
+Multi Pass priority cards came back**, reframed as "drifters first" — the
+user's Guardians pass, booked mid-morning, came back with a **9:10 pm**
+window, and they asked for "a multi pass priority for the ones that will get
+pushed out the latest." So the cards now rank by window drift (Indiana Jones
+first Thursday; Mansion Holiday then Tiana's Friday — Tiana's for sell-out,
+not drift) with the 9:10 lesson stated in the callout, and the day-21
+Mansion/Tiana's bullets moved out of "Worth knowing" into the priority card
+so each fact lives once. **Racers was still unridden as of ~5 pm Wednesday**;
+a live API read showed standby 80 and a Single Pass return at 5:15 pm — told
+the user that was the shot before the 6:20 table, and the night card now
+offers the 8:00–8:50 gap as Incredicoaster-or-Racers, one not both. The
+night card and DAYS also carry the settled evening: WoC 9:00 (Yellow or Blue
+entrance), Guardians/After Dark window opening 9:10, straight from the show.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
@@ -752,8 +767,9 @@ All fifteen pass as of 15 August.
 
 Editorial passes since have also been checked by rendering the page in that same
 Chromium at a 390px viewport and asserting no console errors, no stray markup
-from a broken edit, and the expected card counts (**27 total** since the 19 Aug
-in-park cut — 25 plan/reference cards plus the live strip's two; 12 of the 27
-are `details.card`, being 11 reference cards plus the live-waits strip).
+from a broken edit, and the expected card counts (**29 total** since the 19 Aug
+in-park cut and the priority-card restoration the same evening — 27
+plan/reference cards plus the live strip's two; 12 of the 29 are
+`details.card`, being 11 reference cards plus the live-waits strip).
 That is a structural check, not a verification of any fact on the page. The rest
 of the page's JS — the countdown, the sky, the accordion — is still unexercised.
