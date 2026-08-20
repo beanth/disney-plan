@@ -343,6 +343,14 @@ offers the 8:00–8:50 gap as Incredicoaster-or-Racers, one not both. The
 night card and DAYS also carry the settled evening: WoC 9:00 (Yellow or Blue
 entrance), Guardians/After Dark window opening 9:10, straight from the show.
 
+**Grizzly also unridden (v=20260819e), and back up** — live read ~5:30pm:
+OPERATING at 75 standby (Racers 70 with the Single Pass slipped to 5:35).
+The night card's gap li now weighs all three candidates with the real cost
+stated: Grizzly is on Multi Pass and stackable next to the 9:10 Guardians
+pass, evening standby usually collapses, but riding it at 8pm means
+watching World of Color wet. The dry-by-4:00 rule was already blown, so
+this is the user's comfort call, not the guide's.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule

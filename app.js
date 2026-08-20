@@ -106,7 +106,7 @@
       [9,  0,  "In and riding — rebook a pass every time you tap one in"],
       [12, 50, "Carthay Circle Lounge, 12:50 pm — ask for indoors", 1],
       [18, 20, "Lamplight Lounge, 6:20 pm", 1],
-      [19, 50, "Out of Lamplight — the gap fits one: Incredicoaster dark, or Racers single rider"],
+      [19, 50, "Out of Lamplight — the gap fits one: Racers, or Grizzly (wet for the show)"],
       [20, 50, "Walk to your World of Color entrance"],
       [21, 0,  "World of Color – ONE, 9:00 — Yellow or Blue entrance", 1],
       [21, 10, "Guardians window opens — Monsters After Dark, straight from the show", 1],
