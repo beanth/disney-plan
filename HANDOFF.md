@@ -351,6 +351,15 @@ pass, evening standby usually collapses, but riding it at 8pm means
 watching World of Color wet. The dry-by-4:00 rule was already blown, so
 this is the user's comfort call, not the guide's.
 
+**The crescent-moon watermark is gone (v=20260819f), user request** ("get
+rid of the moon in the collapsible cards"). It was the base `.card`
+watermark in festive.css — live strip + reference cards only, the very one
+that replaced the castle on 18 Aug — so the base cards now carry no
+watermark at all; the plum top hairline stays, and the day sections' own
+motifs (lantern/stars/ghost) are untouched. Verified by computed style in
+Chromium: reference card background is gradient-only at `100% 3px`, day
+cards still two-layer. Don't reintroduce a base watermark.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
