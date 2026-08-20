@@ -307,6 +307,27 @@ other overlay-named entities the substring keys touch; the rank-based pick
 handles a closed twin, but a *renamed-only* entity (no twin) still matches
 fine. This is the attraction-vs-season trap wearing an API costume.
 
+**Evening of 8/19 — the "cut all the bullshit" pass (v=20260819c).** The user,
+mid-trip: they got **World of Color for the 9:00 show, Yellow or Blue viewing
+entrance** (now stated as fact on the day-19 night card and in `DAYS`), had
+"pretty much completely disregarded the whole plan," and asked to cut it. So
+the guide stopped being an itinerary: all three **opening-script cards, all
+Multi Pass priority cards, day 19's pier block and day 21's afternoon block
+are gone** (34 cards → 27). What each day keeps: the booked tables untouched,
+the run-of-show night cards compressed but intact (show times, standing spots,
+the don't-sit / don't-drift / check-the-app warnings and every 8/15 hedge),
+and one **"Worth knowing today"** card per Disneyland day holding the
+salvaged non-script facts — Rise never on Multi Pass, single-rider beats a
+pass on Matterhorn/Space, Big Thunder after dark, Batuu food notes and the
+Bayou Country walk (8/20); sold-out crowds, the Mansion after-4:00 rule,
+Tiana's pass drying at ~4:45, Pirates/Mint Julep Bar, cavalcade times, the
+before-5:00 boat rule (8/21). `DAYS` slimmed to match: bookings and shows
+carry the hard flags; breakfast and curb-claiming are now unflagged
+suggestions. The morning-script prose (droid build steps, Oga's timing
+logic, Peter Pan/Alice rope-drop, landmarks callouts) was **cut, not moved**
+— it exists only in git history now. Don't rebuild the itinerary; the user
+runs on live waits and the booked tables.
+
 ## Open items
 
 1. **Confirm Monsters After Dark in the app at scan-in on 8/19.** The schedule
@@ -731,7 +752,8 @@ All fifteen pass as of 15 August.
 
 Editorial passes since have also been checked by rendering the page in that same
 Chromium at a 390px viewport and asserting no console errors, no stray markup
-from a broken edit, and the expected card counts (**34 total, 11 reference** —
-32 plan/reference cards plus the live strip's two).
+from a broken edit, and the expected card counts (**27 total** since the 19 Aug
+in-park cut — 25 plan/reference cards plus the live strip's two; 12 of the 27
+are `details.card`, being 11 reference cards plus the live-waits strip).
 That is a structural check, not a verification of any fact on the page. The rest
 of the page's JS — the countdown, the sky, the accordion — is still unexercised.
