@@ -129,7 +129,7 @@
     "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", close: [24, 0], events: [
       [7,  0,  "Breakfast from 7:00 — sold-out day; scanning in is what arms the booking clock"],
       [8,  0,  "Scan in, book Haunted Mansion Holiday first — then ride an hour or two"],
-      [10, 0,  "Book once more before leaving the gate area — then again every time the 2-hour clock lapses"],
+      [10, 0,  "Head out — book again every time the 2-hour clock lapses"],
       [17, 40, "Carnation Café, 5:40 pm — dinner service ends 7:00", 1],
       [19, 0,  "Spend the stack — Fantasmic is off, so the windows run to 9:15"],
       [21, 15, "Plant for Screams — Hub end keeps you 8 min from the table", 1],

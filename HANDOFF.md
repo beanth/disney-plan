@@ -350,6 +350,14 @@ line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
 the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
 match, chronological order kept.
 
+**Morning of 8/21, from the park (v=20260821d): off-site booking confirmed —
+"the app books from off site once we scan in."** The stack plan's one
+unverified premise (flagged in v=20260821a) is now settled by the user's own
+report, the same channel that beats this environment everywhere else. The
+guide's book-before-leaving-the-gate hedge, its alarm, and the DAYS line are
+gone; the stack card now states off-site booking plainly, with the
+confirmation quoted in its comment.
+
 **Morning of 8/21, later (v=20260821c): Fantasmic dropped — "little too kiddy
 for us."** User call; both remaining showings (9:00 and 10:30) are out, which
 dissolves the 9:00-show-vs-9:40-table knot from v=20260821a: the evening is
