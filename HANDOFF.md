@@ -350,6 +350,28 @@ line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
 the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
 match, chronological order kept.
 
+**Morning of 8/21, later (v=20260821c): Fantasmic dropped — "little too kiddy
+for us."** User call; both remaining showings (9:00 and 10:30) are out, which
+dissolves the 9:00-show-vs-9:40-table knot from v=20260821a: the evening is
+now stack-spending from 7:00 to ~9:15, Screams planted at the **Hub end**
+(castle mapping + Jack's balloon per the 8/15 read, and the guide's own ~8-min
+Hub→Bayou figure keeps the 9:40 table a few minutes late rather than fifteen),
+then the table, then the last hour. The warn-note covers the one moving part:
+if Screams slides later than ~9:30 the table wins and the pyro gets watched
+from New Orleans Square. Alarms and DAYS resequenced (the 8:30-at-the-river
+alarm replaced by 9:15-planted).
+
+Also reported by the user, same message: **the Paint the Night second parade
+was not caught Thursday night.** So the trip's Paint the Night tally is zero —
+8/20 was the final night of its run, no recovery tonight. Assessment given to
+the user: not a mistake worth regret — the eight-ride Thursday haul (Rise,
+Tiana's, Falcon, Matterhorn, Thunder, Space, Indy, Pirates) was bought with
+exactly the hours a parade camp would have eaten, the post-Fantasmic catch was
+always the plan's most fragile link (unconfirmed direction, tight walk), and
+the parade has returned to the resort before (2015, 2018 DCA — from memory,
+not a checked source). But it was genuinely the last scheduled night, so as a
+fact the window is closed.
+
 **Morning of 8/21 (v=20260821b): hedges moved into comments, day 21 defluffed
 — both user instructions** ("get rid of all this validated and verified crap,
 like validated 8/15. leave it as code comments for yourself instead. also, way

@@ -131,10 +131,9 @@
       [8,  0,  "Scan in, book Haunted Mansion Holiday first — then ride an hour or two"],
       [10, 0,  "Book once more before leaving the gate area — then again every time the 2-hour clock lapses"],
       [17, 40, "Carnation Café, 5:40 pm — dinner service ends 7:00", 1],
-      [19, 0,  "Spend the stack — ninety clear minutes of windows"],
-      [20, 30, "Be at the river — the 9:40 table makes the 9:00 Fantasmic the only one"],
-      [21, 0,  "Fantasmic! — the 9:00 show, last of the trip", 1],
-      [21, 30, "Screams ~9:30 from the riverfront (confirm time in app)"],
+      [19, 0,  "Spend the stack — Fantasmic is off, so the windows run to 9:15"],
+      [21, 15, "Plant for Screams — Hub end keeps you 8 min from the table", 1],
+      [21, 30, "Halloween Screams ~9:30 (confirm time in app)"],
       [21, 40, "Blue Bayou, 9:40 pm", 1],
       [23, 0,  "Out of dinner — last hour: unspent passes, Mansion standby, Pirates next door"],
       [23, 45, "Out and walking back — 25-30 min"]
