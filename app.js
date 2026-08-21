@@ -120,10 +120,10 @@
       [14, 0,  "Out of Café Orléans — walk back for Savi's, check in by 2:25", 1],
       [14, 30, "Savi's Workshop — booked, 2:30", 1],
       [16, 0,  "Blue Bayou, 4:00 pm", 1],
-      [19, 0,  "Main Street curb if you want the parade — final night, crowd builds from 6"],
-      [20, 45, "Paint the Night steps off at the far end — reaches you ~9:05 (confirm in app)"],
-      [21, 35, "Wondrous Journeys, 9:35 — turn to face the castle"],
-      [22, 30, "Fantasmic! — the 10:30 show"],
+      [19, 0,  "Late showings tonight — no curb camp; ride while the 8:45 crowd sits"],
+      [21, 35, "Wondrous Journeys, 9:35 — its only show, final night: be under open sky", 1],
+      [22, 30, "Fantasmic! — the 10:30 show", 1],
+      [22, 45, "Paint the Night second parade steps off — meet its far end ~11:05 after Fantasmic"],
       [23, 45, "Out and walking back — 25-30 min"]
     ]},
     "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", close: [24, 0], events: [

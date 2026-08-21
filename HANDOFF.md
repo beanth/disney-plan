@@ -134,14 +134,16 @@ blurb but confirm in the app at scan-in.
   Docking Bay 7 is quick service and only needs half an hour, which is where
   Oga's hour came from. If the queue is over 20 min on arrival, skip it — Friday
   night has it again.
-- **Thursday's curb: all four claim it together at 7:00.** No splitting into
+- **Thursday's curb: all four claim it together at 7:00.** ~~No splitting into
   pairs — that was tried and rejected. The parade doesn't reach the north end of
   Main Street until ~9:05 and Wondrous Journeys is 9:35 (app, 8/20 morning; the
   8/15 aggregator check said 9:30), so 7:00 is two hours of
   margin against normal busy-night guidance of 90–120 minutes. The risk is the
   crowd, not the clock — final night for both shows, and Oogie Boogie Bash
   empties DCA into this park at 6pm — so if it looks brutal on the walk up, go
-  earlier.
+  earlier.~~ **Superseded by the user on the day (8/20): the party switched to
+  the late showings — see the mid-trip log.** The 7:00 claim never happened;
+  the no-splitting-into-pairs judgment stands if a curb ever comes back.
 - **Friday's 1:20 Blue Bayou is load-bearing — don't move it later.** The 2:45
   Halloween cavalcade runs between "it's a small world" and Town Square via
   Matterhorn, the Hub and Main Street, so New Orleans Square is *not* on the
@@ -323,6 +325,28 @@ Columbia's record was 3.5 days stale the same evening, so it gets the same
 honesty. The ride fact itself is user-observed — their eyes beat both this
 environment and the feed — and is recorded in the settled list and the
 pre-season bullet in the guide.
+
+**Evening of 8/20 (v=20260820c): the party switched to the late showings**
+("we are deciding to attend the later show times for the paint the night
+parade and whatever else was happening"). This reverses the settled "curb at
+7:00" decision — user's call, on the night. What the guide now says: no curb
+camp; ride the early evening; **Wondrous Journeys 9:35 unchanged because it
+has no later showing** (single show, final night — now the evening's one
+hard flag alongside Fantasmic); Fantasmic 10:30 (already the planned later
+show); Paint the Night at **10:45**, the second parade. The 10:30/10:45
+overlap is handled, not hidden: Fantasmic ends ~10:55 while the parade is
+mid-route, so the play is to check the step-off end in the app and meet the
+parade at the *opposite* end, which sees it ~11:05–11:25 (derived from the
+first parade's ~20-min traverse; direction-independent). The old card's
+"second parade runs the route backwards" claim was already asserted
+unhedged; it now carries "reported, not confirmed" — nobody has read a
+source for it this trip. The trade (Main Street curb from ~10:00 gets the
+parade close but costs Fantasmic) is stated in the card's callout for the
+group to make in the park. Also swept per the grep rule: Blue Bayou's
+order-a-drink-now curb rationale, the "clears the evening before you camp"
+line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
+the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
+match, chronological order kept.
 
 **Evening of 8/19 — the "cut all the bullshit" pass (v=20260819c).** The user,
 mid-trip: they got **World of Color for the 9:00 show, Yellow or Blue viewing
