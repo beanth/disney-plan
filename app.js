@@ -318,8 +318,19 @@
   function lwRank(e) {
     var q = e.queue || {};
     if (e.status === "OPERATING") return (q.STANDBY && q.STANDBY.waitTime != null) ? 0 : 1;
+    if (lwStale(e)) return 4;
     if (e.status === "DOWN") return 2;
     return 3;
+  }
+
+  // Disney parks a closed ride's record and stops updating it — Haunted
+  // Mansion sat on an 8/9 REFURBISHMENT the evening the Holiday overlay
+  // opened early (8/20, seen in the park), so the strip printed "closed"
+  // for a ride that was running. A non-operating status on a record older
+  // than a day is the feed not tracking, not a fact about the gate.
+  function lwStale(e) {
+    var t = Date.parse(e.lastUpdated || "");
+    return !(t && Date.now() - t < 24 * 3600 * 1000);
   }
   var lwData = null, lwAt = 0, lwErr = false, lwBusy = false;
 
@@ -411,7 +422,8 @@
       var div = document.createElement("div"); div.className = "kv";
       var k = document.createElement("span"); k.className = "k"; k.textContent = row.label;
       var v = document.createElement("span"); v.className = "v";
-      if (hit.status === "DOWN") { v.textContent = "down"; v.classList.add("lw-down"); }
+      if (hit.status !== "OPERATING" && lwStale(hit)) { v.textContent = "no data"; v.classList.add("lw-na"); }
+      else if (hit.status === "DOWN") { v.textContent = "down"; v.classList.add("lw-down"); }
       else if (hit.status !== "OPERATING") { v.textContent = "closed"; v.classList.add("lw-down"); }
       else {
         var sb = q.STANDBY ? q.STANDBY.waitTime : null;

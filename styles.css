@@ -667,6 +667,7 @@
   .mp-note, .lw-meta { font-size: 12px; color: var(--ink-soft); margin-top: 8px; }
   .kv .v .sub { font-weight: 600; font-size: 12px; color: var(--ink-soft); }
   .kv .v.lw-down { color: var(--warn-ink); }
+  .kv .v.lw-na { color: var(--ink-soft); }
   .kv .v.lw-go { color: var(--go-ink); }
   /* the full-park list: long API names truncate instead of wrapping */
   #lw-list .kv { padding: 5px 0; }

@@ -308,6 +308,22 @@ other overlay-named entities the substring keys touch; the rank-based pick
 handles a closed twin, but a *renamed-only* entity (no twin) still matches
 fine. This is the attraction-vs-season trap wearing an API costume.
 
+**Evening of 8/20 (v=20260820b): the Haunted Mansion trap fired, but in a
+third costume — a stale record, not a twin.** The user, in the park:
+Haunted Mansion Holiday was up and running Thursday evening, **a day ahead
+of the published 8/21 reopen**, while the strip printed "closed". Not the
+substring/rank bug: the payload has **no Holiday entity at all** — one
+"Haunted Mansion" attraction, status REFURBISHMENT, `lastUpdated` 8/9,
+parked when the ride closed on 8/8 and never touched since. The feed stops
+updating a parked ride, so its status is history, not state. Fix in
+`lwRank`/`lwRender`: a non-OPERATING status whose record is **older than
+24h renders as "no data"** (muted `.lw-na`, ranked below fresh closures)
+instead of asserting "closed"; fresh DOWN/CLOSED rows are unchanged.
+Columbia's record was 3.5 days stale the same evening, so it gets the same
+honesty. The ride fact itself is user-observed — their eyes beat both this
+environment and the feed — and is recorded in the settled list and the
+pre-season bullet in the guide.
+
 **Evening of 8/19 — the "cut all the bullshit" pass (v=20260819c).** The user,
 mid-trip: they got **World of Color for the 9:00 show, Yellow or Blue viewing
 entrance** (now stated as fact on the day-19 night card and in `DAYS`), had
@@ -417,7 +433,10 @@ cards still two-layer. Don't reintroduce a base watermark.
 - **Park hours and Bash nights** — DL 8–midnight all three days; DCA 8–10 on
   8/19. August Bash nights are **18, 20, 23, 25, 27, 30**, so 8/19 is not one
   and 8/20 is.
-- **Haunted Mansion** closed 8/8–8/20, reopening 8/21 as Holiday.
+- **Haunted Mansion** closed 8/8 for the overlay. The published reopen was
+  8/21 as Holiday, but **it beat that by an evening**: operating as Holiday
+  on 8/20, user-observed in the park (the wiki feed missed it — see the
+  stale-record entry in the mid-trip log).
 - **Halloween food starts 8/18**, so seasonal items are on all three park days.
 - **Oogie Boogie Bash starts 8/18** — Disney's own press release, and the fact
   that broke the old 8/21 model.
