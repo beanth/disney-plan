@@ -130,8 +130,7 @@
       [7,  0,  "Breakfast from 7:00 — sold-out day; scanning in is what arms the booking clock"],
       [8,  0,  "Scan in, book Haunted Mansion Holiday first — then ride an hour or two"],
       [10, 0,  "Head out — book again every time the 2-hour clock lapses"],
-      [17, 40, "Carnation Café, 5:40 pm — dinner service ends 7:00", 1],
-      [19, 0,  "Spend the stack — Fantasmic is off, so the windows run to 9:15"],
+      [18, 0,  "Back in whenever — spend the stack; no table until 9:40, so graze"],
       [21, 15, "Plant for Screams — Hub end keeps you 8 min from the table", 1],
       [21, 30, "Halloween Screams ~9:30 (confirm time in app)"],
       [21, 40, "Blue Bayou, 9:40 pm", 1],
@@ -266,9 +265,12 @@
 
   // ---- live waits ----
   // themeparks.wiki: the one wait-time API that sends CORS headers, so a static
-  // page can call it. Its server cache is 60s, so polling faster than update()'s
-  // minute would only re-read the same cached payload. queue-times.com has the
-  // same data but no CORS — a browser can't use it.
+  // page can call it. Its server cache is 60s (verified via cache-control), so
+  // fresh data appears at most once a minute. The strip polls on a 30s tick —
+  // user instruction 8/21 (they asked for 10s, with a stated fallback of 30s if
+  // the source caches at 60s, which it does): half the polls re-read the cached
+  // payload, accepted for freshness; don't go faster than 30s. queue-times.com
+  // has the same data but no CORS — a browser can't use it.
   var LW_URL = "https://api.themeparks.wiki/v1/entity/disneylandresort/live";
   var LW_PARKS = {
     day19: { id: "832fcd51-ea19-4e77-85c7-75d5843b127c", label: "California Adventure", plan: "dca" },
@@ -314,8 +316,11 @@
     ]
   };
 
-  // Sort: longest standby first, then walk-in "open", then down, then closed —
-  // the top of the list is where a Lightning Lane earns the most.
+  // Sort (user instruction, 8/21 stack day): rides with a bookable Multi Pass
+  // return first, soonest return at the top — that's the next window a stack
+  // booking would get — then everything else operating, longest standby
+  // first, then down, closed, no-data. "LL out" and Single Pass rides (paid
+  // separately, not part of the stack) sort with the standby block.
   function lwRank(e) {
     var q = e.queue || {};
     if (e.status === "OPERATING") return (q.STANDBY && q.STANDBY.waitTime != null) ? 0 : 1;
@@ -332,6 +337,17 @@
   function lwStale(e) {
     var t = Date.parse(e.lastUpdated || "");
     return !(t && Date.now() - t < 24 * 3600 * 1000);
+  }
+  // Epoch ms of the next bookable Multi Pass return, or null. Single Pass
+  // (PAID_RETURN_TIME) deliberately does NOT count — user instruction 8/21:
+  // paid-separate rides sort with the standby block, though the row still
+  // shows their SP time.
+  function lwReturn(e) {
+    if (e.status !== "OPERATING") return null;
+    var q = e.queue || {};
+    var rt = q.RETURN_TIME && q.RETURN_TIME.returnStart;
+    var t = rt ? Date.parse(rt) : NaN;
+    return isNaN(t) ? null : t;
   }
   var lwData = null, lwAt = 0, lwErr = false, lwBusy = false;
 
@@ -413,6 +429,12 @@
     rows.sort(function (a, b) {
       var r = lwRank(a.e) - lwRank(b.e);
       if (r) return r;
+      var ra = lwReturn(a.e), rb = lwReturn(b.e);
+      if (ra !== null || rb !== null) {
+        if (ra === null) return 1;
+        if (rb === null) return -1;
+        if (ra !== rb) return ra - rb;
+      }
       var wa = (a.e.queue && a.e.queue.STANDBY && a.e.queue.STANDBY.waitTime) || 0;
       var wb = (b.e.queue && b.e.queue.STANDBY && b.e.queue.STANDBY.waitTime) || 0;
       return wb - wa;
@@ -449,7 +471,7 @@
     var age = Math.round((Date.now() - lwAt) / 60000);
     meta.textContent = (lwErr ? "Offline — showing old times · " : "") +
       (age < 1 ? "updated just now" : "updated " + age + " min ago") +
-      " · longest waits first · themeparks.wiki, not Disney — the app is the truth";
+      " · soonest Lightning Lane first · themeparks.wiki, not Disney — the app is the truth";
   }
 
   // ---- Anaheim weather (open-meteo, CORS-open, no key) ----
@@ -545,7 +567,7 @@
       greet.textContent = "Test mode · all timed states exposed";
       mpRender(now);
       lwRender(now);
-      if (!document.hidden && Date.now() - lwAt > 55000) lwFetch();
+      if (!document.hidden && Date.now() - lwAt > 25000) lwFetch();
       if (!document.hidden && Date.now() - wxAt > 10 * 60000) wxFetch();
       return;
     }
@@ -602,7 +624,7 @@
         }
       }
       greet.textContent = today.greet || "Anaheim";
-      if (today.nav && lwWindow(now, LW_PARKS[today.nav]) && !document.hidden && Date.now() - lwAt > 55000) lwFetch();
+      if (today.nav && lwWindow(now, LW_PARKS[today.nav]) && !document.hidden && Date.now() - lwAt > 25000) lwFetch();
       if (today.nav && !document.hidden && Date.now() - wxAt > 10 * 60000) wxFetch();
       if (!today.nav) document.getElementById("wx").hidden = true;
     } else if (now < TRIP_START) {
@@ -661,7 +683,7 @@
   prepFolds();   // must run before the first update(), which folds what's already past
   update();
   watchSections();
-  setInterval(update, 60 * 1000);
+  setInterval(update, 30 * 1000);
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden) update();
   });

@@ -40,7 +40,7 @@ the context behind it.
 | Thu 8/20 | **2:30** | **Savi's Workshop** |
 | Thu 8/20 | 4:00 | Blue Bayou |
 | Fri 8/21 | ~~1:20~~ | ~~Blue Bayou~~ — **cancelled 8/20** for a midday hotel break |
-| Fri 8/21 | 5:40 | Carnation Café |
+| Fri 8/21 | ~~5:40~~ | ~~Carnation Café~~ — **cancelled 8/21** on the day |
 | Fri 8/21 | **9:40 pm** | **Blue Bayou** — booked 8/20, the trip-closing table |
 
 Wine Country Trattoria was **cancelled** — with wine off the table it had three
@@ -154,10 +154,11 @@ blurb but confirm in the app at scan-in.
   again: the 2:45 runs between "it's a small world" and Town Square via
   Matterhorn, the Hub and Main Street — New Orleans Square is not on the route,
   the Hub is the nearest point, and the step-off end was never settled.
-- **Carnation Café is on Main Street, and that's why it won.** You walk out of
-  dinner into the Halloween Screams camping spot instead of crossing from
-  Frontierland. Dinner service ends at **7:00** — you're out then whether you're
-  finished or not, which is why the evening claims ground at 7:00.
+- **Carnation Café is on Main Street, and that's why it won.** **Superseded
+  8/21: the user cancelled the table on the day** — with the 7:00 curb long
+  gone and the night rebuilt around the 9:40 Blue Bayou, its
+  walk-out-into-the-camping-spot rationale had already died twice over.
+  Friday became a one-table day.
 - **Timings are deliberately two-tier.** Clock times mean something external
   enforces them (bookings, park opening, the 11:55 queue, the 12:30 Batuu exit,
   showtimes). Estimated steps show a **duration** in a muted style instead —
@@ -349,6 +350,26 @@ order-a-drink-now curb rationale, the "clears the evening before you camp"
 line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
 the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
 match, chronological order kept.
+
+**Afternoon of 8/21 (v=20260821e): Carnation cancelled, and the live strip
+retuned for stack day.** Three user asks in one message. (1) **The 5:40
+Carnation is cancelled** — Friday is now a one-table day (9:40 Blue Bayou);
+the card is gone (facts preserved in a comment in its place), the Mansion
+back-out rule now keys on the 9:40 table, the night script opens with "back
+in whenever", and Alarms/Dining-at-a-glance/DAYS all dropped it. Card count
+**29 → 28** (12 details unchanged) — fold-test asserts structure not counts,
+so only the scratch render-check expectations moved. (2) **Live waits poll
+every 30s** — the user asked for 10s with a stated fallback of 30s if the
+source caches at 60s; it does (cache-control max-age=60, verified 8/16), so
+30s it is. update()'s tick went 60s → 30s, the staleness gates 55s → 25s,
+and CLAUDE.md's never-poll-faster bullet now says 30s. (3) **Sort is now
+soonest Multi Pass return first** (the next window a stack booking would
+get), then everything else operating longest-standby-first, then
+down/closed/no-data as before. Two refinements from the user in the same
+breath: "LL out" sorts with the standby block, and **Single Pass rides
+(paid separately) count as having no LL for sorting** — their SP time still
+shows on the row. Regression-tested in real Chromium with a crafted
+payload; the meta line says "soonest Lightning Lane first".
 
 **Morning of 8/21, from the park (v=20260821d): off-site booking confirmed —
 "the app books from off site once we scan in."** The stack plan's one
@@ -846,16 +867,21 @@ repo's branches page or their own clone.
   with an Origin header; **queue-times.com has the same data but no CORS
   headers, so a browser page cannot use it — don't switch to it**). One
   destination-level call covers both parks. Refresh rides on `update()`'s
-  60-second tick, gated on the page being visible and the data >55s old; the
-  API's own server cache is 60s (`cache-control: max-age=60`), so polling
-  faster only re-reads the same payload. Rendered from 8:00 to 22:00 at DCA
+  tick — 30 seconds since 8/21 (user instruction; see the mid-trip log), gated
+  on the page being visible and the data >25s old; the API's own server cache
+  is 60s (`cache-control: max-age=60`), so half those polls re-read the same
+  payload, accepted for freshness. Rendered from 8:00 to 22:00 at DCA
   and to 23:59 on Disneyland days (per-park, matching each park's close), as a collapsible `details` open by default and excluded from the
   reference accordion. Shows only the plan's rides for that day's park (a
   curated `LW_PLAN` map — the union of both DL days when at Disneyland; the
   "not in the plan" rides are excluded on the user's instruction), matched as
   normalised substrings against API names — the API uses `™`, curly
-  apostrophes and `Monsters, Inc.`'s comma, all stripped by `lwNorm`. Sorted
-  longest standby first, then walk-ins, then down, then closed. Each row:
+  apostrophes and `Monsters, Inc.`'s comma, all stripped by `lwNorm`. Sorted —
+  since 8/21 — by soonest bookable Multi Pass return first, then everything
+  else operating longest standby first, then down, then closed ("LL out"
+  and Single Pass rides sort with the standby block — SP is paid separately,
+  not part of the stack; before 8/21 it was longest standby first
+  throughout). Each row:
   standby, single-rider (`SR`), next Lightning Lane return (`LL`, or `LL out`
   when sold through) or paid Single Pass return (`SP`).
   Statuses DOWN/CLOSED/REFURBISHMENT render as "down"/"closed". Fetch failure
@@ -915,9 +941,10 @@ All fifteen pass as of 15 August.
 
 Editorial passes since have also been checked by rendering the page in that same
 Chromium at a 390px viewport and asserting no console errors, no stray markup
-from a broken edit, and the expected card counts (**29 total** since the 19 Aug
-in-park cut and the priority-card restoration the same evening — 27
-plan/reference cards plus the live strip's two; 12 of the 29 are
-`details.card`, being 11 reference cards plus the live-waits strip).
+from a broken edit, and the expected card counts (**28 total** since the Carnation cancellation
+on 8/21; it was 29 from the 19 Aug in-park cut and the priority-card
+restoration until then — now 26 plan/reference cards plus the live strip's
+two; 12 of the 28 are `details.card`, being 11 reference cards plus the
+live-waits strip).
 That is a structural check, not a verification of any fact on the page. The rest
 of the page's JS — the countdown, the sky, the accordion — is still unexercised.

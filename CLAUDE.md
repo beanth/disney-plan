@@ -60,7 +60,8 @@ needs to via specificity, not order. Keep that link order.
   can fail or hang (it did on 17 Aug); check the live file when it matters.
 - **Network.** Two external APIs, both chosen for CORS (`allow-origin: *`,
   verified by sending an Origin header): `api.themeparks.wiki` for waits
-  (60s server cache — never poll faster) and `api.open-meteo.com` for weather
+  (60s server cache; the strip polls on a 30s tick — user instruction 8/21,
+  accepting that half the polls re-read cache — never faster than that) and `api.open-meteo.com` for weather
   (10 min cadence). Everything degrades gracefully offline and makes zero
   calls outside trip days. queue-times.com has no CORS — do not switch to it.
 - **When changing any claim, grep the whole repo — comments included.** A JS
