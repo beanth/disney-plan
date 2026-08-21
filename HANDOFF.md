@@ -362,14 +362,15 @@ so only the scratch render-check expectations moved. (2) **Live waits poll
 every 30s** — the user asked for 10s with a stated fallback of 30s if the
 source caches at 60s; it does (cache-control max-age=60, verified 8/16), so
 30s it is. update()'s tick went 60s → 30s, the staleness gates 55s → 25s,
-and CLAUDE.md's never-poll-faster bullet now says 30s. (3) **Sort is now
-soonest Multi Pass return first** (the next window a stack booking would
-get), then everything else operating longest-standby-first, then
-down/closed/no-data as before. Two refinements from the user in the same
+and CLAUDE.md's never-poll-faster bullet now says 30s. (3) **Sort is now by Multi Pass return time** — briefly soonest-first, then
+**reversed to latest-first within the hour by the user** (v=20260821f): the
+ride whose window sits furthest out is the one drifting away fastest, so it
+tops the list as the next thing to book. Then everything else operating
+longest-standby-first, then down/closed/no-data as before. Two refinements from the user in the same
 breath: "LL out" sorts with the standby block, and **Single Pass rides
 (paid separately) count as having no LL for sorting** — their SP time still
 shows on the row. Regression-tested in real Chromium with a crafted
-payload; the meta line says "soonest Lightning Lane first".
+payload; the meta line now says "latest Lightning Lane first".
 
 **Morning of 8/21, from the park (v=20260821d): off-site booking confirmed —
 "the app books from off site once we scan in."** The stack plan's one
@@ -877,7 +878,8 @@ repo's branches page or their own clone.
   "not in the plan" rides are excluded on the user's instruction), matched as
   normalised substrings against API names — the API uses `™`, curly
   apostrophes and `Monsters, Inc.`'s comma, all stripped by `lwNorm`. Sorted —
-  since 8/21 — by soonest bookable Multi Pass return first, then everything
+  since 8/21 — by bookable Multi Pass return first, latest return at the
+  top (reversed from soonest-first the same day, by user), then everything
   else operating longest standby first, then down, then closed ("LL out"
   and Single Pass rides sort with the standby block — SP is paid separately,
   not part of the stack; before 8/21 it was longest standby first

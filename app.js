@@ -316,11 +316,12 @@
     ]
   };
 
-  // Sort (user instruction, 8/21 stack day): rides with a bookable Multi Pass
-  // return first, soonest return at the top — that's the next window a stack
-  // booking would get — then everything else operating, longest standby
-  // first, then down, closed, no-data. "LL out" and Single Pass rides (paid
-  // separately, not part of the stack) sort with the standby block.
+  // Sort (user instruction, 8/21 stack day; direction reversed same day):
+  // rides with a bookable Multi Pass return first, LATEST return at the top —
+  // the ride whose window is drifting away fastest, the one to book first —
+  // then everything else operating, longest standby first, then down, closed,
+  // no-data. "LL out" and Single Pass rides (paid separately, not part of the
+  // stack) sort with the standby block.
   function lwRank(e) {
     var q = e.queue || {};
     if (e.status === "OPERATING") return (q.STANDBY && q.STANDBY.waitTime != null) ? 0 : 1;
@@ -433,7 +434,7 @@
       if (ra !== null || rb !== null) {
         if (ra === null) return 1;
         if (rb === null) return -1;
-        if (ra !== rb) return ra - rb;
+        if (ra !== rb) return rb - ra;
       }
       var wa = (a.e.queue && a.e.queue.STANDBY && a.e.queue.STANDBY.waitTime) || 0;
       var wb = (b.e.queue && b.e.queue.STANDBY && b.e.queue.STANDBY.waitTime) || 0;
@@ -471,7 +472,7 @@
     var age = Math.round((Date.now() - lwAt) / 60000);
     meta.textContent = (lwErr ? "Offline — showing old times · " : "") +
       (age < 1 ? "updated just now" : "updated " + age + " min ago") +
-      " · soonest Lightning Lane first · themeparks.wiki, not Disney — the app is the truth";
+      " · latest Lightning Lane first · themeparks.wiki, not Disney — the app is the truth";
   }
 
   // ---- Anaheim weather (open-meteo, CORS-open, no key) ----
