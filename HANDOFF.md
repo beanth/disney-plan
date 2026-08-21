@@ -39,8 +39,9 @@ the context behind it.
 | Thu 8/20 | 12:50 | Café Orléans |
 | Thu 8/20 | **2:30** | **Savi's Workshop** |
 | Thu 8/20 | 4:00 | Blue Bayou |
-| Fri 8/21 | 1:20 | Blue Bayou |
+| Fri 8/21 | ~~1:20~~ | ~~Blue Bayou~~ — **cancelled 8/20** for a midday hotel break |
 | Fri 8/21 | 5:40 | Carnation Café |
+| Fri 8/21 | **9:40 pm** | **Blue Bayou** — booked 8/20, the trip-closing table |
 
 Wine Country Trattoria was **cancelled** — with wine off the table it had three
 spritzes and a courtyard that isn't really air-conditioned. Carthay replaced it:
@@ -125,10 +126,10 @@ blurb but confirm in the app at scan-in.
   $159.99–400 *plus* a $44.99–49.99 blade, and there's no experience attached.
   Savi's includes hilt, blade, case and pin, and is the only path to a
   colour-swappable saber.
-- **The double Blue Bayou stays**, deliberately. Thursday is food-forward on the
-  dinner menu; Friday is drinks-forward on the lunch menu and gets the $34 Monte
-  Cristo that Thursday structurally cannot serve (lunch ends 3:55). Don't repeat
-  an order across the two.
+- **The double Blue Bayou stays**, deliberately — though the shape changed on
+  8/20: Friday's table is now **9:40 pm** (the 1:20 was cancelled), so both
+  visits are on the dinner menu and the lunch-only $34 Monte Cristo is out of
+  reach this trip. "Don't repeat an order across the two" still stands.
 - **Oga's runs last in Batuu, 11:15**, not first, so a slow queue eats the
   block's own slack instead of everything feeding the 2:30 Savi's deadline.
   Docking Bay 7 is quick service and only needs half an hour, which is where
@@ -144,14 +145,15 @@ blurb but confirm in the app at scan-in.
   earlier.~~ **Superseded by the user on the day (8/20): the party switched to
   the late showings — see the mid-trip log.** The 7:00 claim never happened;
   the no-splitting-into-pairs judgment stands if a curb ever comes back.
-- **Friday's 1:20 Blue Bayou is load-bearing — don't move it later.** The 2:45
-  Halloween cavalcade runs between "it's a small world" and Town Square via
-  Matterhorn, the Hub and Main Street, so New Orleans Square is *not* on the
-  route. The Hub is the nearest point at ~8 minutes. An 80-minute sitting from
-  1:20 puts you out at 2:40, which just makes it. A 1:40 booking puts you out at
-  3:00 and there is no later catch point. If the table ever moves later, cut the
-  cavalcade in the same edit rather than leaving an instruction that can't be
-  executed.
+- **Friday's 1:20 Blue Bayou is load-bearing — don't move it later.**
+  **Superseded 8/20: the user cancelled the 1:20** (midday hotel break;
+  a 9:40 pm Blue Bayou replaces it), and per this bullet's own instruction the
+  cavalcade advice was cut in the same edit — both cavalcades (1:30, 2:45) run
+  while the party is at the hotel, so the "be at the Hub by 2:50" chain and its
+  alarm are gone from the guide. Route facts, kept here in case plans move
+  again: the 2:45 runs between "it's a small world" and Town Square via
+  Matterhorn, the Hub and Main Street — New Orleans Square is not on the route,
+  the Hub is the nearest point, and the step-off end was never settled.
 - **Carnation Café is on Main Street, and that's why it won.** You walk out of
   dinner into the Halloween Screams camping spot instead of crossing from
   Frontierland. Dinner service ends at **7:00** — you're out then whether you're
@@ -348,6 +350,36 @@ line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
 the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
 match, chronological order kept.
 
+**Night of 8/20 → Friday replan (v=20260821a): scan in, leave, stack for the
+night.** First, the 8/20 ride log as the user reported it: **Rise of the
+Resistance, Tiana's, Millennium Falcon, Matterhorn, Big Thunder, Space
+Mountain, Indiana Jones, Pirates** — so the late-showings switch bought a
+real evening, and Tiana's/Big Thunder came off Friday's unridden list.
+Then the Friday reshape, all user decisions: **the 1:20 Blue Bayou is
+cancelled; a 9:40 pm Blue Bayou is booked instead; the day is scan in
+early, ride an hour or two, spend midday at the hotel while booking a
+Lightning Lane every time the 120-minute clock lapses, and return for the
+evening with the stack.** Guide consequences: the priority card became a
+stack plan (Mansion Holiday first — still unridden — then Runaway
+Railway/Roger Rabbit/Buzz; Indy/Thunder/Space as re-rides; Tiana's off the
+list), the cavalcades and river boats are logged as the known price of the
+break, and the night rebuilt around the 9:40 table: it **rules out the
+10:30 Fantasmic, so the 9:00 show is the plan**, then Screams ~9:30
+watched **from the riverfront** (the river is one of its four *reported*
+surfaces; the castle/Main Street mapping and Jack's balloon are the
+acknowledged loss), then the table two minutes away, out ~11:00 into the
+last hour. The Main Street alternative — full Screams, arrive ~15 min
+late to the table — is stated in the card with the honest hedge that
+nobody has verified how much grace a table gets. **One mechanic flagged
+as unverified in the guide itself: booking from the hotel after scan-in.**
+Scan-in-required and stacking are 8/15-verified; booking *off-site* is the
+plan's premise and nothing in this file ever checked it, so the card says
+to make the first booking before leaving the gate area and treat the first
+hotel-side booking as the proof, while walking back is still cheap.
+Alarms and Dining-at-a-glance updated (Fri tables now 5:40 & 9:40);
+`DAYS` rewritten, chronological, hard flags on the two tables and the
+9:00 Fantasmic.
+
 **Evening of 8/19 — the "cut all the bullshit" pass (v=20260819c).** The user,
 mid-trip: they got **World of Color for the 9:00 show, Yellow or Blue viewing
 entrance** (now stated as fact on the day-19 night card and in `DAYS`), had
@@ -450,8 +482,9 @@ cards still two-layer. Don't reintroduce a base watermark.
 - **Multi Pass: must be scanned in to book**, and **stacking works** — a
   Lightning Lane guide read in full works a three-deep stack as a named
   strategy. The rope-drop shape and the 10:00 "book another" beat are safe.
-- **Cavalcade times** — 1:30 and 2:45 on 8/21 specifically. The 1:30 really is
-  lost to the 1:20 table.
+- **Cavalcade times** — 1:30 and 2:45 on 8/21 specifically. Originally the 1:30
+  was lost to the 1:20 table; as of the 8/20 replan both are lost to the midday
+  hotel break, knowingly.
 - **Fantasmic!** — 9:05 + 10:30 on 8/20 (confirmed in the app that morning),
   9:00 + 10:30 on 8/21.
 - **Park hours and Bash nights** — DL 8–midnight all three days; DCA 8–10 on

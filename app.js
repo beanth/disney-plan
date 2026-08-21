@@ -110,7 +110,7 @@
       [20, 50, "Walk to your World of Color entrance"],
       [21, 0,  "World of Color – ONE, 9:00 — Yellow or Blue entrance", 1],
       [21, 10, "Guardians window opens — Monsters After Dark, straight from the show", 1],
-      [21, 55, "Out through the Cars Land neon \u2014 bus from the Esplanade"]
+      [21, 55, "Out through the Cars Land neon — bus from the Esplanade"]
     ]},
     "2026-08-20": { label: "Disneyland · Day 1", nav: "day20", greet: "Paint the Night · final night", close: [24, 0], events: [
       [7,  0,  "Breakfast from 7:00 — bus whenever you're ready, park opens 8:00"],
@@ -127,14 +127,16 @@
       [23, 45, "Out and walking back — 25-30 min"]
     ]},
     "2026-08-21": { label: "Disneyland · Day 2", nav: "day21", greet: "Halloween Time · day one", close: [24, 0], events: [
-      [7,  0,  "Breakfast from 7:00 — busiest day of the trip: sold out, Halloween opens"],
-      [8,  0,  "Book Haunted Mansion Holiday at scan-in — back out if the window is after 4:00"],
-      [9,  0,  "Take every pass window first time round — Tiana's dries up by ~4:45"],
-      [13, 20, "Blue Bayou — drinks stop, 1:20 pm", 1],
-      [17, 40, "Carnation Caf\u00e9, 5:40 pm — dinner service ends 7:00", 1],
-      [20, 15, "Main Street east sidewalk if you want Screams — camp by 8:15"],
-      [21, 30, "Halloween Screams debut (confirm time in app)"],
-      [22, 30, "Fantasmic! — last show of the trip"],
+      [7,  0,  "Breakfast from 7:00 — sold-out day; scanning in is what arms the booking clock"],
+      [8,  0,  "Scan in, book Haunted Mansion Holiday first — then ride an hour or two"],
+      [10, 0,  "Book once more before leaving the gate area — then again every time the 2-hour clock lapses"],
+      [17, 40, "Carnation Café, 5:40 pm — dinner service ends 7:00", 1],
+      [19, 0,  "Spend the stack — ninety clear minutes of windows"],
+      [20, 30, "Be at the river — the 9:40 table makes the 9:00 Fantasmic the only one"],
+      [21, 0,  "Fantasmic! — the 9:00 show, last of the trip", 1],
+      [21, 30, "Screams ~9:30 from the riverfront (confirm time in app)"],
+      [21, 40, "Blue Bayou, 9:40 pm", 1],
+      [23, 0,  "Out of dinner — last hour: unspent passes, Mansion standby, Pirates next door"],
       [23, 45, "Out and walking back — 25-30 min"]
     ]},
     "2026-08-22": { label: "Last day in Cali", note: "No parks today — Downtown Disney from 7am, then the drive to ONT. Safe travels home.", nav: null, greet: "Anaheim · heading home" }
@@ -171,7 +173,7 @@
 
         var hint = document.createElement("div");
         hint.className = "reopen";
-        hint.textContent = "Done \u00b7 tap to reopen";
+        hint.textContent = "Done · tap to reopen";
         card.insertBefore(hint, fold);
       }
 
@@ -212,8 +214,8 @@
           var btn = document.createElement("button");
           btn.type = "button";
           btn.className = "dayreopen";
-          var EMO = { day19: "\ud83c\udf83 ", day20: "\u2728 ", day21: "\ud83d\udc7b " };
-          btn.textContent = (EMO[DAY_SECTIONS[k]] || "") + "Day complete \u00b7 tap to reopen";
+          var EMO = { day19: "🎃 ", day20: "✨ ", day21: "👻 " };
+          btn.textContent = (EMO[DAY_SECTIONS[k]] || "") + "Day complete · tap to reopen";
           btn.addEventListener("click", function () {
             sec.dataset.manual = "1";
             sec.classList.remove("day-done");
@@ -579,7 +581,7 @@
           lede.className = "cd-in";
           lede.textContent = untilText(nextIn);
           small.appendChild(lede);
-          small.appendChild(document.createTextNode(" \u00b7 " + next[2]));
+          small.appendChild(document.createTextNode(" · " + next[2]));
         } else {
           small.textContent = "That's the day. Enjoy the night.";
         }
@@ -597,7 +599,7 @@
         if (clIn > 0 && clIn <= 90) {
           closing.hidden = false;
           closing.textContent = "Park closes " + untilText(clIn) +
-            " \u00b7 anyone in line at closing still rides";
+            " · anyone in line at closing still rides";
         }
       }
       greet.textContent = today.greet || "Anaheim";
