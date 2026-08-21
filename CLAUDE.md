@@ -92,11 +92,16 @@ aggregators through mid-August 2026. They are **not** continuously re-verified
 and go stale quickly — Disney raises prices in sweeps and changes menus
 monthly.
 
-So: when adding or changing a fact, verify it, and when you can't, say so in
-the guide rather than asserting it. Do not delete an existing hedge to make a
-sentence read better — several were lost that way already. If a verification
-pass could not open a source directly, the resulting claim is *reported*, not
-*verified*, and should be worded that way.
+So: when adding or changing a fact, verify it, and track what you couldn't.
+**Where the hedge lives changed on 8/21, by user instruction: provenance and
+verification status go in HTML/JS comments beside the claim (and HANDOFF),
+not in the visible prose.** The page states the fact plainly; the comment
+says how it's known, from when, and what's unverified. Behavioral lines
+("check the app", "ask at the counter") stay visible — they're instructions,
+not provenance. Moving a hedge into a comment is not deleting it; deleting
+the comment is, and the old rule still applies to comments: don't drop one
+to make anything read better. Do not reintroduce visible "(read 8/15)" /
+"reported" / "verified" tags.
 
 Verification claims in commit messages must carry their limits — if something
 was tested against a shim rather than a browser, or synthesised from search

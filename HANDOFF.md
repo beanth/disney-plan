@@ -350,6 +350,24 @@ line, the Alarms card's 7:00 curb alarm (now a 9:25 find-sky alarm), and
 the packing card's "for the 7:00 curb" sit-pad clause. `DAYS` rewritten to
 match, chronological order kept.
 
+**Morning of 8/21 (v=20260821b): hedges moved into comments, day 21 defluffed
+— both user instructions** ("get rid of all this validated and verified crap,
+like validated 8/15. leave it as code comments for yourself instead. also, way
+too much fluff on day 21"). Every visible provenance tag — "(read 8/15)",
+"reported", "verified 8/15", "snippet-grade", "isn't confirmed" — moved into
+an HTML comment beside its claim; none deleted. The rule change is recorded
+in CLAUDE.md's Standard for facts: the page now states facts plainly, the
+comments carry how they're known, behavioral lines ("check the app") stay
+visible, and a future pass must not count these as hedges lost — they moved,
+grep the comments. Day 21 was also cut hard: the break-costs bullet is now a
+comment (decision made, no action), the stack callout shrank to its two
+actions, Carnation and the 9:40 Bayou cards lost their editorializing, and
+the night script tightened — the Main Street Screams alternative kept one
+sentence, its geometry in a comment. Two reference-card lines that
+contradicted the deliberate Friday break ("stay in the park all day",
+"one entry and one exit") were reconciled to name Friday as the knowing
+exception.
+
 **Night of 8/20 → Friday replan (v=20260821a): scan in, leave, stack for the
 night.** First, the 8/20 ride log as the user reported it: **Rise of the
 Resistance, Tiana's, Millennium Falcon, Matterhorn, Big Thunder, Space
